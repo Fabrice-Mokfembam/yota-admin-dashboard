@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Sidebar from "./components/sidebar/Sidebar";
-import Header from './components/header/Header';
+import Header from './components/header/header';
 import "./App.css";
 import Chats from "./pages/chats/Chats";
 import Home from "./pages/home/Home";
