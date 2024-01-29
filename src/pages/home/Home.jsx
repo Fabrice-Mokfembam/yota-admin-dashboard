@@ -1,5 +1,5 @@
 import React from 'react'
-import './Home.css'
+import './home.css'
 import { MdOutlineProductionQuantityLimits } from "react-icons/md"
 import img from '../../assets/images/remix1.jpg'
 
