@@ -1,0 +1,35 @@
+:root {
+    --font-weight-normal: 400;
+    --font-weight-bold: 700;
+    --font-weight-header-bold: 700;
+    --orange-bgcolor: #f90707;
+    --orangebg-font-color: #ffffff;
+    --logo-font-size: 18px;
+    --icons-font-size: 17px;
+    --success-color: #28a745;
+    --error-colorr: #DC3545;
+    --error-color: #9e9798;
+    --warning-color: #EB9247;
+    --color-body: #f8f8f8;
+    --color-bg: #f8f8f8;
+    --font-size:16px;
+    --font-family-all:poppins;
+    --bg-grey: rgb(250, 250, 250);
+}
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body{
+  font-family: var(--font-family-all);
+  font-size: var(--font-size);
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-grey);
+}
+
+.main{
+  display: flex;
+}

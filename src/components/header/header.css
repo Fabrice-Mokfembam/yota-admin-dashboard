@@ -1,0 +1,143 @@
+.Header-container {
+  width: 100%;
+  height: 55px;
+  background-color: var(--orangebg-font-color);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(197, 194, 194, 0.4);
+  box-shadow: 0px 5px 8px var(--boxshadow-grey);
+}
+
+.nav-icons {
+  height: inherit;
+  display: flex;
+  align-items: center;
+  padding: 0px 20px;
+  gap: 20px;
+}
+
+.nav-icons .search-header-container {
+  position: relative;
+}
+
+.search-header-container .input-header-container {
+  position: relative;
+}
+
+#input-1 {
+  width: 250px;
+  height: 30px;
+  border-radius: 7px;
+  outline: none;
+  border: none;
+  background-color: var(--bg-grey);
+}
+
+.input-header-container .search {
+  position: absolute;
+  top: 25%;
+  right: 15px;
+}
+
+.icons {
+  font-size: var(--icons-font-size);
+  color: var(--orange-bgcolor);
+}
+
+.nav-icons .notification-container {
+  position: relative;
+  padding: 1.8px 6px;
+  border-radius: 7px;
+  box-shadow: 0px 0px 5px var(--bg-grey);
+  align-items: center;
+}
+
+.notification-container span {
+  position: absolute;
+  font-size: small;
+  background-color: var(--orange-bgcolor);
+  color: var(--orangebg-font-color);
+  padding: 5px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  top: -10px;
+  right: -10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-icons .profile-header-container {
+  width: 120px;
+  height: inherit;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.profile-header-container .image-header-container {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.image-header-container img {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+  display: block;
+}
+
+.profile-name span {
+  font-weight: var(--font-weight-bold);
+}
+
+.nav-icons .hamburger-container,
+.menuX-container {
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+
+.hamburger,
+.menuX {
+  font-size: 30px;
+}
+
+@media screen and (max-width: 1034px) {
+  .nav-icons .hamburger-container {
+    display: block;
+    margin-top: 15px;
+  }
+  .menuX-container {
+    margin-top: 17px;
+  }
+  .visible {
+    display: block;
+  }
+  .nav-icons .hidden {
+    display: none;
+  }
+   .slide-in{
+        transform: translateX(0);
+    }
+}
+
+@media screen and (max-width: 1034px) {
+  .nav-icons{
+    padding: 0px 0px;
+  }
+  #input-1 {
+    display: none;
+  }
+  .input-header-container .search{
+    display: none;
+  }
+}
+

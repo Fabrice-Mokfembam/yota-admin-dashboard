@@ -1,0 +1,141 @@
+.add-box-container{
+    padding-left:10px ;
+    margin: 30px 15px 0px 16px;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(3,1fr);
+    grid-auto-rows: minmax(80px,auto);
+}
+.add-products{
+    display: inline;
+    border-radius: 5px;
+    padding: 10px 20px;
+    background-color: var(--orange-bgcolor);
+    color: var( --orangebg-font-color);
+}
+
+.add-box{
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--orangebg-font-color);
+    background-color: var(--orangebg-font-color);
+     box-shadow: 0px 0px 5px var(--error-color);
+}
+
+.addbox1{
+    grid-row: span 3;
+}
+.addbox2{
+    grid-column: span 2;
+    grid-row: span 3;
+    padding: 10px 0px 0px 15px;
+}
+.addbox4{
+    grid-column: span 2;
+    grid-row: span 3;
+}
+.addbox8{
+    grid-column: span 2;
+    grid-row: span 3;
+}
+.addbox9{
+    grid-row: span 2;
+}
+
+#input-add-product{
+    width: 100%;
+    height: 30px;
+    border: none;
+    border-bottom: 1px solid gray;
+    outline: none;
+    font-size: 16px;
+    font-family: poppins;
+    font-weight: 450;
+}
+
+.title-addbox2{
+    font-weight: 450;
+    font-size: large;
+}
+
+.radio-inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    height: 70%;
+    padding-left: 10px;
+    justify-content: center;
+}
+.radio-inputs label{
+    display: flex;
+    gap: 5px;
+}
+
+.addbox1 img{
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    object-fit: cover;
+}
+
+#uploadImage{
+    display: none;
+}
+.loadimg{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.loadimg div{
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: -2px 0px 5px rgb(236, 150, 150);
+}
+.input-textArea {
+  min-height: 80%;
+  display: flex;
+  align-items: center;
+}
+
+#textArea {
+  width: 100%;
+  height: auto;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid var(--orange-bgcolor);
+ 
+  resize: vertical;
+  font-size: 17px;
+}
+
+.description{
+    width: 100%;
+    word-wrap: break-word;
+    /* overflow-wrap: break-word; */
+}
+
+.addbox5 label{
+    margin-left: 10px;
+    margin-top: 5px;
+    display: flex;
+    gap: 5px;
+}
+.addbox6 label{
+    margin-left: 10px;
+    margin-top: 5px;
+    display: flex;
+    gap: 5px;
+}
+.addbox7 label{
+    margin-left: 10px;
+    margin-top: 5px;
+    display: flex;
+    gap: 5px;
+}
