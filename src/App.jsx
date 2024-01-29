@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import Sidebar from "./components/sidebar/Sidebar";
-import Header from "./components/header/header";
+import Header from "./components/header/Header";
 import "./App.css";
 import Chats from "./pages/chats/Chats";
-import Home from "./pages/home/home";
+import Home from "./pages/home/Home";
 import Orders from "./pages/orders/Orders";
 import Products from "./pages/products/Products";
 import Bonus from "./pages/bonus-settings/Bonus";
