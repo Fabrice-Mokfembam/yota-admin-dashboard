@@ -2,7 +2,7 @@ import React from "react";
 import "./Chats.css";
 
 import PageDetail from "../../components/PageAlert/PageDetail";
-import People from "../../components/people/people";
+import People from "../../components/people/People";
 import Messages from "../../components/messages/Messages";
 
 function Chats() {
