@@ -4,7 +4,7 @@ import "./AddProduct.css";
 
 import PageDetail from "../../../components/PageAlert/PageDetail";
 
-function AddProduct( { fetchData,setData}) {
+function AddProduct({ fetchData, setData }) {
   const [image, setImage] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("Wheel");
   const [selectedFitPosition, setSelectedFitPosition] = useState("");
@@ -13,6 +13,7 @@ function AddProduct( { fetchData,setData}) {
   const [CarBrand, setCarBrand] = useState("");
   const [MakeMaterial, setMakeMaterial] = useState("");
   const [fitment, setFitment] = useState("");
+  const [Price, setPrice] = useState(0);
 
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
@@ -43,6 +44,10 @@ function AddProduct( { fetchData,setData}) {
   };
   const handleFitment = (e) => {
     setFitment(e.target.value);
+  };
+
+  const handlePriceChange = (e) => {
+    setPrice(e.target.value);
   };
 
   const handleSubmit = async (e) => {
@@ -80,8 +85,7 @@ function AddProduct( { fetchData,setData}) {
     try {
       const response = await axios.get("http://localhost:5000/api/blog");
       setData(response.data);
-      console.log('added latest product to database',response.data);
-      
+      console.log("added latest product to database", response.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -90,228 +94,238 @@ function AddProduct( { fetchData,setData}) {
   return (
     <div className="home-container">
       <PageDetail />
-      <div
-        className="title-page add-products"
-        onClick={() => {
-          handleSubmit();
-          setTimeout(retrieveProducts, 1000);
-          // fetchData();
-        }}
-      >
-        Add Product
-      </div>
-      <div className="add-box-container">
-        <div className="add-box addbox1">
-          {image ? (
-            <img src={image} alt="Uploaded Image" />
-          ) : (
-            <label htmlFor="uploadImage" className="loadimg">
-              <div>upload image</div>
-              <input
-                type="file"
-                id="uploadImage"
-                accept="image/*"
-                onChange={handleImageUpload}
-              />
-            </label>
-          )}
+      <div className="main-add-product-conatainer">
+       
+        <div className="firstpart part">
+          <div className="product-info">Product-Info</div>
+          <div className="image-name">
+            <div className="image-add-product">
+              {image ? (
+                <img src={image} alt="Uploaded Image" />
+              ) : (
+                <label htmlFor="uploadImage" className="loadimg">
+                  <div>upload image</div>
+                  <input
+                    type="file"
+                    id="uploadImage"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                  />
+                </label>
+              )}
+            </div>
+            <div className="name">
+              <label htmlFor="name">
+                Name:
+                <input type="text" placeholder="name" id="name" />
+              </label>
+            </div>
+          </div>
+
+          <div className="carbrand-and-details">
+            <div className="category title">
+              Category
+              <div className="category-input ">
+                <label htmlFor="Bumpers">
+                  <input
+                    type="radio"
+                    id="Bumpers"
+                    value="Bumpers"
+                    checked={selectedCategory === "Bumpers"}
+                    onChange={handleCategoryChange}
+                  />
+                  Bumpers
+                </label>
+                <label htmlFor="Hood">
+                  <input
+                    type="radio"
+                    id="Hood"
+                    value="Hood"
+                    checked={selectedCategory === "Hood"}
+                    onChange={handleCategoryChange}
+                  />
+                  Hood
+                </label>
+                <label htmlFor="Exhaust">
+                  <input
+                    type="radio"
+                    id="Exhaust"
+                    value="Exhaust"
+                    checked={selectedCategory === "Exhaust"}
+                    onChange={handleCategoryChange}
+                  />
+                  Exhaust
+                </label>
+                <label htmlFor="Wheel">
+                  <input
+                    type="radio"
+                    id="Wheel"
+                    value="Wheel"
+                    checked={selectedCategory === "Wheel"}
+                    onChange={handleCategoryChange}
+                  />
+                  Wheel
+                </label>
+                <label htmlFor="Fenders">
+                  <input
+                    type="radio"
+                    id="Fenders"
+                    value="Fenders"
+                    checked={selectedCategory === "Fenders"}
+                    onChange={handleCategoryChange}
+                  />
+                  Fenders
+                </label>
+              </div>
+            </div>
+
+            <div className="Model title">
+              Model
+              <div className="category-input Model ">
+                <label >
+                  <input
+                    type="radio"
+                    value="Corrola"
+                    checked={selectCarModel === "Corrola"}
+                    onChange={handleCarModelChange}
+                  />
+                  Corrola
+                </label>
+                <label >
+                  <input
+                    type="radio"
+                    value="Camrry"
+                    checked={ selectCarModel === "Camrry"}
+                    onChange={handleCarModelChange}
+                  />
+                  Camrry
+                </label>
+              </div>
+            </div>
+
+            <div className="Carbrand title">
+              Car Brand
+              <div className="category-input Model ">
+                <label >
+                  <input
+                    type="radio"
+                    value="Toyota Corrola"
+                    checked={CarBrand === "Toyota Corrola"}
+                    onChange={handleCarBrand}
+                  />
+                   Toyota Corrola
+                </label>
+                <label >
+                  <input
+                    type="radio"
+                    value="Toyota Camrry"
+                    checked={ CarBrand === "Toyota Camrry"}
+                    onChange={handleCarBrand}
+                  />
+                   Toyota Camrry
+                </label>
+              </div>
+            </div>
+
+            <div className="Carbrand title">
+              Price($)
+              <div className="number ">
+                <label htmlFor="number">
+                  <input type="number"  id="number" onChange={handlePriceChange}/>
+                  </label>
+              </div>
+            </div>
+
+            
+          </div>
         </div>
 
-        <div className="add-box addbox2">
-          <div className="title-addbox2">Category</div>
-          <div className="radio-inputs">
-            <label htmlFor="wheel">
-              <input
-                type="radio"
-                id="wheel"
-                value="Wheel"
-                checked={selectedCategory === "Wheel"}
-                onChange={handleCategoryChange}
-              />
-              Wheel
-            </label>
-            <label htmlFor="exhaust">
-              <input
-                type="radio"
-                id="exhaust"
-                value="exhaust"
-                checked={selectedCategory === "exhaust"}
-                onChange={handleCategoryChange}
-              />
-              Exhaust
-            </label>
-            <label htmlFor="bumpers">
-              <input
-                type="radio"
-                id="bumpers"
-                value="bumpers"
-                checked={selectedCategory === "bumpers"}
-                onChange={handleCategoryChange}
-              />
-              Bumpers
-            </label>
-            <label htmlFor="fenders">
-              <input
-                type="radio"
-                id="fenders"
-                value="Fenders"
-                checked={selectedCategory === "Fenders"}
-                onChange={handleCategoryChange}
-              />
-              Fenders
-            </label>
-            <label htmlFor="hood">
-              <input
-                type="radio"
-                id="hood"
-                value="Hood"
-                checked={selectedCategory === "Hood"}
-                onChange={handleCategoryChange}
-              />
-              Hood
-            </label>
+        <div className="secondpart part">
+              <div className="category title">
+              FitPossition
+              <div className="category-input ">
+                <label >
+                  <input
+                    type="radio"
+                    value="lighting"
+                    checked={selectedFitPosition === "lighting"}
+                    onChange={handleFitPositionChange}
+                  />
+                  Lighting
+                </label>
+                <label >
+                  <input
+                    type="radio"
+                    value="exterior"
+                    checked={selectedFitPosition === "exterior"}
+                    onChange={handleFitPositionChange}
+                  />
+                  Exterior
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    value="interior"
+                    checked={selectedFitPosition === "interior"}
+                    onChange={handleFitPositionChange}
+                  />
+                  Interior
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    value="other"
+                    checked={selectedFitPosition === "other"}
+                    onChange={handleFitPositionChange}
+                  />
+                  Other
+                </label>
+              </div>
           </div>
-        </div>
+          
+          
+            <div className="Carbrand title">
+              Make Material
+              <div className="category-input Model ">
+                <label >
+                  <input
+                    type="radio"
+                    value="carbon fibre"
+                    checked={MakeMaterial === "carbon fibre"}
+                    onChange={handleMakeMaterial}
+                  />
+                   Carbon Fibre
+                </label>
+                <label >
+                  <input
+                    type="radio"
+                    value="Other"
+                    checked={ MakeMaterial === "Other"}
+                    onChange={handleMakeMaterial}
+                  />
+                   Other
+                </label>
+              </div>
+          </div>
+          
+           <div className="Carbrand title ">
+              Fitment
+              <div className="number ">
+                <label htmlFor="fitment">
+                  <input type="text" id="fitment" placeholder="Enter Fitment" onChange={handleFitment} />
+                  </label>
+              </div>
+          </div>
+          
+           <div className="Carbrand title">
+              Description
+              <div className="description">
+                <label htmlFor="description">
+                  <input type="textarea" id="description" onChange={handleDescription} placeholder="Product Description" />
+                  </label>
+              </div>
+            </div>
 
-        <div className="add-box addbox3">
-          <div className="title-addbox2">Name:</div>
-          <input type="text" id="input-add-product" />
-        </div>
-
-        <div className="add-box addbox4">
-          <div className="title-addbox2">Fit Position</div>
-          <div className="radio-inputs">
-            <label htmlFor="lighting">
-              <input
-                type="checkbox"
-                id="lighting"
-                value="lighting"
-                checked={selectedFitPosition === "lighting"}
-                onChange={handleFitPositionChange}
-              />
-              Lighting
-            </label>
-            <label htmlFor="exterior">
-              <input
-                type="checkbox"
-                id="exterior"
-                value="exterior"
-                checked={selectedFitPosition === "exterior"}
-                onChange={handleFitPositionChange}
-              />
-              Exterior
-            </label>
-            <label htmlFor="interior">
-              <input
-                type="checkbox"
-                id="interior"
-                value="interior"
-                checked={selectedFitPosition === "interior"}
-                onChange={handleFitPositionChange}
-              />
-              Interior
-            </label>
-            <label htmlFor="other">
-              <input
-                type="checkbox"
-                id="other"
-                value="other"
-                checked={selectedFitPosition === "other"}
-                onChange={handleFitPositionChange}
-              />
-              Other
-            </label>
-          </div>
-        </div>
-
-        <div className="add-box addbox5">
-          <div className="title-addbox2">Car Model</div>
-          <div>
-            <label htmlFor="model-1">
-              <input
-                type="radio"
-                value={"Corolla"}
-                checked={selectCarModel === "Corolla"}
-                onChange={handleCarModelChange}
-              />
-              Corrola
-            </label>
-          </div>
-          <div>
-            <label htmlFor="model-2">
-              <input
-                type="radio"
-                value={"Camrry"}
-                checked={selectCarModel === "Camrry"}
-                onChange={handleCarModelChange}
-              />
-              Camrry
-            </label>
-          </div>
-        </div>
-        <div className="add-box addbox6">
-          <div className="title-addbox2">Car Brand</div>
-          <div>
-            <label htmlFor="model-1">
-              <input
-                type="radio"
-                value={"Toyota Corolla"}
-                checked={CarBrand === "Toyota Corolla"}
-                onChange={handleCarBrand}
-              />
-              Toyota Corrola
-            </label>
-          </div>
-          <div>
-            <label htmlFor="model-2">
-              <input
-                type="radio"
-                value={"Camrry"}
-                checked={CarBrand === "Camrry"}
-                onChange={handleCarBrand}
-              />
-              Toyota Camrry
-            </label>
-          </div>
-        </div>
-        <div className="add-box addbox7">
-          <div className="title-addbox2">Make Material</div>
-          <div>
-            <label htmlFor="model-1">
-              <input
-                type="checkbox"
-                value={"Carbon Fibre"}
-                checked={MakeMaterial === "Carbon Fibre"}
-                onChange={handleMakeMaterial}
-              />
-              Carbon Fibre
-            </label>
-          </div>
-          <div>
-            <label htmlFor="model-2">
-              <input
-                type="checkbox"
-                value={"Other"}
-                checked={MakeMaterial === "Other"}
-                onChange={handleMakeMaterial}
-              />
-              Other
-            </label>
-          </div>
-        </div>
-        <div className="add-box addbox8">
-          <div className="title-addbox2">Description</div>
-          <div className="description">{description}</div>
-          <div className="input-textArea">
-            <input type="textarea" id="textArea" onChange={handleDescription} />
-          </div>
-        </div>
-        <div className="add-box addbox9">
-          <div className="title-addbox2">Fitment</div>
-          <div className="description">{fitment}</div>
-          <div className="input-textArea">
-            <input type="textarea" id="textArea" onChange={handleFitment} />
-          </div>
         </div>
       </div>
     </div>

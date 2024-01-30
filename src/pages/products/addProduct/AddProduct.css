@@ -1,141 +1,180 @@
-.add-box-container{
-    padding-left:10px ;
-    margin: 30px 15px 0px 16px;
-    display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(3,1fr);
-    grid-auto-rows: minmax(80px,auto);
-}
-.add-products{
-    display: inline;
-    border-radius: 5px;
-    padding: 10px 20px;
-    background-color: var(--orange-bgcolor);
-    color: var( --orangebg-font-color);
-}
-
-.add-box{
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid var(--orangebg-font-color);
-    background-color: var(--orangebg-font-color);
-     box-shadow: 0px 0px 5px var(--error-color);
-}
-
-.addbox1{
-    grid-row: span 3;
-}
-.addbox2{
-    grid-column: span 2;
-    grid-row: span 3;
-    padding: 10px 0px 0px 15px;
-}
-.addbox4{
-    grid-column: span 2;
-    grid-row: span 3;
-}
-.addbox8{
-    grid-column: span 2;
-    grid-row: span 3;
-}
-.addbox9{
-    grid-row: span 2;
-}
-
-#input-add-product{
+.main-add-product-conatainer{
     width: 100%;
-    height: 30px;
-    border: none;
-    border-bottom: 1px solid gray;
-    outline: none;
-    font-size: 16px;
-    font-family: poppins;
-    font-weight: 450;
+    padding: 5px 25px;
 }
 
-.title-addbox2{
-    font-weight: 450;
-    font-size: large;
+.product-info{
+    font-weight: 500;
+    font-size: 17px;
+    margin: 10px 0px;
 }
-
-.radio-inputs{
+.image-name{
     display: flex;
-    flex-direction: column;
-    gap: 6px;
-    height: 70%;
-    padding-left: 10px;
-    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
 }
-.radio-inputs label{
-    display: flex;
-    gap: 5px;
+.image-add-product{
+    width: 220px;
+    height: 205px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
 }
 
-.addbox1 img{
+.image-add-product img{
     width: 100%;
     height: 100%;
     border-radius: inherit;
-    object-fit: cover;
+}
+
+.loadimg{
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #uploadImage{
     display: none;
 }
-.loadimg{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
-}
 .loadimg div{
-    width: 80%;
-    height: 80%;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
+    width: 150px;
+    height: 150px;
+    display:flex ;
     align-items: center;
-    box-shadow: -2px 0px 5px rgb(236, 150, 150);
-}
-.input-textArea {
-  min-height: 80%;
-  display: flex;
-  align-items: center;
+    justify-content: center;
+    border-radius: 45%;
+    box-shadow: 0px 2px 5px rgb(194, 194, 253);
 }
 
-#textArea {
-  width: 100%;
-  height: auto;
-  outline: none;
-  border: none;
-  border-bottom: 1px solid var(--orange-bgcolor);
- 
-  resize: vertical;
-  font-size: 17px;
+
+.main-add-product-conatainer label{
+    font-size: 18px;
+    font-weight: 500;
+}
+.image-add-product label{
+    font-size: 16px;
+    font-weight: 300;
 }
 
-.description{
+#name{
+    width: 110%;
+    height: 40px;
+    border: 1px solid rgb(201, 201, 202);
+    border-radius: 5px;
+}
+
+#name::placeholder{
+    font-size: 16px;
+    font-family: poppins;
+}
+
+.main-add-product-conatainer input{
+    padding: 5px 10px;
+}
+.carbrand-and-details{
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+.title{
+    font-size: 18px;
+    font-weight: 600;
+}
+.category{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.category-input{
     width: 100%;
-    word-wrap: break-word;
-    /* overflow-wrap: break-word; */
+    padding: 15px 10px;
+    border-radius: 8px;
+    border: 1px solid rgb(201, 201, 202);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.category-input label{
+    display: flex;
+    gap: 4px;
 }
 
-.addbox5 label{
-    margin-left: 10px;
-    margin-top: 5px;
+.secondpart{
+    margin-top: 18px;
     display: flex;
-    gap: 5px;
+    flex-direction: column;
+    gap: 10px;
 }
-.addbox6 label{
-    margin-left: 10px;
-    margin-top: 5px;
-    display: flex;
-    gap: 5px;
+
+.secondpart .title{
+    margin-top: 15px;
 }
-.addbox7 label{
-    margin-left: 10px;
-    margin-top: 5px;
-    display: flex;
-    gap: 5px;
+#fitment,#description{
+    width: 100%;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid rgb(201, 201, 202);
+    background: transparent;
+    position: relative;
+}
+.secondpart ::placeholder{
+    font-size: 17px;
+    font-family: poppins;
+}
+
+#description::placeholder{
+  position: absolute;
+  top: 5px;
+}
+
+
+#description{
+    height: 150px;
+}
+
+input{
+    outline: none;
+}
+
+@media screen and (max-width:450px){
+    .image-name{
+        flex-direction: column;
+    }
+    #name{
+        width: 100%;
+    }
+    .image-add-product{
+        margin: 0px auto;
+        width: 240px;
+        height: 220px;
+    }
+}
+@media screen and (min-width:580px){
+    .image-name{
+        flex-direction: column;
+    }
+    #name{
+        width: 100%;
+    }
+    .image-add-product{
+        margin: 0px auto;
+        width: 240px;
+        height: 220px;
+    }
+}
+@media screen and (min-width:800px){
+    .main-add-product-conatainer{
+        display: flex;
+        gap: 20px;
+    }
+    .firstpart{
+        flex-basis: 45%;
+    }
+   .secondpart{
+    flex-basis: 55%;
+   }
 }
