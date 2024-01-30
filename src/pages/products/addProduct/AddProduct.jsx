@@ -4,6 +4,8 @@ import "./AddProduct.css";
 
 import PageDetail from "../../../components/PageAlert/PageDetail";
 
+const page = 'Add Products'
+
 function AddProduct({ fetchData, setData }) {
   const [image, setImage] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("Wheel");
@@ -93,7 +95,7 @@ function AddProduct({ fetchData, setData }) {
 
   return (
     <div className="home-container">
-      <PageDetail />
+      <PageDetail page={page} />
       <div className="main-add-product-conatainer">
        
         <div className="firstpart part">

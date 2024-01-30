@@ -12,45 +12,83 @@ function Home() {
       <div className='title-page'>
           Analytic overview
       </div>
-      <div className="grid-box-container">
-        <div className="box bf box1">
-          <h2>203</h2>
-          <h3> Total Products </h3>
-          <div>
-            <h4>view all</h4>
-            <MdOutlineProductionQuantityLimits className='box-icons'/>
-          </div>
-         </div>
-        <div className="box bf box2">
-            <h2>5678</h2>
-          <h3> Totat orders </h3>
-          <div>
-            <h4>view all</h4>
-            <MdOutlineProductionQuantityLimits className='box-icons'/>  
-          </div>
-          </div>
-        <div className="box bf box3">
-            <h2>150</h2>
-          <h3> Total customers </h3>
-          <div>
-            <h4>view all</h4>
-            <MdOutlineProductionQuantityLimits className='box-icons'/>  
-          </div>
-          </div>
-        <div className="box box4">
-          <h4>Reviews</h4>
-          <div className="review-container">
-            <div className="review-img-container">
-              <img src={img} alt="" />
+      <div className="home-main-container">
+        <div className="home-div1">
+          <div className="data-boxes">
+            <div className="box1 product-box">
+              <div className="number">3567</div>
+              <div className="product">Products</div>
+              <div className="view-icon">
+                <div className='view'> view</div>
+                <div className="icon"> <MdOutlineProductionQuantityLimits className='icon-home'/> </div>
+              </div>
             </div>
-            <div className="review-text">
-              The products have been awesome and really good. they are rich in quality
+
+            <div className="box1 customer-box">
+              <div className="number">103</div>
+              <div className="product">Customers</div>
+              <div className="view-icon">
+                <div className='view'> view</div>
+                <div className="icon"> <MdOutlineProductionQuantityLimits className='icon-home'/> </div>
+              </div>
             </div>
+
+            <div className="box1 order-box">
+              <div className="number">356</div>
+              <div className="product">Orders</div>
+              <div className="view-icon">
+                <div className='view'> view</div>
+                <div className="icon"> <MdOutlineProductionQuantityLimits className='icon-home'/> </div>
+              </div>
+            </div>
+           
           </div>
-           <div className="read-all-container"> Read all</div>
-         </div>
-         <div className="box box5"></div>
-      </div>
+
+          <div className="graph-box">
+            graph
+          </div>
+        </div>
+        <div className="home-div2">
+          <div className="review-highlight">
+            <div className="review-container">
+              <div className="iner">
+                 <img src={img} alt="" />
+              </div>
+              <div className="info-h-container">
+                <p>02/11/2034</p>
+                <div className="review-text">
+                  The iphone x is great phone. its features are spectacular
+                </div>
+              </div>
+            </div>
+            <div className="review-container">
+              <div className="iner">
+                 <img src={img} alt="" />
+              </div>
+              <div className="info-h-container">
+                <p>02/11/2034</p>
+                <div className="review-text">
+                  The iphone x is great phone. its features are spectacular
+                </div>
+              </div>
+            </div>
+            <div className="review-container">
+              <div className="iner">
+                 <img src={img} alt="" />
+              </div>
+              <div className="info-h-container">
+                <p>02/11/2034</p>
+                <div className="review-text">
+                  The iphone x is great phone. its features are spectacular
+                </div>
+              </div>
+            </div>
+             <div className="rdmore">Read more</div>
+          </div>
+          
+        </div>
+       
+    </div>
     </div>
   )
 }
