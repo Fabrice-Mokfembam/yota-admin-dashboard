@@ -4,6 +4,8 @@
     overflow-y: auto;
     padding-bottom: 30px;
     margin: 5px;
+    background-image: url('../../assets/images/tw.webp');
+    background-size: cover;
 }
 
 .title-page {

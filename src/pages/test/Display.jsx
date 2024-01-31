@@ -1,18 +1,22 @@
-import React from 'react'
+import React, { useState } from "react";
 
-function Display({data}) {
-    return (
-      <>
-        {data.map((item) => (
-          <div key={item._id} className="data-item">
-            <img src={item.image} alt="Product" />
-            <h3>{item.selectedCategory}</h3>
-            <p>{item.selectedFitPosition}</p>
-            <p>{item.description}</p>
-          </div>
-        ))}
-      </>
-    )
+function ImageUploader() {
+  const [selectedImages, setSelectedImages] = useState([]);
+
+  const handleImageChange = (event) => {
+    const files = event.target.files;
+    const imagesArray = Array.from(files).map((file) => URL.createObjectURL(file));
+    setSelectedImages(imagesArray);
+  };
+
+  return (
+   <div>
+   <  input type="file" multiple onChange={handleImageChange} />
+      {selectedImages.map((image, index) => (
+      < img key={index} src={image} alt={`Image ${index}`} />
+      ))}
+    </div>
+  );
 }
 
-export default Display
+export default ImageUploader;

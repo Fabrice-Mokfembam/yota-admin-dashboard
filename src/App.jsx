@@ -10,7 +10,7 @@ import Bonus from "./pages/bonus-settings/Bonus";
 import Card from "./pages/card-details/Card";
 import AddProduct from "./pages/products/addProduct/AddProduct";
 import ProductList from "./pages/products/productList/ProductList";
-import Display from "./pages/test/Display";
+import ImageUploader from "./pages/test/Display";
 
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Reviews from "./pages/Reviews/Reviews";
@@ -108,7 +108,7 @@ function App() {
         },
         {
           path: "/test",
-          element: <Display data={data} />,
+          element: <ImageUploader />,
         },
       ],
     },

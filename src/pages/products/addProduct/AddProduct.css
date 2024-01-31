@@ -140,6 +140,29 @@ input{
     outline: none;
 }
 
+.selected-images{
+    width: 100%;
+    display: flex;
+    gap: 5px;
+}
+
+.imagges{
+    font-size: 18px;
+    font-weight: 500;
+    margin:20px 0px ;
+}
+
+.selected-images img{
+    width: 100px;
+    height: 100px;
+}
+
+
+
+
+
+
+
 @media screen and (max-width:450px){
     .image-name{
         flex-direction: column;

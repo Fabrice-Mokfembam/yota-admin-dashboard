@@ -8,6 +8,7 @@ const page = 'Add Products'
 
 function AddProduct({ fetchData, setData }) {
   const [image, setImage] = useState(null);
+  const [imagesArray, setImagesArray] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("Wheel");
   const [selectedFitPosition, setSelectedFitPosition] = useState("");
   const [description, setDescription] = useState("");
@@ -26,8 +27,10 @@ function AddProduct({ fetchData, setData }) {
   };
 
   const handleImageUpload = (event) => {
-    const uploadedImage = event.target.files[0];
-    setImage(URL.createObjectURL(uploadedImage));
+    const uploadedImage = event.target.files;
+    const arrImage = Array.from(uploadedImage).map(image => URL.createObjectURL(image));
+    setImagesArray(arrImage);
+    setImage(arrImage[0]);
   };
 
   const handleDescription = (e) => {
@@ -110,7 +113,7 @@ function AddProduct({ fetchData, setData }) {
                   <input
                     type="file"
                     id="uploadImage"
-                    accept="image/*"
+                    multiple
                     onChange={handleImageUpload}
                   />
                 </label>
@@ -327,7 +330,18 @@ function AddProduct({ fetchData, setData }) {
                   </label>
               </div>
             </div>
-
+          
+          <div className="imagges">selected images
+            <div className="selected-images"> 
+            {
+              imagesArray.map(image => {
+                return (
+                  <img src={image} alt="" />
+                )
+              })
+            }
+          </div>
+          </div>
         </div>
       </div>
     </div>
