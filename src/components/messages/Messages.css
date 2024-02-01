@@ -1,5 +1,8 @@
 .messages-container{
     width: 71%;
+    position: relative;
+    
+ 
 }
 .person-chat-open-detail{
     width: 100%;
@@ -82,4 +85,31 @@
 .ch-icon{
     font-size: 24px;
     color: white;
+}
+ .textarea-chat-box{
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+
+
+@media screen and (max-width:750px) {
+    .messages-container{
+      width: 100%;
+      position: relative;
+      display: none;
+    }
+    .textarea-chat-box{
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+}
+@media screen and (max-width:750px) {
+    .sender-message p{
+      max-width: 80%;
+    }
+    .receiver-message p{
+        max-width: 80%;
+    }
 }

@@ -125,7 +125,7 @@
 .secondpart .title{
     margin-top: 15px;
 }
-#fitment,#description{
+#fitment,#description,#wheel-size{
     width: 100%;
     height: 40px;
     border-radius: 8px;
@@ -133,7 +133,14 @@
     background: transparent;
     position: relative;
 }
+.wheel{
+    margin-top: 10px;
+}
 .secondpart ::placeholder{
+    font-size: 17px;
+    font-family: poppins;
+}
+.firstpart ::placeholder{
     font-size: 17px;
     font-family: poppins;
 }
@@ -169,7 +176,9 @@ input{
     height: 100px;
 }
 
-
+.text-alert{
+    color: var(--orange-bgcolor);
+}
 
 
 

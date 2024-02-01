@@ -15,6 +15,8 @@ import ImageUploader from "./pages/test/Display";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Reviews from "./pages/Reviews/Reviews";
 import axios from "axios";
+import Messages from "./components/messages/Messages";
+import PersonMessage from "./components/PersonMessage/PersonMessage";
 
 function App() {
   const [data, setData] = useState([]);
@@ -105,6 +107,10 @@ function App() {
         {
           path: "/Reviews",
           element: <Reviews />,
+        },
+        {
+          path: "/messages",
+          element: <PersonMessage />, 
         },
         {
           path: "/test",

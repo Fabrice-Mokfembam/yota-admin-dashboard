@@ -1,0 +1,22 @@
+.pp-ms-container{
+    width: 80%;
+    height: calc(100vh - 60px);
+    background-image: url(../../assets/images/yo.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0 auto;
+}
+
+
+@media screen and (max-width:1034px) {
+.pp-ms-container{
+    width: 100%;
+  
+}    
+}
+@media screen and (max-width:750px) {
+.pp-ms-container{
+    width: 100%;
+    display: block;
+}    
+}

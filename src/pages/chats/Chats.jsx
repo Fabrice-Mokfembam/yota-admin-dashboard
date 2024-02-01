@@ -12,7 +12,7 @@ function Chats() {
       <PageDetail page={chats} />
       <div className="chatbox">
         <People />
-        <Messages />
+        <Messages  />
       </div>
     </div>
   );

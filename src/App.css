@@ -33,3 +33,7 @@ body{
 .main{
   display: flex;
 }
+
+.mesOnly{
+  height: calc(100vh - 60px);
+}

@@ -17,9 +17,13 @@ function AddProduct({ fetchData, setData }) {
   const [MakeMaterial, setMakeMaterial] = useState("");
   const [fitment, setFitment] = useState("");
   const [Price, setPrice] = useState(0);
+  const [Quntity_left, setQuantity_left] = useState(0);
+  const [WheelSize, setWheelSize] = useState('');
+
   const [wheel, setWheel] = useState(true);
   const [Exhaust, setExhaust] = useState(false);
-  const [parts, setParts] = useState(false)
+  const [parts, setParts] = useState(false);
+  const [cfibre, setCfibre] = useState(false);
 
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
@@ -59,6 +63,16 @@ function AddProduct({ fetchData, setData }) {
   const handlePriceChange = (e) => {
     setPrice(e.target.value);
   };
+
+  const handleQuantityChange = (e) => {
+    setQuantity_left(e.target.value);
+  };
+  
+  const handleWheelSize = (e) => {
+    setQuantity_left(e.target.value);
+  };
+
+  const alerttext = "update the category brand section";
 
   const handleSubmit = async (e) => {
     try {
@@ -143,9 +157,10 @@ function AddProduct({ fetchData, setData }) {
                     checked={selectedCategory === "Exhaust"}
                     onChange={handleCategoryChange}
                     onClick={() => {
-                      setParts(false)
-                      setExhaust(true)
-                      setWheel(false)
+                      setParts(false);
+                      setExhaust(true);
+                      setWheel(false);
+                      setCfibre(false);
                     }}
                   />
                   Exhaust
@@ -158,9 +173,10 @@ function AddProduct({ fetchData, setData }) {
                     checked={selectedCategory === "Wheel"}
                     onChange={handleCategoryChange}
                     onClick={() => {
-                      setParts(false)
-                      setExhaust(false)
-                      setWheel(true)
+                      setParts(false);
+                      setExhaust(false);
+                      setWheel(true);
+                      setCfibre(false);
                     }}
                   />
                   Wheel
@@ -172,9 +188,10 @@ function AddProduct({ fetchData, setData }) {
                     checked={selectedCategory === "suspension parts"}
                     onChange={handleCategoryChange}
                     onClick={() => {
-                      setParts(true)
-                      setExhaust(false)
-                      setWheel(false)
+                      setParts(true);
+                      setExhaust(false);
+                      setWheel(false);
+                      setCfibre(false);
                     }}
                   />
                   Suspension parts
@@ -184,9 +201,8 @@ function AddProduct({ fetchData, setData }) {
 
             <div className="category title">
               Category Brand
-              {
-                wheel && (
-                         <select name="wheel" id="wheels">
+              {wheel && (
+                <select name="wheel" id="wheels">
                   <option value="" className="unbrand">
                     select the category brand:wheel
                   </option>
@@ -197,41 +213,77 @@ function AddProduct({ fetchData, setData }) {
                   <option value="Volk Racing">Volk Racing</option>
                   <option value="FR1">FR1</option>
                 </select>
-
-                )
-              }
-              {
-                Exhaust && (
-                         <select name="wheel" id="wheels">
+              )}
+              {wheel && (
+                <div className="Carbrand title wheel">
+                  Wheel Size
+                  <div className="number">
+                    <label htmlFor="wheel-size">
+                      <input
+                        type="text"
+                        id="wheel-size"
+                        placeholder="Enter Wheel size"
+                        onChange={handleWheelSize}
+                      />
+                    </label>
+                  </div>
+                </div>
+              )}
+              {Exhaust && (
+                <select name="wheel" id="wheels">
                   <option value="" className="unbrand">
                     select the category brand:Exhaust
                   </option>
                   <option value="Corolla GR">Corolla GR</option>
-                  <option value="12th gen Toyota Corrola(2019+)">12th gen Toyota Corrola</option>
-                  <option value="11th gen Toyota Corrola">11th gen Toyota Corrola</option>
-                  <option value="8th gen Toyota Cammry">8th gen Toyota Cammry</option>
-                  <option value="7th gen Toyota Cammry">7th gen Toyota Cammry</option>
+                  <option value="12th gen Toyota Corrola(2019+)">
+                    12th gen Toyota Corrola
+                  </option>
+                  <option value="11th gen Toyota Corrola">
+                    11th gen Toyota Corrola
+                  </option>
+                  <option value="8th gen Toyota Cammry">
+                    8th gen Toyota Cammry
+                  </option>
+                  <option value="7th gen Toyota Cammry">
+                    7th gen Toyota Cammry
+                  </option>
                 </select>
-
-                )
-              }
-              {
-                parts && (
-                         <select name="wheel" id="wheels">
+              )}
+              {parts && (
+                <select name="wheel" id="wheels">
                   <option value="" className="unbrand">
                     select the category brand:suspension-parts
                   </option>
                   <option value="Corolla GR">Corolla GR</option>
-                  <option value="12th gen Toyota Corrola(2019+)">12th gen Toyota Corrola</option>
-                  <option value="11th gen Toyota Corrola">11th gen Toyota Corrola</option>
-                  <option value="8th gen Toyota Cammry">8th gen Toyota Cammry</option>
-                  <option value="7th gen Toyota Cammry">7th gen Toyota Cammry</option>
+                  <option value="12th gen Toyota Corrola(2019+)">
+                    12th gen Toyota Corrola
+                  </option>
+                  <option value="11th gen Toyota Corrola">
+                    11th gen Toyota Corrola
+                  </option>
+                  <option value="8th gen Toyota Cammry">
+                    8th gen Toyota Cammry
+                  </option>
+                  <option value="7th gen Toyota Cammry">
+                    7th gen Toyota Cammry
+                  </option>
                 </select>
-
-                )
-              }
-               
-              
+              )}
+              {cfibre && (
+                <select name="wheel" id="wheels">
+                  <option value="" className="unbrand">
+                    select the category brand:carbon fibre
+                  </option>
+                  <option value="Corolla GR">Hood</option>
+                  <option value="12th gen Toyota Corrola(2019+)">
+                    Bumpers
+                  </option>
+                  <option value="11th gen Toyota Corrola">Fenders</option>
+                  <option value="8th gen Toyota Cammry">Front LIP</option>
+                  <option value="7th gen Toyota Cammry">Steering Wheel</option>
+                  <option value="7th gen Toyota Cammry">Rear Spoiler</option>
+                </select>
+              )}
             </div>
 
             <div className="Model title">
@@ -349,6 +401,13 @@ function AddProduct({ fetchData, setData }) {
                   value="carbon fibre"
                   checked={MakeMaterial === "carbon fibre"}
                   onChange={handleMakeMaterial}
+                  onClick={() => {
+                    setParts(false);
+                    setExhaust(false);
+                    setWheel(false);
+                    setCfibre(true);
+                    handleCategoryChange();
+                  }}
                 />
                 Carbon Fibre
               </label>
@@ -363,10 +422,13 @@ function AddProduct({ fetchData, setData }) {
               </label>
             </div>
           </div>
+          {MakeMaterial === "carbon fibre" && (
+            <div className="text-alert">{alerttext}</div>
+          )}
 
           <div className="Carbrand title ">
             Fitment
-            <div className="number ">
+            <div className="number">
               <label htmlFor="fitment">
                 <input
                   type="text"
@@ -387,6 +449,19 @@ function AddProduct({ fetchData, setData }) {
                   id="description"
                   onChange={handleDescription}
                   placeholder="Product Description"
+                />
+              </label>
+            </div>
+          </div>
+
+          <div className="Carbrand title">
+            Quantity Avalaible
+            <div className="quantity">
+              <label htmlFor="quantity">
+                <input
+                  type="quantity"
+                  id="quantity"
+                  onChange={handleQuantityChange}
                 />
               </label>
             </div>

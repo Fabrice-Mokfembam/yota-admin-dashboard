@@ -102,7 +102,7 @@ function ProductList() {
     },
     {
       name: "Iphone XR",
-      description: "Light in size plus 3d features",
+      description: " Light in size plus 3d features Light in size plus 3d features",
       price: "$" + 540,
     },
     {

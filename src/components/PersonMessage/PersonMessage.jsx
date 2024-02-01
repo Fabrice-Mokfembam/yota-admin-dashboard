@@ -1,12 +1,12 @@
 import React from 'react'
-import './Messages.css'
+import './PersonMessage.css'
 import me from '../../assets/images/remix1.jpg'
 import { IoIosSend } from "react-icons/io";
 import { MdOutlineAttachFile } from "react-icons/md";
 
-function Messages() {
+function PersonMessage() {
   return (
-    <div className='messages-container'>
+    <div className='messages-container pp-ms-container'>
       <div className="person-chat-open-detail">
         <div className="each-person chat-opened">
                   <div className="person-img chat-opened-img">
@@ -34,4 +34,4 @@ function Messages() {
   )
 }
 
-export default Messages
+export default PersonMessage;
