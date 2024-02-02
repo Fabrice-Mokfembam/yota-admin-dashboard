@@ -34,22 +34,21 @@ function App() {
 
   useEffect(() => {
     fetchData();
-
-    return () => {
-      
-    };
   }, []);
 
-  // Define an async function for data fetching
   const fetchData = async () => {
     try {
-      const fetchedData = await axios.get("http://localhost:5000/api/blog");
-      setData(fetchedData.data);
-      console.log("fdatabml", data);
+      const response = await axios.get("http://localhost:5000/get/products/");
+      console.log("fetchedData", response.data);
+      setData(response.data)
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching-data:", error);
     }
   };
+
+  useEffect(() => {
+  console.log("Data: see", data);
+}, []);
 
   const Layout = () => {
     return (
@@ -63,9 +62,7 @@ function App() {
         </div>
       </>
     );
-  };
-
-  const testdisplay = () => {};
+  }
 
   const router = createBrowserRouter([
     {
@@ -94,7 +91,7 @@ function App() {
         },
         {
           path: "/products/list",
-          element: <ProductList />,
+          element: <ProductList data={data} />,
         },
         {
           path: "/card-details",

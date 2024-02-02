@@ -9,7 +9,7 @@ import { rowsProduct } from "../../../data.js";
 
 const page = "All Products";
 
-function ProductList() {
+function ProductList({data}) {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentItems, setCurrentItems] = useState([]);
@@ -27,9 +27,9 @@ function ProductList() {
   };
 
   const changePage = () => {
-    setCurrentItems(products.slice(indexOfFirstItem, indexOfLastItem));
+    setCurrentItems(data.slice(indexOfFirstItem, indexOfLastItem));
   };
-  const data = [
+  const datal = [
     {
       name: "Iphone XR",
       description: "Light in size plus 3d features",
@@ -102,7 +102,7 @@ function ProductList() {
     },
     {
       name: "Iphone XR",
-      description: " Light in size plus 3d features Light in size plus 3d features",
+      description: "Light in size plus 3d features",
       price: "$" + 540,
     },
     {
@@ -131,13 +131,12 @@ function ProductList() {
             <input type="text" id="input-product" placeholder="Search product by name" />
         </div> 
         <div className="select-product">
-          <select name="select-category" id="select-category">
+          <select name="select-category" id="select-category" onChange={(e) => { setSelectValue(e.target.value)}}>
             <option value=" ">Select by category</option>
-            <option value="Wheel" onChange={(e) => { setSelectValue(e.target.value) }}>Wheel</option>
-            <option value="Exhaust" onChange={(e) => { setSelectValue(e.target.value) }}>Exhaust</option>
-            <option value="Bumpers" onChange={(e) => { setSelectValue(e.target.value) }}>Bumpers</option>
-            <option value="Exhaust" onChange={(e) => { setSelectValue(e.target.value) }}>Fenders</option>
-            <option value="Hood" onChange={(e) => { setSelectValue(e.target.value) }}>Hood</option>
+            <option value="Wheel" >Wheel</option>
+            <option value="Exhaust" >Exhaust</option>
+            <option value="Bumpers">Bumpers</option>
+            <option value="Exhaust">Fenders</option>
           </select>
            <button className="select-date-added">Last added</button>
         </div>
@@ -147,13 +146,13 @@ function ProductList() {
       <div className="product_list">
         {currentItems.map((item) => {
           return (
-            <div className="products_container">
+            <div className="products_container" key={item._id}>
               <div className="product_image">
-                <img src={me} alt="" />
+                <img src={'http://localhost:5173/d8fb44a8-890f-44f8-a63f-39a899663010'} alt="" />
               </div>
-              <div className="product_name">{item.name}</div>
+              <div className="product_name">{item.product_name}</div>
               <div className="product_short_description">
-                {item.description}
+                {item.description.slice(0,40) + "...read more"}
               </div>
               <div className="product_prize">{item.price}</div>
               <div className="product_edit_delete">

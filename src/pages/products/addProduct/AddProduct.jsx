@@ -17,16 +17,23 @@ function AddProduct({ fetchData, setData }) {
   const [MakeMaterial, setMakeMaterial] = useState("");
   const [fitment, setFitment] = useState("");
   const [Price, setPrice] = useState(0);
-  const [Quntity_left, setQuantity_left] = useState(0);
-  const [WheelSize, setWheelSize] = useState('');
+  const [quantity_left, setQuantity_left] = useState(0);
+  const [WheelSize, setWheelSize] = useState("no size");
+  const [product_name, setProduct_Name] = useState("");
+  const [category_brand, setCategoryBrand] = useState("");
 
+  // states for conditional rendering
   const [wheel, setWheel] = useState(true);
   const [Exhaust, setExhaust] = useState(false);
   const [parts, setParts] = useState(false);
   const [cfibre, setCfibre] = useState(false);
+  const [showDetails, setShowProductDetails] = useState(false);
 
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
+  };
+  const handleCategorybrandChange = (event) => {
+    setCategoryBrand(event.target.value);
   };
 
   const handleFitPositionChange = (event) => {
@@ -67,9 +74,12 @@ function AddProduct({ fetchData, setData }) {
   const handleQuantityChange = (e) => {
     setQuantity_left(e.target.value);
   };
-  
+
   const handleWheelSize = (e) => {
-    setQuantity_left(e.target.value);
+    setWheelSize(e.target.value);
+  };
+  const handleProductName = (e) => {
+    setProduct_Name(e.target.value);
   };
 
   const alerttext = "update the category brand section";
@@ -77,18 +87,32 @@ function AddProduct({ fetchData, setData }) {
   const handleSubmit = async (e) => {
     try {
       const postData = {
-        image,
-        selectedCategory,
-        selectedFitPosition,
+        product_name,
+        images: imagesArray,
+        category: selectedCategory,
+        fit_position: selectedFitPosition,
         description,
-        selectCarModel,
-        CarBrand,
-        MakeMaterial,
+        car_model: selectCarModel,
+        car_brand: CarBrand,
+        category_brand,
+        make_material: MakeMaterial,
+        wheel_size: WheelSize,
+        price: Price,
         fitment,
+        quantity_left,
+        rating: 1,
+        reviews: [
+          {
+            user_text: "Sample review",
+            user_rating: 5,
+            user_name: "John Doe",
+            user_id: "123456789",
+          },
+        ],
       };
 
       const response = await axios.post(
-        "http://localhost:5000/api/blog",
+        "http://localhost:5000/create/product/",
         postData
       );
       console.log("product cretead", response.data);
@@ -107,7 +131,7 @@ function AddProduct({ fetchData, setData }) {
 
   const retrieveProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/blog");
+      const response = await axios.get("http://localhost:5000/create/product/");
       setData(response.data);
       console.log("added latest product to database", response.data);
     } catch (error) {
@@ -140,7 +164,12 @@ function AddProduct({ fetchData, setData }) {
             <div className="name">
               <label htmlFor="name">
                 Name:
-                <input type="text" placeholder="name" id="name" />
+                <input
+                  type="text"
+                  placeholder="name"
+                  id="name"
+                  onChange={handleProductName}
+                />
               </label>
             </div>
           </div>
@@ -202,7 +231,11 @@ function AddProduct({ fetchData, setData }) {
             <div className="category title">
               Category Brand
               {wheel && (
-                <select name="wheel" id="wheels">
+                <select
+                  name="wheel"
+                  id="wheels"
+                  onChange={handleCategorybrandChange}
+                >
                   <option value="" className="unbrand">
                     select the category brand:wheel
                   </option>
@@ -230,7 +263,11 @@ function AddProduct({ fetchData, setData }) {
                 </div>
               )}
               {Exhaust && (
-                <select name="wheel" id="wheels">
+                <select
+                  name="wheel"
+                  id="wheels"
+                  onChange={handleCategorybrandChange}
+                >
                   <option value="" className="unbrand">
                     select the category brand:Exhaust
                   </option>
@@ -250,7 +287,11 @@ function AddProduct({ fetchData, setData }) {
                 </select>
               )}
               {parts && (
-                <select name="wheel" id="wheels">
+                <select
+                  name="wheel"
+                  id="wheels"
+                  onChange={handleCategorybrandChange}
+                >
                   <option value="" className="unbrand">
                     select the category brand:suspension-parts
                   </option>
@@ -270,18 +311,20 @@ function AddProduct({ fetchData, setData }) {
                 </select>
               )}
               {cfibre && (
-                <select name="wheel" id="wheels">
+                <select
+                  name="wheel"
+                  id="wheels"
+                  onChange={handleCategorybrandChange}
+                >
                   <option value="" className="unbrand">
                     select the category brand:carbon fibre
                   </option>
-                  <option value="Corolla GR">Hood</option>
-                  <option value="12th gen Toyota Corrola(2019+)">
-                    Bumpers
-                  </option>
-                  <option value="11th gen Toyota Corrola">Fenders</option>
-                  <option value="8th gen Toyota Cammry">Front LIP</option>
-                  <option value="7th gen Toyota Cammry">Steering Wheel</option>
-                  <option value="7th gen Toyota Cammry">Rear Spoiler</option>
+                  <option value="Hood">Hood</option>
+                  <option value="Bumpers">Bumpers</option>
+                  <option value="Fenders">Fenders</option>
+                  <option value="Front LIP">Front LIP</option>
+                  <option value="Steering wheel">Steering Wheel</option>
+                  <option value="Rear Spoiler">Rear Spoiler</option>
                 </select>
               )}
             </div>
@@ -475,8 +518,109 @@ function AddProduct({ fetchData, setData }) {
               })}
             </div>
           </div>
+
+          <button
+            className="product-save-btn"
+            onClick={() => {
+              setShowProductDetails(true);
+            }}
+          >
+            save
+          </button>
         </div>
       </div>
+      {showDetails && (
+        <div className="details-container">
+          Product Detail
+          <button
+            className="detail-btn"
+            onClick={() => {
+              setShowProductDetails(false);
+            }}
+          >
+            X
+          </button>
+          {
+            <div className="detail-wrapper">
+              <div className="detail-part1">
+                <div className="imagges">
+                  Product Name
+                  <div className="selected-images">{product_name}</div>
+                </div>
+
+                <div className="imagges">
+                  selected images
+                  <div className="selected-images">
+                    {imagesArray.map((image) => {
+                      return <img src={image} alt="" />;
+                    })}
+                  </div>
+                </div>
+
+                <div className="imagges">
+                  Car Brand
+                  <div className="selected-images"> {CarBrand}</div>
+                </div>
+                <div className="imagges">
+                  Car Model
+                  <div className="selected-images"> {selectCarModel}</div>
+                </div>
+                <div className="imagges">
+                  Make Material
+                  <div className="selected-images"> {MakeMaterial}</div>
+                </div>
+                <div className="imagges">
+                  Category Brand
+                  <div className="selected-images"> {category_brand}</div>
+                </div>
+                <div className="imagges">
+                  Category
+                  <div className="selected-images"> {selectedCategory}</div>
+                </div>
+              </div>
+              <div className="detail-part2">
+                <div className="imagges">
+                  Wheel Size
+                  <div className="selected-images">{WheelSize}</div>
+                </div>
+
+                <div className="imagges">
+                  Fit-Position
+                  <div className="selected-images">{selectedFitPosition}</div>
+                </div>
+
+                <div className="imagges">
+                  Description
+                  <div className="selected-images"> {description}</div>
+                </div>
+                <div className="imagges">
+                  Fitment
+                  <div className="selected-images"> {fitment}</div>
+                </div>
+                <div className="imagges">
+                  Price
+                  <div className="selected-images"> {Price}</div>
+                </div>
+                <div className="imagges">
+                  Quantity
+                  <div className="selected-images"> {quantity_left}</div>
+                </div>
+
+                <button
+                  className="Add-to-db"
+                  onClick={() => {
+                    handleSubmit();
+                    setShowProductDetails(false);
+                    setTimeout(retrieveProducts,1000);
+                  }}
+                >
+                  Add
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      )}
     </div>
   );
 }

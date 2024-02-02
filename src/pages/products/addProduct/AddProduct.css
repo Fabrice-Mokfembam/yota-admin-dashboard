@@ -168,7 +168,7 @@ input{
 .imagges{
     font-size: 18px;
     font-weight: 500;
-    margin:20px 0px ;
+    margin: 20px 0px ;
 }
 
 .selected-images img{
@@ -179,10 +179,115 @@ input{
 .text-alert{
     color: var(--orange-bgcolor);
 }
+.product-save-btn{
+    padding: 10px 0px;
+    border-radius: 5px;
+    font-size: 17px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    background-color: rgb(212, 208, 208);
+    box-shadow: 0px 0px 5px gray;
+}
 
+.details-container{
+    background-color: white;
+    border: 1px solid gainsboro;
+    width: 75%;
+    height: calc(100vh - 140px);
+    z-index: 3000;
+    background: url('../../../assets/images/images.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 120px;
+    margin: 5px 30px;
+    padding: 20px;
+    overflow-y:scroll;
+}
 
+.Add-to-db{
+    width: 100%;
+    padding: 10px 0px;
+    border-radius: 5px;
+    font-size: 17px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    background-color: rgb(212, 208, 208);
+    box-shadow: 0px 0px 5px gray;
 
+}
 
+.detail-wrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+.detail-part1,.detail-part2{
+    flex-basis: 50%;
+    padding: 15px;
+}
+
+.detail-part1 .imagges{
+    margin: 30px 0px;
+}
+.detail-part1 .selected-images{
+    font-size: 17px;
+    color: #ccc;
+}
+.detail-part2 .selected-images{
+    font-size: 17px;
+    color: #ccc;
+}
+
+.detail-btn{
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 25px;
+    border:none ;
+    background: transparent;
+}
+
+@media screen and (max-width:1034px){
+    .details-container{
+        width: 92%;
+      
+    }
+}
+@media screen and (max-width:800px){
+    .selected-images{
+        flex-wrap: wrap;
+    }
+}
+@media screen and (max-width:765px){
+    .details-container{
+      margin: 10px;
+      
+    }
+}
+@media screen and (max-width:700px){
+    .details-container{
+        top: 80px;
+    }
+    .detail-wrapper {
+        flex-direction: column;
+        
+    }
+    .detail-part1{
+        padding-bottom: 5px;
+    }
+    .detail-part2{
+        padding-top: 5px;
+    }
+}
+@media screen and (max-width:500px){
+    .details-container{
+      margin: 6px;
+      
+    }
+}
 
 @media screen and (max-width:450px){
     .image-name{
