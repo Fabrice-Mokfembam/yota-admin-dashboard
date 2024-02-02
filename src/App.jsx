@@ -32,23 +32,6 @@ function App() {
     sidebarRef.current.classList.toggle("slide-in");
   }
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/get/products/");
-      console.log("fetchedData", response.data);
-      setData(response.data)
-    } catch (error) {
-      console.error("Error fetching-data:", error);
-    }
-  };
-
-  useEffect(() => {
-  console.log("Data: see", data);
-}, []);
 
   const Layout = () => {
     return (
@@ -83,7 +66,7 @@ function App() {
         },
         {
           path: "/products",
-          element: <ProductList fetchData={fetchData} />,
+          element: <ProductList />,
         },
         {
           path: "/products/add-product",
