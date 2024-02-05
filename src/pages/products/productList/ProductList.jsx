@@ -85,7 +85,7 @@ function ProductList() {
       </div>
 
       {loading ? ( 
-        <div>Loading...</div>
+        <div>Loading....</div>
       ) : (
         <div className="product_list">
           {currentItems.map((item) => {
@@ -94,7 +94,7 @@ function ProductList() {
                 <div className="product_image">
                   <img
                     src={
-                      "http://localhost:5173/d8fb44a8-890f-44f8-a63f-39a899663010"
+                      item.images[0]
                     }
                     alt=""
                   />

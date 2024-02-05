@@ -70,7 +70,7 @@ function App() {
         },
         {
           path: "/products/add-product",
-          element: <AddProduct setData={setData} />,
+          element: <AddProduct />,
         },
         {
           path: "/products/list",

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Bonus.css";
-import me from '../../assets/images/remix1.jpg'
+import me from "../../assets/images/remix1.jpg";
 import PageDetail from "../../components/PageAlert/PageDetail";
 
 function Bonus() {
@@ -8,29 +8,64 @@ function Bonus() {
 
   const [option1, setOption1] = useState(true);
   const [option2, setOption2] = useState(false);
-  const [option3, setOption3] = useState(false);
+  const [option3, setOption3] = useState(true);
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedOptionother, setSelectedOptionother] = useState("");
   const [coupon, setCoupon] = useState("");
   const [value, setValue] = useState("");
   const [endDate, setEndDate] = useState("");
   const [previewDetail, setPreviewDetail] = useState(false);
+  const [selectedProducts, setSelectedProducts] = useState([]);
+
+  function handleproductbonus(e) {
+    const productId = e.target.value;
+    const isChecked = e.target.checked;
+
+    if (isChecked) {
+      setSelectedProducts((prevproducts) => [...prevproducts, productId]);
+    } else {
+      setSelectedProducts((prevproducts) =>
+        prevproducts.filter((item) => {
+          item !== productId;
+        })
+      );
+    }
+  }
+
+  const arraylist = [
+    {
+      id: "12345",
+      name: "name",
+    },
+    {
+      id: "123456",
+      name: "name",
+    },
+    {
+      id: "123457",
+      name: "name",
+    },
+    {
+      id: "123458",
+      name: "name",
+    },
+  ];
 
   function handleOptionChange(e) {
     setSelectedOption(e.target.value);
   }
 
   return (
-    <div className="home-container">
+    <div className="home-container bonus">
       <PageDetail page={bonus} />
 
       <div className="bonus-options">
         <div
-          className={`option1 ${option1 ? "red-bg" : null}`}
+          className={`option1 ${option1 && option3 ? "red-bg" : null}`}
           onClick={() => {
             setOption1(true);
+            setOption3(true);
             setOption2(false);
-            setOption3(false);
           }}
         >
           General Bonus
@@ -39,62 +74,81 @@ function Bonus() {
           className={`option2 ${option2 ? "red-bg" : null}`}
           onClick={() => {
             setOption2(true);
-            setOption1(false);
             setOption3(false);
           }}
         >
           Assign bonus to particular Products
         </div>
-        <div
-          className={`option3 ${option3 ? "red-bg" : null}`}
-          onClick={() => {
-            setOption2(false);
-            setOption1(false);
-            setOption3(true);
-          }}
-        >
-          Assign bonus to a particular product
-        </div>
       </div>
       {option1 && (
         <div className="option-box box1-option">
-          <div className="title-addbox2">Bonus Title</div>
-          <div>
-            <label htmlFor="black-friday">
-              <input
-                type="radio"
-                id="black-friday"
-                value="black-friday"
-                checked={selectedOption === "black-friday"}
-                onChange={handleOptionChange}
-              />
-              Black-Friday
-            </label>
-          </div>
-          <div>
-            <label htmlFor="other">
-              <input
-                type="radio"
-                id="other"
-                value="other"
-                checked={selectedOption === "other"}
-                onChange={handleOptionChange}
-              />
-              Other
-            </label>
-          </div>
-          {selectedOption === "other" ? (
-            <div className="title-input-container">
-              <input
-                type="text"
-                id="title-input"
-                placeholder="Type bonus title here"
-                onChange={(e) => {
-                  setSelectedOptionother(e.target.value);
-                }}
-              />
+          {option2 && (
+            <div className="swiping-box-container">
+              <div className="swipping-box">
+                {arraylist.map((item) => {
+                  return (
+                    <div className="product-select">
+                      <div className="p-img">
+                        <img src={me} alt="" />
+                      </div>
+                      <div className="product-id">
+                        <p> Product ID: { item.id}</p>
+                        <label htmlFor="pdt123">
+                          <input
+                            type="checkbox"
+                            value={item.id}
+                            onChange={handleproductbonus}
+                          />
+                          add to list
+                        </label>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          ) : null}
+          )}
+          {selectedProducts}
+
+          <div className="title-addbox2">Bonus Title</div>
+          <div className="title-box">
+            <div>
+              <label htmlFor="black-friday">
+                <input
+                  type="radio"
+                  id="black-friday"
+                  value="black-friday"
+                  checked={selectedOption === "black-friday"}
+                  onChange={handleOptionChange}
+                />
+                Black-Friday
+              </label>
+            </div>
+            <div>
+              <label htmlFor="other">
+                <input
+                  type="radio"
+                  id="other"
+                  value="other"
+                  checked={selectedOption === "other"}
+                  onChange={handleOptionChange}
+                />
+                Other
+              </label>
+            </div>
+            {selectedOption === "other" ? (
+              <div className="title-input-container">
+                <input
+                  type="text"
+                  id="title-input"
+                  placeholder="Type bonus title here"
+                  onChange={(e) => {
+                    setSelectedOptionother(e.target.value);
+                  }}
+                />
+              </div>
+            ) : null}
+          </div>
           <div className="value">
             <div className="title-addbox2">Bonus Value</div>
             <input
@@ -172,87 +226,23 @@ function Bonus() {
               </div>
               <div className="bon-id">
                 <div className="title-addbox2">Product ids</div>
-                <p>All products selected</p>
+                <p>
+                  {selectedProducts.length > 0
+                    ? bonus_products
+                    : "all products"}
+                </p>
               </div>
               <button className="preview">Apply Bonus</button>
+              <div
+                className="previewX"
+                onClick={() => {
+                  setPreviewDetail(!previewDetail);
+                }}
+              >
+                X
+              </div>
             </div>
           )}
-        </div>
-      )}
-      {option2 && (
-        <div className="option-box">
-          <div className="swiping-box-container">
-            <div className="swipping-box">
-              <div className="product-select">
-                <div className="p-img">
-                  <img src={me} alt="" />
-                </div>
-                <div className="product-id">
-                  <p> Product ID: pdt123</p>
-                  <label htmlFor="pdt123">
-                    <input type="checkbox" />
-                    add to list
-                  </label>
-                </div>
-                  </div>
-              <div className="product-select">
-                <div className="p-img">
-                  <img src={me} alt="" />
-                </div>
-                <div className="product-id">
-                  <p> Product ID: pdt123</p>
-                  <label htmlFor="pdt123">
-                    <input type="checkbox" />
-                    add to list
-                  </label>
-                </div>
-                  </div>
-            </div>
-          </div>
-        </div>
-      )}
-      {option3 && (
-        <div className="option-box">
-          <div className="swiping-box-container">
-            <div className="swipping-box">
-              <div className="product-select">
-                <div className="p-img">
-                  <img src={me} alt="" />
-                </div>
-                <div className="product-id">
-                  <p> Product ID: pdt123</p>
-                  <label htmlFor="pdt123">
-                    <input type="checkbox" />
-                    add to list
-                  </label>
-                </div>
-                  </div>
-              <div className="product-select">
-                <div className="p-img">
-                  <img src={me} alt="" />
-                </div>
-                <div className="product-id">
-                  <p> Product ID: pdt123</p>
-                  <label htmlFor="pdt123">
-                    <input type="checkbox" />
-                    add to list
-                  </label>
-                </div>
-                  </div>
-              <div className="product-select">
-                <div className="p-img">
-                  <img src={me} alt="" />
-                </div>
-                <div className="product-id">
-                  <p> Product ID: pdt123</p>
-                  <label htmlFor="pdt123">
-                    <input type="checkbox" />
-                    add to list
-                  </label>
-                </div>
-                  </div>
-            </div>
-          </div>
         </div>
       )}
     </div>
