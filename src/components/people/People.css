@@ -20,7 +20,7 @@
     width: 88%;
     padding-left: 28px;
     font-size: 17px;
-    font-family: poppins;
+    font-family: var(--poppins);
     outline:none;
     border: none;
     border-bottom: 1px solid var(--error-color);
