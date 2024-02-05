@@ -11,7 +11,7 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      left: 80%;
+      left: 90%;
       width: 2px;
       background: #f50707;
       transform: translateX(-50%);
@@ -21,13 +21,14 @@
       position: relative;
       margin-bottom: 50px;
       padding: 10px;
+      display: flex;
     }
 
     .timeline-item::after {
       content: '';
       position: absolute;
       top: 50%;
-      left: 80%;
+      left: 90%;
       width: 12px;
       height: 12px;
       background: #f70a0a;
@@ -37,6 +38,7 @@
 
     .timeline-content {
       margin-left: 20px;
+      margin-top: 5px;
     }
 
     .timeline-date {
@@ -46,10 +48,83 @@
 
     .timeline-heading {
       font-size: 18px;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
     }
 
     .timeline-description {
       font-size: 16px;
       line-height: 1.4;
+      width: 550px;
+    }
+
+    .pic-review{
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+    }
+    .staricon{
+      font-size: x-large;
+      color: yellow;
+      margin: 1px;
+    }
+    .pic-review img{
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      object-fit: cover;
+    }
+
+  @media screen and (max-width:850px) {
+      .timeline-description{
+        width: 400px;
+      }
+    }
+
+
+    @media screen and (max-width:600px) {
+     .timeline::before{
+      left: 100%;
+     }
+     .timeline-item::after{
+      left: 100%;
+     }
+    }
+
+
+    @media screen and (max-width:500px) {
+      .timeline-description{
+        width: 250px;
+      }
+    }
+    @media screen and (max-width:450px) {
+      .timeline-description{
+        width: 250px;
+        font-size: 15px;
+      }
+      .staricon{
+        font-size: larger;
+      }
+      .timeline-heading{
+        font-size: 15.8px;
+      }
+      .pic-review{
+        width: 48px;
+        height: 48px;
+      }
+      .timeline{
+        width: 100%;
+      }
+    }
+    @media screen and (max-width:380px) {
+     
+      .pic-review{
+        width: 50px;
+        height: 38px;
+      }
+      .timeline-content{
+        margin-left: 10px;
+      }
+      .timeline{
+        width: 100%;
+      }
     }
