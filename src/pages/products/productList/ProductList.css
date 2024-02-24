@@ -143,6 +143,7 @@
   padding: 10px 25px;
   border-radius: 5px;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .product_edit_delete{

@@ -33,6 +33,7 @@
     border-radius: 6px;
     box-shadow: 0px 0px 7px rgb(194, 192, 192);
     margin: 10px;
+    cursor: pointer;
 }
 
 .product-box,
@@ -75,6 +76,7 @@
 
 .view {
     font-size: 19px;
+    cursor: pointer;
 }
 
 .icon-home {
@@ -131,8 +133,11 @@
     display: flex;
     flex-direction: column;
 }
+
 .rdmore{
+
     align-self: center;
+    cursor: pointer;
 }
 /* .iner{
     width: 58px;

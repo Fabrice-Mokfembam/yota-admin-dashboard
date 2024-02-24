@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Sidebar from "./components/sidebar/Sidebar";
-import Header from './components/header/header';
+import Header from "./components/header/header";
 import "./App.css";
 import Chats from "./pages/chats/Chats";
 import Home from "./pages/home/Home";
@@ -17,9 +17,17 @@ import Reviews from "./pages/Reviews/Reviews";
 import axios from "axios";
 import Messages from "./components/messages/Messages";
 import PersonMessage from "./components/PersonMessage/PersonMessage";
+import { productContext } from "./context/productContext";
+import { userContext } from "./context/userContext";
+import { ordersContext } from "./context/ordersContext";
 
 function App() {
   const [data, setData] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [reviews, setReviews] = useState([]);
 
   const sidebarRef = useRef(null);
   const hamRef = useRef(null);
@@ -32,20 +40,76 @@ function App() {
     sidebarRef.current.classList.toggle("slide-in");
   }
 
+  useEffect(() => {
+    fetchData();
+    fetchUsers();
+    fetchOrders();
+    fetchReviews();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/get/products/");
+      console.log("fetchedData", response.data);
+      setProducts(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setLoading(false);
+    }
+  };
+
+  const fetchUsers = async () => {
+
+    try {
+      const {data} = await axios.get("http://localhost:5000/get/users/");
+      console.log("fetchedData", data);
+      setUsers(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const fetchOrders = async () => {
+
+    try {
+      const {data} = await axios.get("http://localhost:5000/get/order");
+      console.log("fetchedData", data);
+      setOrders(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const fetchReviews = async () => {
+
+    try {
+      const {data} = await axios.get("http://localhost:5000/get/products/reviews");
+      console.log("fetchedData", data);
+      setReviews(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   const Layout = () => {
     return (
       <>
-        <div className="layout">
-          <Header  hamRef={hamRef} xRef={xRef} showSidebar={showSidebar}/>
-          <div className="main">
-            <Sidebar sidebarRef={ sidebarRef} />
-            <Outlet />
-          </div>
-        </div>
+        <productContext.Provider    value={{ products, setProducts, setLoading, loading }}>
+          <userContext.Provider value={{ users }}>
+            <ordersContext.Provider value={ {orders}}>
+          <div className="layout">
+            <Header hamRef={hamRef} xRef={xRef} showSidebar={showSidebar} />
+            <div className="main">
+              <Sidebar sidebarRef={sidebarRef} />
+              <Outlet />
+            </div>
+              </div>
+              </ordersContext.Provider>
+          </userContext.Provider>
+        </productContext.Provider>
       </>
     );
-  }
+  };
 
   const router = createBrowserRouter([
     {
@@ -54,7 +118,7 @@ function App() {
       children: [
         {
           path: "/",
-          element: <Home />,
+          element: <Home reviews={ reviews} />,
         },
         {
           path: "/chats",
@@ -90,7 +154,7 @@ function App() {
         },
         {
           path: "/messages",
-          element: <PersonMessage />, 
+          element: <PersonMessage />,
         },
         {
           path: "/test",

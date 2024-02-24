@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./ProductList.css";
-import { DataGrid } from "@mui/x-data-grid";
 import PageDetail from "../../../components/PageAlert/PageDetail";
-import me from "../../../assets/images/remix1.jpg";
 import axios from "axios";
-
-import { columnsProduct } from "../../../data.js";
-import { rowsProduct } from "../../../data.js";
+import { useContext } from "react";
+import { productContext } from "../../../context/productContext";
 
 const page = "All Products";
 
 function ProductList() {
-  const [products, setProducts] = useState([]);
+  const { products, setProducts ,setLoading,loading} = useContext(productContext);
+  
   const [currentPage, setCurrentPage] = useState(1);
   const [currentItems, setCurrentItems] = useState([]);
-  const [loading, setLoading] = useState(true); // Add loading state
 
   const [selectValue, setSelectValue] = useState("");
 
@@ -28,26 +25,51 @@ function ProductList() {
     setCurrentPage(currentPage - 1);
   };
 
-  const changePage = () => {
+const changePage = () => {
+  if (products && products.length > 0) {
     setCurrentItems(products.slice(indexOfFirstItem, indexOfLastItem));
-  };
+  }
+};
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
+   useEffect(() => {
     changePage();
   }, [currentPage, products]);
 
-    const fetchData = async () => {
+
+  
+    const handleDeleteProduct = async (id) => {
       try {
-        const response = await axios.get("http://localhost:5000/get/products/");
-        console.log("fetchedData", response.data);
-        setProducts(response.data);
-        setLoading(false); 
+        const {data} = await axios.delete(`http://localhost:5000/delete/product/${id}`);
+        console.log("deletedData", data);
+        setProducts((products) => products.filter((item) => item._id !== data._id));
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error deleting data:", error);
+        setLoading(false); 
+      }
+  };
+  
+    const searchByCategory = async (category) => {
+      try {
+        setLoading(true);
+        const {data} = await axios.get(`http://localhost:5000/get/product/${category}`);
+        console.log("categoryData", data);
+        setLoading(false)
+        setProducts((data));
+      } catch (error) {
+        console.error("Error category data:", error);
+        setLoading(false); 
+      }
+  };
+  
+    const searchByName = async (name) => {
+      try {
+        setLoading(true);
+        const {data} = await axios.get(`http://localhost:5000/get/product/${name}`);
+        console.log("categoryData", data);
+        setLoading(false)
+        setProducts((data));
+      } catch (error) {
+        console.error("Error category data:", error);
         setLoading(false); 
       }
     };
@@ -64,6 +86,9 @@ function ProductList() {
             type="text"
             id="input-product"
             placeholder="Search product by name"
+            onChange={(e) => {
+              searchByName(e.target.value);
+            }}
           />
         </div>
         <div className="select-product">
@@ -72,6 +97,7 @@ function ProductList() {
             id="select-category"
             onChange={(e) => {
               setSelectValue(e.target.value);
+              searchByCategory(e.target.value);
             }}
           >
             <option value=" ">Select by category</option>
@@ -99,14 +125,14 @@ function ProductList() {
                     alt=""
                   />
                 </div>
-                <div className="product_name">{item.product_name}</div>
+                <div className="product_name">{item.product_name.slice(0, 40) + '...'}</div>
                 <div className="product_short_description">
                   {item.description.slice(0, 40) + "...read more"}
                 </div>
                 <div className="product_prize">{item.price}</div>
                 <div className="product_edit_delete">
                   <button className="product_view Pbtn">View</button>
-                  <button className="product_delete Pbtn">Delete</button>
+                  <button className="product_delete Pbtn" onClick={() => { handleDeleteProduct(item._id) }}>Delete</button>
                 </div>
               </div>
             );

@@ -1,44 +1,32 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Review.css";
 import PageDetail from "../../components/PageAlert/PageDetail";
 import img from '../../assets/images/bf.jpeg'
 import { FaStar } from 'react-icons/fa';
+import { productContext } from "../../context/productContext";
+import { format as timeAgo } from 'timeago.js';
+import moment from "moment";
 
 function Reviews() {
-
- const reviews = [
-  {
-    date: "2024-06-30",
-    heading: "Corolla",
-    rating: 6,
-    description: "The engine performance of this Corolla is exceptional, delivering an exhilarating driving experience."
-  },
-  {
-    date: "2024-02-15",
-    heading: "Cammry",
-    rating: 4,
-    description: "The Cammry's suspension system provides a smooth and comfortable ride, making every journey enjoyable."
-  },
-  {
-    date: "2013-05-25",
-    heading: "Camrry",
-    rating: 2,
-    description: "Although the Camrry's fuel efficiency is commendable, the spacious interior steals the show with its comfort."
-  },
-  {
-    date: "2022-12-20",
-    heading: "Corolla",
-    rating: 5,
-    description: "With its advanced safety features, the Corolla instills confidence and ensures peace of mind on the road."
-  },
-];
+  const { products } = useContext(productContext);
 
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 1; i <= rating; i++) {
-      stars.push(<FaStar className="staricon"/>);
+      stars.push(<FaStar className="staricon" />);
     }
     return stars;
+  };
+
+  const formatDate = (datesent) => {
+    const time = new Date(datesent);
+    const now = new Date();
+
+    if (now - time >= 24 * 60 * 60 * 1000) {
+      return moment(time).format('DD/MM/YYYY');
+    } else {
+      return timeAgo(time);
+    }
   };
 
   const review = "Reviews";
@@ -47,17 +35,19 @@ function Reviews() {
     <div className="home-container">
       <PageDetail page={review} />
 
-      <div className="timeline">   
-        {reviews.map((review, index) => (
-          <div className="timeline-item" key={index}>
-            <div className="pic-review"> <img src={img} alt="" /></div>
-            <div className="timeline-content">
-              <div className="timeline-date">{review.date}</div>
-              <div className="timeline-heading">{review.heading}</div>
-              {renderStars(review.rating)}
-              <div className="timeline-description">{review.description}</div>
+      <div className="timeline">
+        {products.map((product, index) => (
+          product.reviews.map((review, index) => (
+            <div className="timeline-item" key={index}>
+              <div className="pic-review"> <img src={img} alt="" /></div>
+              <div className="timeline-content">
+                <div className="timeline-date">{formatDate(review.createdAt)}</div>
+                <div className="timeline-heading">{product.product_name}</div>
+                {renderStars(review.user_rating)}
+                <div className="timeline-description">{review.user_text}</div>
+              </div>
             </div>
-          </div>
+          ))
         ))}
       </div>
     </div>

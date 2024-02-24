@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./AddProduct.css";
-
+import FileBase64 from "react-file-base64";
 import PageDetail from "../../../components/PageAlert/PageDetail";
 
 const page = "Add Products";
 
-function AddProduct({ fetchData, setData }) {
+function AddProduct({  }) {
   const [image, setImage] = useState(null);
   const [imagesArray, setImagesArray] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("Wheel");
@@ -40,13 +40,16 @@ function AddProduct({ fetchData, setData }) {
     setSelectedFitPosition(event.target.value);
   };
 
-  const handleImageUpload = (event) => {
-    const uploadedImage = event.target.files;
-    const arrImage = Array.from(uploadedImage).map((image) =>
-      URL.createObjectURL(image)
-    );
-    setImagesArray(arrImage);
-    setImage(arrImage[0]);
+  const handleImageUpload = (file) => {
+    const newArrOfImages = [
+      ...imagesArray,
+      ...file.map((item) => {
+        return item.base64;
+      }),
+    ];
+
+    setImagesArray(newArrOfImages);
+    setImage(newArrOfImages[0]);
   };
 
   const handleDescription = (e) => {
@@ -113,26 +116,18 @@ function AddProduct({ fetchData, setData }) {
 
       const response = await axios.post(
         "http://localhost:5000/create/product/",
-        postData
+        postData,{  maxContentLength: 1000000}
       );
-      console.log("product cretead", response.data);
+      console.log("product created", response.data);
     } catch (error) {
-      console.log("error", error.response.data);
+      console.log("error", error);
     }
 
-    setImage("");
-    setSelectedCategory("");
-    selectedFitPosition("");
-    setDescription("");
-    setSelectModel("");
-    setCarBrand("");
-    setFitment("");
   };
 
   const retrieveProducts = async () => {
     try {
       const response = await axios.get("http://localhost:5000/create/product/");
-      setData(response.data);
       console.log("added latest product to database", response.data);
     } catch (error) {
       console.log(error.message);
@@ -150,16 +145,29 @@ function AddProduct({ fetchData, setData }) {
               {image ? (
                 <img src={image} alt="Uploaded Image" />
               ) : (
-                <label htmlFor="uploadImage" className="loadimg">
-                  <div>upload image</div>
-                  <input
-                    type="file"
-                    id="uploadImage"
-                    multiple
-                    onChange={handleImageUpload}
-                  />
-                </label>
+                <FileBase64
+                  type="file"
+                  id="uploadImage"
+                  multiple={true}
+                  onDone={handleImageUpload}
+                />
               )}
+            </div>
+            {image && (
+              <FileBase64
+                type="file"
+                id="uploadImage"
+                multiple={true}
+                onDone={handleImageUpload}
+              />
+            )}
+            <div className="imagges">
+              selected images
+              <div className="selected-images">
+                {imagesArray.map((image) => {
+                  return <img src={image} alt="" />;
+                })}
+              </div>
             </div>
             <div className="name">
               <label htmlFor="name">
@@ -510,15 +518,6 @@ function AddProduct({ fetchData, setData }) {
             </div>
           </div>
 
-          <div className="imagges">
-            selected images
-            <div className="selected-images">
-              {imagesArray.map((image) => {
-                return <img src={image} alt="" />;
-              })}
-            </div>
-          </div>
-
           <button
             className="product-save-btn"
             onClick={() => {
@@ -611,7 +610,7 @@ function AddProduct({ fetchData, setData }) {
                   onClick={() => {
                     handleSubmit();
                     setShowProductDetails(false);
-                    setTimeout(retrieveProducts,1000);
+                    setTimeout(retrieveProducts, 1000);
                   }}
                 >
                   Add

@@ -1,19 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "./sidebar.css";
-import { NavLink } from "react-router-dom";
+import { NavLink,Link } from "react-router-dom";
 
-import { IoHome } from "react-icons/io5";
-import { BsArchive, BsChatSquareTextFill } from "react-icons/bs";
-import { CiSettings } from "react-icons/ci";
-import { FcViewDetails } from "react-icons/fc";
-import { FaServicestack } from "react-icons/fa";
-import { useRef, useState } from "react";
-import { SlArrowRight } from "react-icons/sl";
-import { MdOutlineReviews } from "react-icons/md";
+import { BsHouseDoor, BsFillArchiveFill, BsFillChatSquareTextFill, BsListUl, BsGearFill, BsCardChecklist } from "react-icons/bs";
+import { useRef } from "react";
+import { BsArrowRight } from "react-icons/bs";
+import { MdRateReview } from "react-icons/md";
 
-function Sidebar({ sidebarRef}) {
+function Sidebar({ sidebarRef }) {
   const [isProductActive, setIsProductActive] = useState(false);
- 
 
   return (
     <div ref={sidebarRef} className="sidebar-container">
@@ -23,7 +18,7 @@ function Sidebar({ sidebarRef}) {
         <ul className="list-items">
           <li>
             <NavLink exact to="/" activeClassName="active">
-              <IoHome className="sidebar-icons" /> Home
+              <BsHouseDoor className="sidebar-icons" /> Home
             </NavLink>
           </li>
           <li
@@ -31,51 +26,60 @@ function Sidebar({ sidebarRef}) {
               setIsProductActive(!isProductActive);
             }}
           >
-            <NavLink to="/products" activeClassName="active">
-              <FaServicestack className="sidebar-icons" /> Products
-              <SlArrowRight
+            <Link  activeClassName="active">
+              <BsFillArchiveFill className="sidebar-icons" /> Products
+              <BsArrowRight
                 onClick={() => {
                   setIsProductActive(!isProductActive);
                 }}
-                className={`arrow-icon ${isProductActive? 'rotate-arrow': null}`}
+                className={`arrow-icon ${
+                  isProductActive ? "rotate-arrow" : null
+                }`}
               />
-            </NavLink>
+            </Link>
           </li>
           {isProductActive && (
             <div className={`product-dropdown `}>
               <ul>
                 <li>
-                  <NavLink to="/products/list" activeClassName="active">Product List</NavLink>
+                  <NavLink to="/products/list" activeClassName="active">
+                    <BsListUl className="sidebar-icons" /> Product List
+                  </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/products/add-product" activeClassName="active">Add Products</NavLink>
+                  <NavLink
+                    to="/products/add-product"
+                    activeClassName="active"
+                  >
+                    <BsListUl className="sidebar-icons" /> Add Products
+                  </NavLink>
                 </li>
               </ul>
             </div>
           )}
           <li>
             <NavLink to="/orders" activeClassName="active">
-              <BsArchive className="sidebar-icons" /> Orders
+              <BsFillArchiveFill className="sidebar-icons" /> Orders
             </NavLink>
           </li>
           <li>
             <NavLink to="/chats" activeClassName="active">
-              <BsChatSquareTextFill className="sidebar-icons" /> Messages
+              <BsFillChatSquareTextFill className="sidebar-icons" /> Messages
             </NavLink>
           </li>
           <li>
             <NavLink to="/bonus-settings" activeClassName="active">
-              <CiSettings className="sidebar-icons" /> Bonus Settings
+              <BsGearFill className="sidebar-icons" /> Bonus Settings
             </NavLink>
           </li>
           <li>
             <NavLink to="/card-details" activeClassName="active">
-              <FcViewDetails className="sidebar-icons" /> Card Details
+              <BsCardChecklist className="sidebar-icons" /> Card Details
             </NavLink>
           </li>
           <li>
             <NavLink to="/Reviews" activeClassName="active">
-              <MdOutlineReviews className="sidebar-icons"/> Reviews
+              <MdRateReview className="sidebar-icons" /> Reviews
             </NavLink>
           </li>
         </ul>
