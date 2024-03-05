@@ -1,32 +1,11 @@
-import React, {useEffect,useState } from "react";
 import "./Card.css";
 import PageDetail from "../../components/PageAlert/PageDetail.jsx";
 import code from "../../assets/images/chip.png";
 import icon from "../../assets/images/money.png";
-import axios from "axios";
 
 const page = " Card-Details";
 
-function Card() {
-
-  const [Card, setCard] = useState([]);
-
-  useEffect(() => {
-    getAllCards();
-  }, [Card]);
-
-async function getAllCards() {
-       try {
-        const {data} = await axios.get("http://localhost:5000/get/cards");
-        console.log("fetchedData", data);
-        setCard(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-  }
-  
-
-
+function Card({ cards }) {
   const card = [
     {
       holder: "Thiago A",
@@ -57,26 +36,28 @@ async function getAllCards() {
     <div className="home-container">
       <PageDetail page={page} />
       <div className="card-main-container">
-        {card.map((item) => {
-          return (
-            <div className="card-container">
-              <div className="flex-cvv-date">
-                <div className="expiry-date">{ item.date}</div>
-                <div className="cvv">{item.cvv}</div>
-              </div>
+        {cards.map((item) => {
+          return item.CerditCardDetails.map((itemd) => {
+            return (
+              <div className="card-container">
+                <div className="flex-cvv-date">
+                  <div className="expiry-date">{itemd.expiryDate}</div>
+                  <div className="cvv">{itemd.cvv}</div>
+                </div>
 
-              <div className="code-pic">
-                <img src={code} alt="" />
-              </div>
-              <div className="card-number">{item.number}</div>
-              <div className="card-holder-icon">
-                <div className="holder-name">{item.holder}</div>
-                <div className="icon-container">
-                  <img src={icon} alt="" />
+                <div className="code-pic">
+                  <img src={code} alt="" />
+                </div>
+                <div className="card-number">{itemd.cardNumber}</div>
+                <div className="card-holder-icon">
+                  <div className="holder-name">{itemd.cardHolderName}</div>
+                  <div className="icon-container">
+                    <img src={icon} alt="" />
+                  </div>
                 </div>
               </div>
-            </div>
-          );
+            );
+          });
         })}
       </div>
     </div>

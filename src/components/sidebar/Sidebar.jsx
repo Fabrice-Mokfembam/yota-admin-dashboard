@@ -3,7 +3,6 @@ import "./sidebar.css";
 import { NavLink,Link } from "react-router-dom";
 
 import { BsHouseDoor, BsFillArchiveFill, BsFillChatSquareTextFill, BsListUl, BsGearFill, BsCardChecklist } from "react-icons/bs";
-import { useRef } from "react";
 import { BsArrowRight } from "react-icons/bs";
 import { MdRateReview } from "react-icons/md";
 
@@ -17,7 +16,7 @@ function Sidebar({ sidebarRef }) {
       <nav className="sidebar-navigation-items">
         <ul className="list-items">
           <li>
-            <NavLink exact to="/" activeClassName="active">
+            <NavLink exact='true' to="/" activeClassName="active">
               <BsHouseDoor className="sidebar-icons" /> Home
             </NavLink>
           </li>

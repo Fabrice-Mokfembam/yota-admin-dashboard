@@ -3,6 +3,8 @@ import axios from "axios";
 import "./AddProduct.css";
 import FileBase64 from "react-file-base64";
 import PageDetail from "../../../components/PageAlert/PageDetail";
+import { useContext } from "react";
+import { productContext } from '../../../context/productContext'
 
 const page = "Add Products";
 
@@ -22,11 +24,9 @@ function AddProduct({  }) {
   const [product_name, setProduct_Name] = useState("");
   const [category_brand, setCategoryBrand] = useState("");
 
+    const { products, setProducts ,setLoading,loading} = useContext(productContext);
   // states for conditional rendering
   const [wheel, setWheel] = useState(true);
-  const [Exhaust, setExhaust] = useState(false);
-  const [parts, setParts] = useState(false);
-  const [cfibre, setCfibre] = useState(false);
   const [showDetails, setShowProductDetails] = useState(false);
 
   const handleCategoryChange = (event) => {
@@ -85,8 +85,6 @@ function AddProduct({  }) {
     setProduct_Name(e.target.value);
   };
 
-  const alerttext = "update the category brand section";
-
   const handleSubmit = async (e) => {
     try {
       const postData = {
@@ -119,6 +117,7 @@ function AddProduct({  }) {
         postData,{  maxContentLength: 1000000}
       );
       console.log("product created", response.data);
+      setProducts((products)=>[...products,postData])
     } catch (error) {
       console.log("error", error);
     }
@@ -182,186 +181,7 @@ function AddProduct({  }) {
             </div>
           </div>
 
-          <div className="carbrand-and-details">
-            <div className="category title">
-              Category
-              <div className="category-input ">
-                <label htmlFor="Exhaust">
-                  <input
-                    type="radio"
-                    id="Exhaust"
-                    value="Exhaust"
-                    checked={selectedCategory === "Exhaust"}
-                    onChange={handleCategoryChange}
-                    onClick={() => {
-                      setParts(false);
-                      setExhaust(true);
-                      setWheel(false);
-                      setCfibre(false);
-                    }}
-                  />
-                  Exhaust
-                </label>
-                <label htmlFor="Wheel">
-                  <input
-                    type="radio"
-                    id="Wheel"
-                    value="Wheel"
-                    checked={selectedCategory === "Wheel"}
-                    onChange={handleCategoryChange}
-                    onClick={() => {
-                      setParts(false);
-                      setExhaust(false);
-                      setWheel(true);
-                      setCfibre(false);
-                    }}
-                  />
-                  Wheel
-                </label>
-                <label htmlFor="suspension parts">
-                  <input
-                    type="radio"
-                    value="suspension parts"
-                    checked={selectedCategory === "suspension parts"}
-                    onChange={handleCategoryChange}
-                    onClick={() => {
-                      setParts(true);
-                      setExhaust(false);
-                      setWheel(false);
-                      setCfibre(false);
-                    }}
-                  />
-                  Suspension parts
-                </label>
-              </div>
-            </div>
-
-            <div className="category title">
-              Category Brand
-              {wheel && (
-                <select
-                  name="wheel"
-                  id="wheels"
-                  onChange={handleCategorybrandChange}
-                >
-                  <option value="" className="unbrand">
-                    select the category brand:wheel
-                  </option>
-                  <option value="Kansei">Kansei</option>
-                  <option value="Enkei">Enkei</option>
-                  <option value="Advan Racing">Advan Racing</option>
-                  <option value="Bc Forged">Bc Forged</option>
-                  <option value="Volk Racing">Volk Racing</option>
-                  <option value="FR1">FR1</option>
-                </select>
-              )}
-              {wheel && (
-                <div className="Carbrand title wheel">
-                  Wheel Size
-                  <div className="number">
-                    <label htmlFor="wheel-size">
-                      <input
-                        type="text"
-                        id="wheel-size"
-                        placeholder="Enter Wheel size"
-                        onChange={handleWheelSize}
-                      />
-                    </label>
-                  </div>
-                </div>
-              )}
-              {Exhaust && (
-                <select
-                  name="wheel"
-                  id="wheels"
-                  onChange={handleCategorybrandChange}
-                >
-                  <option value="" className="unbrand">
-                    select the category brand:Exhaust
-                  </option>
-                  <option value="Corolla GR">Corolla GR</option>
-                  <option value="12th gen Toyota Corrola(2019+)">
-                    12th gen Toyota Corrola
-                  </option>
-                  <option value="11th gen Toyota Corrola">
-                    11th gen Toyota Corrola
-                  </option>
-                  <option value="8th gen Toyota Cammry">
-                    8th gen Toyota Cammry
-                  </option>
-                  <option value="7th gen Toyota Cammry">
-                    7th gen Toyota Cammry
-                  </option>
-                </select>
-              )}
-              {parts && (
-                <select
-                  name="wheel"
-                  id="wheels"
-                  onChange={handleCategorybrandChange}
-                >
-                  <option value="" className="unbrand">
-                    select the category brand:suspension-parts
-                  </option>
-                  <option value="Corolla GR">Corolla GR</option>
-                  <option value="12th gen Toyota Corrola(2019+)">
-                    12th gen Toyota Corrola
-                  </option>
-                  <option value="11th gen Toyota Corrola">
-                    11th gen Toyota Corrola
-                  </option>
-                  <option value="8th gen Toyota Cammry">
-                    8th gen Toyota Cammry
-                  </option>
-                  <option value="7th gen Toyota Cammry">
-                    7th gen Toyota Cammry
-                  </option>
-                </select>
-              )}
-              {cfibre && (
-                <select
-                  name="wheel"
-                  id="wheels"
-                  onChange={handleCategorybrandChange}
-                >
-                  <option value="" className="unbrand">
-                    select the category brand:carbon fibre
-                  </option>
-                  <option value="Hood">Hood</option>
-                  <option value="Bumpers">Bumpers</option>
-                  <option value="Fenders">Fenders</option>
-                  <option value="Front LIP">Front LIP</option>
-                  <option value="Steering wheel">Steering Wheel</option>
-                  <option value="Rear Spoiler">Rear Spoiler</option>
-                </select>
-              )}
-            </div>
-
-            <div className="Model title">
-              Model
-              <div className="category-input Model ">
-                <label>
-                  <input
-                    type="radio"
-                    value="Corrola"
-                    checked={selectCarModel === "Corrola"}
-                    onChange={handleCarModelChange}
-                  />
-                  Corrola
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="Camrry"
-                    checked={selectCarModel === "Camrry"}
-                    onChange={handleCarModelChange}
-                  />
-                  Camrry
-                </label>
-              </div>
-            </div>
-
-            <div className="Carbrand title">
+                      <div className="Carbrand title">
               Car Brand
               <div className="category-input Model ">
                 <label>
@@ -383,24 +203,233 @@ function AddProduct({  }) {
                   Toyota Camrry
                 </label>
               </div>
-            </div>
-
-            <div className="Carbrand title">
-              Price($)
-              <div className="number ">
-                <label htmlFor="number">
+          </div>
+          
+            <div className="Model title">
+              Car Model
+              <div className="category-input Model ">
+                <label>
                   <input
-                    type="number"
-                    id="number"
-                    onChange={handlePriceChange}
+                    type="radio"
+                    value="Corrola GR"
+                    checked={selectCarModel === "Corrola GR"}
+                    onChange={handleCarModelChange}
                   />
+                  Corrola GR
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    value="12th gen Toyota Corrola"
+                    checked={selectCarModel === "12th gen Toyota Corrola"}
+                    onChange={handleCarModelChange}
+                  />
+                  12th gen Toyota Corrola
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    value="11th gen Toyota Corrola"
+                    checked={selectCarModel === "11th gen Toyota Corrola"}
+                    onChange={handleCarModelChange}
+                  />
+                  11th gen Toyota Corrola
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    value=" 8th gen Toyota Cammry"
+                    checked={selectCarModel === " 8th gen Toyota Cammry"}
+                    onChange={handleCarModelChange}
+                  />
+                 8th gen Toyota Cammry
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    value="7th gen Toyota Cammry"
+                    checked={selectCarModel === "7th gen Toyota Cammry"}
+                    onChange={handleCarModelChange}
+                  />
+                  7th gen Toyota Cammry
                 </label>
               </div>
             </div>
+           
+            <div className="Carbrand title">
+            Make Material
+            <div className="category-input Model ">
+              <label>
+                <input
+                  type="radio"
+                  value="carbon fibre"
+                  checked={MakeMaterial === "carbon fibre"}
+                  onChange={handleMakeMaterial}
+                  onClick={() => {
+                    setParts(false);
+                    setExhaust(false);
+                    setWheel(false);
+                    setCfibre(true);
+                    handleCategoryChange();
+                  }}
+                />
+                Carbon Fibre
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="Other"
+                  checked={MakeMaterial === "Other"}
+                  onChange={handleMakeMaterial}
+                />
+                Other
+              </label>
+            </div>
+          </div>
+
+          <div className="carbrand-and-details">
+            <div className="category title">
+              Category
+              <div className="category-input ">
+                <label htmlFor="Exhaust">
+                  <input
+                    type="radio"
+                    id="Exhaust"
+                    value="Exhaust"
+                    checked={selectedCategory === "Exhaust"}
+                    onChange={handleCategoryChange}
+                    onClick={() => {
+                      setWheel(false);
+                    }}
+                  />
+                  Exhaust
+                </label>
+                <label htmlFor="Exhaust">
+                  <input
+                    type="radio"
+                    id="Bumpers"
+                    value="Bumpers"
+                    checked={selectedCategory === "Bumpers"}
+                    onChange={handleCategoryChange}
+                    onClick={() => {
+                      setWheel(false);
+                    }}
+                  />
+                  Bumpers
+                </label>
+                <label htmlFor="Exhaust">
+                  <input
+                    type="radio"
+                    id="Fenders"
+                    value="Fenders"
+                    checked={selectedCategory === "Fenders"}
+                    onChange={handleCategoryChange}
+                    onClick={() => {
+                      setWheel(false);
+                    }}
+                  />
+                  Fenders
+                </label>
+                <label htmlFor="Exhaust">
+                  <input
+                    type="radio"
+                    id="Hood"
+                    value="Hood"
+                    checked={selectedCategory === "Hood"}
+                    onChange={handleCategoryChange}
+                    onClick={() => {
+                      setWheel(false);
+                    }}
+                  />
+                  Hood
+                </label>
+                <label htmlFor="Wheel">
+                  <input
+                    type="radio"
+                    id="Wheel"
+                    value="Wheel"
+                    checked={selectedCategory === "Wheel"}
+                    onChange={handleCategoryChange}
+                    onClick={() => {
+                      setWheel(true);
+                    }}
+                  />
+                  Wheel
+                </label>
+                <label htmlFor="suspension parts">
+                  <input
+                    type="radio"
+                    value="suspension parts"
+                    checked={selectedCategory === "suspension parts"}
+                    onChange={handleCategoryChange}
+                    onClick={() => {
+                      setWheel(false);
+                
+                    }}
+                  />
+                  Suspension parts
+                </label>
+                <label htmlFor="steering wheel">
+                  <input
+                    type="radio"
+                    value="steering wheel"
+                    checked={selectedCategory === "steering wheel"}
+                    onChange={handleCategoryChange}
+                    onClick={() => {
+                      setWheel(false);
+                
+                    }}
+                  />
+                  Steering Wheel
+                </label>
+              </div>
+            </div>
+
+            
+            {wheel && (
+              <div className="category title">
+              Category Brand
+                <select
+                  name="wheel"
+                  id="wheels"
+                  onChange={handleCategorybrandChange}
+                >
+                  <option value="" className="unbrand">
+                    select the category brand:wheel
+                  </option>
+                  <option value="Kansei">Kansei</option>
+                  <option value="Enkei">Enkei</option>
+                  <option value="Advan Racing">Advan Racing</option>
+                  <option value="Bc Forged">Bc Forged</option>
+                  <option value="Volk Racing">Volk Racing</option>
+                  <option value="FR1">FR1</option>
+                </select>
+                 </div>
+              )}
+            
+           
+           
+
+          {selectedCategory}
           </div>
         </div>
 
         <div className="secondpart part">
+            {wheel && (
+                <div className="Carbrand title wheel">
+                  Wheel Size
+                  <div className="number">
+                    <label htmlFor="wheel-size">
+                      <input
+                        type="text"
+                        id="wheel-size"
+                        placeholder="Enter Wheel size"
+                        onChange={handleWheelSize}
+                      />
+                    </label>
+                  </div>
+                </div>
+              )}
           <div className="category title">
             FitPossition
             <div className="category-input ">
@@ -443,40 +472,6 @@ function AddProduct({  }) {
             </div>
           </div>
 
-          <div className="Carbrand title">
-            Make Material
-            <div className="category-input Model ">
-              <label>
-                <input
-                  type="radio"
-                  value="carbon fibre"
-                  checked={MakeMaterial === "carbon fibre"}
-                  onChange={handleMakeMaterial}
-                  onClick={() => {
-                    setParts(false);
-                    setExhaust(false);
-                    setWheel(false);
-                    setCfibre(true);
-                    handleCategoryChange();
-                  }}
-                />
-                Carbon Fibre
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="Other"
-                  checked={MakeMaterial === "Other"}
-                  onChange={handleMakeMaterial}
-                />
-                Other
-              </label>
-            </div>
-          </div>
-          {MakeMaterial === "carbon fibre" && (
-            <div className="text-alert">{alerttext}</div>
-          )}
-
           <div className="Carbrand title ">
             Fitment
             <div className="number">
@@ -504,6 +499,19 @@ function AddProduct({  }) {
               </label>
             </div>
           </div>
+
+            <div className="Carbrand title">
+              Price($)
+              <div className="number ">
+                <label htmlFor="number">
+                  <input
+                    type="number"
+                    id="number"
+                    onChange={handlePriceChange}
+                  />
+                </label>
+              </div>
+            </div>
 
           <div className="Carbrand title">
             Quantity Avalaible

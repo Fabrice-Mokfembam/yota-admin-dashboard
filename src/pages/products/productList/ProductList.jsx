@@ -4,6 +4,7 @@ import PageDetail from "../../../components/PageAlert/PageDetail";
 import axios from "axios";
 import { useContext } from "react";
 import { productContext } from "../../../context/productContext";
+import { useNavigate } from "react-router-dom";
 
 const page = "All Products";
 
@@ -12,8 +13,13 @@ function ProductList() {
   
   const [currentPage, setCurrentPage] = useState(1);
   const [currentItems, setCurrentItems] = useState([]);
+  const [names, setNames] = useState('');
+   const routeTo = useNavigate();
 
-  const [selectValue, setSelectValue] = useState("");
+  const routeToProductDetail = () => {
+    routeTo("/product-detail");
+  };
+
 
   const indexOfLastItem = currentPage * 8;
   const indexOfFirstItem = indexOfLastItem - 8;
@@ -61,17 +67,15 @@ const changePage = () => {
       }
   };
   
-    const searchByName = async (name) => {
-      try {
-        setLoading(true);
-        const {data} = await axios.get(`http://localhost:5000/get/product/${name}`);
-        console.log("categoryData", data);
-        setLoading(false)
-        setProducts((data));
-      } catch (error) {
-        console.error("Error category data:", error);
-        setLoading(false); 
-      }
+const searchByName = async () => {
+  const nProducts = products.filter((product) =>
+    product.product_name.match(new RegExp(names, "i"))
+  );
+  setProducts(nProducts);
+};
+  
+    const searchByname = async () => {
+       
     };
 
   return (
@@ -87,16 +91,17 @@ const changePage = () => {
             id="input-product"
             placeholder="Search product by name"
             onChange={(e) => {
-              searchByName(e.target.value);
+              setNames(e.target.value);
+              searchByName();
             }}
-          />
+          />{names}
         </div>
         <div className="select-product">
           <select
             name="select-category"
             id="select-category"
             onChange={(e) => {
-              setSelectValue(e.target.value);
+              // setSelectValue(e.target.value);
               searchByCategory(e.target.value);
             }}
           >
@@ -131,7 +136,7 @@ const changePage = () => {
                 </div>
                 <div className="product_prize">{item.price}</div>
                 <div className="product_edit_delete">
-                  <button className="product_view Pbtn">View</button>
+                  <button className="product_view Pbtn" onClick={routeToProductDetail}>View</button>
                   <button className="product_delete Pbtn" onClick={() => { handleDeleteProduct(item._id) }}>Delete</button>
                 </div>
               </div>

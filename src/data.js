@@ -1,82 +1,137 @@
-   export const columnsProduct = [
-    { field: 'name', headerName: 'Name', width: 150 },
-    { field: 'carBrand', headerName: 'Car Brand', width: 150 },
-    { field: 'carModel', headerName: 'Car Model', width: 150 },
-    { field: 'makeMaterial', headerName: 'Make Material', width: 150 },
-    { field: 'category', headerName: 'Category', width: 150 },
-    { field: 'categoryBrand', headerName: 'Category Brand', width: 150 },
-    { field: 'WheelSize', headerName: 'Wheel Size', width: 150 },
-    { field: 'fitPosition', headerName: 'Fit-Position', width: 150 },
-    { field: 'description', headerName: 'Description', width: 200 },
-    { field: 'fitment', headerName: 'Fitment', width: 150 },
+export const columnsProduct = [
+  { field: '_id', headerName: 'ID', width: 100 },
+  { field: 'user_id', headerName: 'User ID', width: 100 },
+  { 
+    field: 'items', 
+    headerName: 'Items', 
+    width: 130,
+    valueGetter: (params) => params.value.length + '  items'
+  },
+  { field: 'total_price', headerName: 'Total Price', width: 110 },
+  { field: 'shipping_id', headerName: 'Shipping ID', width: 110 },
+  { field: 'order_status', headerName: 'Order Status', width: 150 },
+  { field: 'order_date', headerName: 'Order Date', width: 150 },
+  { field: 'delivery_date', headerName: 'Delivery Date', width: 150 }
 ];
-  
-
- export const rowsProduct = [
-    {
-      id: 1,
-      name: 'Car 1',
-      carBrand: 'Brand 1',
-      carModel: 'Model 1',
-      makeMaterial: 'Material 1',
-      category: 'Category 1',
-      fitPosition: 'Position 1',
-      description: 'Description 1',
-      fitment: 'Fitment 1',
-      categoryBrand: 'ddd',
-      WheelSize:'23'
-    },
-    {
-      id: 1,
-      name: 'Car 1',
-      carBrand: 'Brand 1',
-      carModel: 'Model 1',
-      makeMaterial: 'Material 1',
-      category: 'Category 1',
-      fitPosition: 'Position 1',
-      description: 'Description 1',
-      fitment: 'Fitment 1',
-      categoryBrand: 'ddd',
-      WheelSize:'23'
-    },
-    {
-      id: 1,
-      name: 'Car 1',
-      carBrand: 'Brand 1',
-      carModel: 'Model 1',
-      makeMaterial: 'Material 1',
-      category: 'Category 1',
-      fitPosition: 'Position 1',
-      description: 'Description 1',
-      fitment: 'Fitment 1',
-      categoryBrand: 'ddd',
-      WheelSize:'23'  
-    },
-    {
-      id: 2,
-      name: 'Car 2',
-      carBrand: 'Brand 2',
-      carModel: 'Model 2',
-      makeMaterial: 'Material 2',
-      category: 'Category 2',
-      fitPosition: 'Position 2',
-      description: 'Description 2',
-      fitment: 'Fitment 2',
-      categoryBrand: 'ddd',
-      WheelSize:'23'  
-    },
-    {
-      id: 2,
-      name: 'Car 2',
-      carBrand: 'Brand 2',
-      carModel: 'Model 2',
-      makeMaterial: 'Material 2',
-      category: 'Category 2',
-      fitPosition: 'Position 2',
-      description: 'Description 2',
-      fitment: 'Fitment 2',
-      categoryBrand: '----',
-      WheelSize:'------'  
-    },
-    // Add more rows here as needed
-  ];
+export const rowsProduct = [
+  {
+    id: 1,
+    _id: '1',
+    user_id: 'user1',
+    items: [
+      {
+        product_id: 'product1',
+        quantities: 2,
+        price: 10.99
+      }
+    ],
+    total_price: 21.98,
+    shipping_id: 12345,
+    order_status: 'Not Delivered',
+    order_date: new Date('2024-02-29'),
+    delivery_date: new Date('2024-03-05')
+  },
+  {
+    id: 2,
+    _id: '2',
+    user_id: 'user2',
+    items: [
+      {
+        product_id: 'product2',
+        quantities: 3,
+        price: 15.99
+      }
+    ],
+    total_price: 47.97,
+    shipping_id: 54321,
+    order_status: 'Not Delivered',
+    order_date: new Date('2024-02-29'),
+    delivery_date: new Date('2024-03-06')
+  },
+  {
+    id: 6,
+    _id: '2',
+    user_id: 'user2',
+    items: [
+      {
+        product_id: 'product2',
+        quantities: 3,
+        price: 15.99
+      }
+    ],
+    total_price: 47.97,
+    shipping_id: 54321,
+    order_status: 'Not Delivered',
+    order_date: new Date('2024-02-29'),
+    delivery_date: new Date('2024-03-06')
+  },
+  {
+    id: 5,
+    _id: '2',
+    user_id: 'user2',
+    items: [
+      {
+        product_id: 'product2',
+        quantities: 3,
+        price: 15.99
+      }
+    ],
+    total_price: 47.97,
+    shipping_id: 54321,
+    order_status: 'Not Delivered',
+    order_date: new Date('2024-02-29'),
+    delivery_date: new Date('2024-03-06')
+  },
+  {
+    id: 0,
+    _id: '2',
+    user_id: 'user2',
+    items: [
+      {
+        product_id: 'product2',
+        quantities: 3,
+        price: 15.99
+      }
+    ],
+    total_price: 47.97,
+    shipping_id: 54321,
+    order_status: 'Not Delivered',
+    order_date: new Date('2024-02-29'),
+    delivery_date: new Date('2024-03-06')
+  },
+  {
+    id: 3,
+    _id: '2',
+    user_id: 'user2',
+    items: [
+      {
+        product_id: 'product2',
+        quantities: 3,
+        price: 15.99
+      }
+    ],
+    total_price: 47.97,
+    shipping_id: 54321,
+    order_status: 'Not Delivered',
+    order_date: new Date('2024-02-29'),
+    delivery_date: new Date('2024-03-06')
+  },
+  {
+    id: 8,
+    _id: '2',
+    user_id: 'user2',
+    items: [
+      {
+        product_id: 'product2',
+        quantities: 3,
+        price: 15.99
+      }
+    ],
+    total_price: 47.97,
+    shipping_id: 54321,
+    order_status: 'Not Delivered',
+    order_date: new Date('2024-02-29'),
+    delivery_date: new Date('2024-03-06')
+  },
+  // Add more rows here as needed
+];

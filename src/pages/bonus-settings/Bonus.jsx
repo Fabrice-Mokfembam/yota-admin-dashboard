@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import "./Bonus.css";
-import me from "../../assets/images/remix1.jpg";
 import PageDetail from "../../components/PageAlert/PageDetail";
+import { productContext } from "../../context/productContext";
+import axios from "axios";
+
+import { useContext } from "react";
+
 
 function Bonus() {
   const bonus = "bonus-settings";
+  const { products} = useContext(productContext);
 
   const [option1, setOption1] = useState(true);
   const [option2, setOption2] = useState(false);
@@ -32,28 +37,34 @@ function Bonus() {
     }
   }
 
-  const arraylist = [
-    {
-      id: "12345",
-      name: "name",
-    },
-    {
-      id: "123456",
-      name: "name",
-    },
-    {
-      id: "123457",
-      name: "name",
-    },
-    {
-      id: "123458",
-      name: "name",
-    },
-  ];
-
   function handleOptionChange(e) {
     setSelectedOption(e.target.value);
   }
+
+ async function createBonus() {
+      const body = {
+	       product_ids: selectedProducts,
+	       value: value,
+	       code: coupon,
+	       endDate: endDate,
+    }
+    
+    if (selectedOption === 'black-friday') {
+      body.bonus_name = 'black-friday';
+    }
+    else {
+      body.bonus_name = selectedOptionother;
+    }
+
+    try {
+      await axios.post('http://localhost:5000/create/bonus', body);
+      console.log('successfully creation')
+    } catch (error) {
+      console.log(error); 
+    }
+   
+  }
+
 
   return (
     <div className="home-container bonus">
@@ -85,18 +96,18 @@ function Bonus() {
           {option2 && (
             <div className="swiping-box-container">
               <div className="swipping-box">
-                {arraylist.map((item) => {
+                {products.map((item) => {
                   return (
                     <div className="product-select">
                       <div className="p-img">
-                        <img src={me} alt="" />
+                        <img src={item.images[0]} alt="" />
                       </div>
                       <div className="product-id">
-                        <p> Product ID: { item.id}</p>
+                        <p> PID: { item._id.slice(0,9) + '...'}</p>
                         <label htmlFor="pdt123">
                           <input
                             type="checkbox"
-                            value={item.id}
+                            value={item._id}
                             onChange={handleproductbonus}
                           />
                           add to list
@@ -140,6 +151,7 @@ function Bonus() {
               <div className="title-input-container">
                 <input
                   type="text"
+                  value={selectedOptionother}
                   id="title-input"
                   placeholder="Type bonus title here"
                   onChange={(e) => {
@@ -154,6 +166,7 @@ function Bonus() {
             <input
               type="text"
               id="title-input"
+              value={value}
               className="value-input"
               placeholder="Enter Bonus Value"
               onChange={(e) => {
@@ -169,6 +182,7 @@ function Bonus() {
               id="title-input"
               className="value-input"
               placeholder="generate bonus code"
+              onChange={(e)=>{e.target.value}}
             />
             <button
               onClick={() => {
@@ -228,11 +242,11 @@ function Bonus() {
                 <div className="title-addbox2">Product ids</div>
                 <p>
                   {selectedProducts.length > 0
-                    ? bonus_products
+                    ? selectedProducts
                     : "all products"}
                 </p>
               </div>
-              <button className="preview">Apply Bonus</button>
+              <button className="preview" onClick={createBonus}>Apply Bonus</button>
               <div
                 className="previewX"
                 onClick={() => {

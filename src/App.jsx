@@ -20,6 +20,10 @@ import PersonMessage from "./components/PersonMessage/PersonMessage";
 import { productContext } from "./context/productContext";
 import { userContext } from "./context/userContext";
 import { ordersContext } from "./context/ordersContext";
+import { chatContext } from "./context/chatContext";
+import OrderDetail from "./pages/orderDetail/OrderDetail";
+import ProductDetail from "./pages/ProductDetail/ProductDetail";
+import Customer from "./pages/customers/Customer";
 
 function App() {
   const [data, setData] = useState([]);
@@ -28,6 +32,8 @@ function App() {
   const [users, setUsers] = useState([]);
   const [orders, setOrders] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [cards, setCards] = useState([]);
+  const [chats, setChats] = useState([]);
 
   const sidebarRef = useRef(null);
   const hamRef = useRef(null);
@@ -43,9 +49,28 @@ function App() {
   useEffect(() => {
     fetchData();
     fetchUsers();
-    fetchOrders();
+    getAllOrders();
     fetchReviews();
+    fetchFinance();
+    fetchChats();
   }, []);
+
+
+
+async function getAllOrders() {
+  try {
+    const { data } = await axios.get('http://localhost:5000/get/orders');
+    console.log('orders', data);
+
+    const newData = data.map((item) => {
+      return { id: item.id, ...item._doc };
+    });
+    setOrders(newData);
+     console.log('newOrders',newData);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
   const fetchData = async () => {
     try {
@@ -60,9 +85,8 @@ function App() {
   };
 
   const fetchUsers = async () => {
-
     try {
-      const {data} = await axios.get("http://localhost:5000/get/users/");
+      const { data } = await axios.get("http://localhost:5000/get/users/");
       console.log("fetchedData", data);
       setUsers(data);
     } catch (error) {
@@ -70,20 +94,30 @@ function App() {
     }
   };
 
-  const fetchOrders = async () => {
-
+  const fetchChats = async () => {
     try {
-      const {data} = await axios.get("http://localhost:5000/get/order");
-      console.log("fetchedData", data);
-      setOrders(data);
+      const { data } = await axios.get("http://localhost:5000/get/chat/admin/admin123");
+      console.log("fetchedChats", data);
+      setChats(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const fetchFinance = async () => {
+    try {
+      const { data } = await axios.get("http://localhost:5000/get/cards");
+      console.log("fetchedCards", data);
+      setCards(data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
   const fetchReviews = async () => {
-
     try {
-      const {data} = await axios.get("http://localhost:5000/get/products/reviews");
+      const { data } = await axios.get(
+        "http://localhost:5000/get/products/reviews"
+      );
       console.log("fetchedData", data);
       setReviews(data);
     } catch (error) {
@@ -94,17 +128,19 @@ function App() {
   const Layout = () => {
     return (
       <>
-        <productContext.Provider    value={{ products, setProducts, setLoading, loading }}>
+        <productContext.Provider value={{ products, setProducts, setLoading, loading }}>
           <userContext.Provider value={{ users }}>
-            <ordersContext.Provider value={ {orders}}>
-          <div className="layout">
-            <Header hamRef={hamRef} xRef={xRef} showSidebar={showSidebar} />
-            <div className="main">
-              <Sidebar sidebarRef={sidebarRef} />
-              <Outlet />
-            </div>
-              </div>
-              </ordersContext.Provider>
+            <ordersContext.Provider value={{ orders }}>
+              <chatContext.Provider value={{chats,setChats}}>
+              <div className="layout">
+                <Header hamRef={hamRef} xRef={xRef} showSidebar={showSidebar} />
+                <div className="main">
+                  <Sidebar sidebarRef={sidebarRef} />
+                  <Outlet />
+                </div>
+                </div>
+                </chatContext.Provider>
+            </ordersContext.Provider>
           </userContext.Provider>
         </productContext.Provider>
       </>
@@ -118,7 +154,7 @@ function App() {
       children: [
         {
           path: "/",
-          element: <Home reviews={ reviews} />,
+          element: <Home reviews={reviews} />,
         },
         {
           path: "/chats",
@@ -126,7 +162,7 @@ function App() {
         },
         {
           path: "/orders",
-          element: <Orders />,
+          element: <Orders orders={ orders} />,
         },
         {
           path: "/products",
@@ -141,8 +177,12 @@ function App() {
           element: <ProductList data={data} />,
         },
         {
+          path: "/product-detail",
+          element: <ProductDetail />,
+        },
+        {
           path: "/card-details",
-          element: <Card />,
+          element: <Card cards={ cards} />,
         },
         {
           path: "/bonus-settings",
@@ -157,8 +197,16 @@ function App() {
           element: <PersonMessage />,
         },
         {
+          path: "/order-detail",
+          element: <OrderDetail />,
+        },
+        {
           path: "/test",
           element: <ImageUploader />,
+        },
+        {
+          path: "/customers",
+          element: <Customer />,
         },
       ],
     },

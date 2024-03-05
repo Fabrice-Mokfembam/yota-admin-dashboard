@@ -28,7 +28,9 @@ function Home({ reviews }) {
   const routeToOrders = () => {
     routeTo("/orders");
   };
-  const routeToCustomers = () => { };
+  const routeToCustomers = () => { 
+    routeTo('/customers')
+  };
   
   const formatDate = (datesent) => {
     const date = new Date(datesent);
@@ -37,7 +39,7 @@ function Home({ reviews }) {
     if (now - date >= 24 * 60 * 60 * 1000) {
       return moment(date).format("DD/MM/YYYY");
     }
-    return timeAgo(date);o
+    return timeAgo(date);
   };
 
   function setRW(rview) {
