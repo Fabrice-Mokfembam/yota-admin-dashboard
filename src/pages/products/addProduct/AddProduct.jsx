@@ -379,7 +379,7 @@ function AddProduct({  }) {
                       setWheel(false);
                 
                     }}
-                  />
+                  />  
                   Steering Wheel
                 </label>
               </div>

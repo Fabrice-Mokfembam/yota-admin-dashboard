@@ -59,7 +59,7 @@ function App() {
 
 async function getAllOrders() {
   try {
-    const { data } = await axios.get('http://localhost:5000/get/orders');
+    const { data } = await axios.get('https://yota-performance-backend.vercel.app/get/orders');
     console.log('orders', data);
 
     const newData = data.map((item) => {
@@ -74,7 +74,7 @@ async function getAllOrders() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/get/products/");
+      const response = await axios.get("https://yota-performance-backend.vercel.app/get/products/");
       console.log("fetchedData", response.data);
       setProducts(response.data);
       setLoading(false);
@@ -86,7 +86,7 @@ async function getAllOrders() {
 
   const fetchUsers = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/get/users/");
+      const { data } = await axios.get("https://yota-performance-backend.vercel.app/get/users/");
       console.log("fetchedData", data);
       setUsers(data);
     } catch (error) {
@@ -96,7 +96,7 @@ async function getAllOrders() {
 
   const fetchChats = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/get/chat/admin/admin123");
+      const { data } = await axios.get("https://yota-performance-backend.vercel.app/get/chat/admin/admin123");
       console.log("fetchedChats", data);
       setChats(data);
     } catch (error) {
@@ -106,7 +106,7 @@ async function getAllOrders() {
 
   const fetchFinance = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/get/cards");
+      const { data } = await axios.get("https://yota-performance-backend.vercel.app/get/cards");
       console.log("fetchedCards", data);
       setCards(data);
     } catch (error) {
@@ -116,7 +116,7 @@ async function getAllOrders() {
   const fetchReviews = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:5000/get/products/reviews"
+        "https://yota-performance-backend.vercel.app/get/products/reviews"
       );
       console.log("fetchedData", data);
       setReviews(data);

@@ -45,7 +45,7 @@ const changePage = () => {
   
     const handleDeleteProduct = async (id) => {
       try {
-        const {data} = await axios.delete(`http://localhost:5000/delete/product/${id}`);
+        const {data} = await axios.delete(`https://yota-performance-backend.vercel.app/delete/product/${id}`);
         console.log("deletedData", data);
         setProducts((products) => products.filter((item) => item._id !== data._id));
       } catch (error) {
@@ -57,7 +57,7 @@ const changePage = () => {
     const searchByCategory = async (category) => {
       try {
         setLoading(true);
-        const {data} = await axios.get(`http://localhost:5000/get/product/${category}`);
+        const {data} = await axios.get(`https://yota-performance-backend.vercel.app/get/product/${category}`);
         console.log("categoryData", data);
         setLoading(false)
         setProducts((data));
