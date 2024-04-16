@@ -76,7 +76,7 @@ async function getAllOrders() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/get/products/");
+      const response = await axios.get("https://yotaperformanceshop.com/yps_server/admin/get_products");
       console.log("fetchedData", response.data);
       setProducts(response.data);
       setLoading(false);

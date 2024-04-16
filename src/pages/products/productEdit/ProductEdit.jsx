@@ -153,6 +153,7 @@ function ProductEdit() {
                added images
               <div className="selected-images">
                 {imagesArray.map((image) => {
+                  console.log(image);
                   return <img src={image} alt="" />;
                 })}
               </div>
