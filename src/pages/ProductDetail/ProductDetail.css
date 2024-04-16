@@ -1,0 +1,89 @@
+.product-detail-wrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.product-detail-wrapper .dt {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.Description,
+.pdd h3 {
+  padding: 10px;
+}
+.Description {
+  color: rgb(134, 137, 139);
+}
+
+.editbtn {
+  background-color: aliceblue;
+  padding: 10px 25px;
+  border: none;
+  margin: 5px 0px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 4px gainsboro;
+}
+.deletebtn {
+  background-color: rgba(249, 7, 7, 0.8);
+  padding: 10px 25px;
+  border: none;
+  margin: 5px 0px;
+  border-radius: 4px;
+}
+  .bonus-detail{
+    margin-left: 14px;
+}
+@media screen and (max-width: 1044px) {
+  .pd2 {
+    flex-basis: 0;
+    padding: 0;
+  }
+  .pdd {
+    text-align: center;
+  }
+  .product-detail-wrapper {
+    width: 96%;
+  }
+}
+@media screen and (max-width: 800px) {
+  .product-detail-wrapper {
+    width: 98%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .product-detail-wrapper {
+    width: 96%;
+  }
+  .editbtn {
+    position: relative;
+  }
+}
+@media screen and (min-width: 600px) {
+  .editbtn {
+    position: absolute;
+    right: 60px;
+    top: 0;
+    border: 1px solid gray;
+    box-shadow: none;
+  }
+}
+@media screen and (max-width: 520px) {
+  .product-detail-wrapper .dt {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+  }
+  .pd2 {
+    margin-left: 8px;
+  }
+  .pdd {
+    text-align: left;
+    padding: 2px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .product-detail-wrapper {
+    width: 100%;
+  }
+}

@@ -5,7 +5,6 @@ import "./App.css";
 import Chats from "./pages/chats/Chats";
 import Home from "./pages/home/Home";
 import Orders from "./pages/orders/Orders";
-import Products from "./pages/products/Products";
 import Bonus from "./pages/bonus-settings/Bonus";
 import Card from "./pages/card-details/Card";
 import AddProduct from "./pages/products/addProduct/AddProduct";
@@ -15,7 +14,6 @@ import ImageUploader from "./pages/test/Display";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Reviews from "./pages/Reviews/Reviews";
 import axios from "axios";
-import Messages from "./components/messages/Messages";
 import PersonMessage from "./components/PersonMessage/PersonMessage";
 import { productContext } from "./context/productContext";
 import { userContext } from "./context/userContext";
@@ -24,6 +22,10 @@ import { chatContext } from "./context/chatContext";
 import OrderDetail from "./pages/orderDetail/OrderDetail";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Customer from "./pages/customers/Customer";
+import ProductEdit from "./pages/products/productEdit/ProductEdit";
+import Bonuses from "./pages/bonus-details/Bonuses";
+import BonusDetail from "./pages/bonus-details/BonusDetail";
+import BonusEdit from "./pages/bonus-details/BonusEdit";
 
 function App() {
   const [data, setData] = useState([]);
@@ -59,7 +61,7 @@ function App() {
 
 async function getAllOrders() {
   try {
-    const { data } = await axios.get('https://yota-performance-backend.vercel.app/get/orders');
+    const { data } = await axios.get('http://localhost:5000/get/orders');
     console.log('orders', data);
 
     const newData = data.map((item) => {
@@ -74,7 +76,7 @@ async function getAllOrders() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("https://yota-performance-backend.vercel.app/get/products/");
+      const response = await axios.get("http://localhost:5000/get/products/");
       console.log("fetchedData", response.data);
       setProducts(response.data);
       setLoading(false);
@@ -86,8 +88,8 @@ async function getAllOrders() {
 
   const fetchUsers = async () => {
     try {
-      const { data } = await axios.get("https://yota-performance-backend.vercel.app/get/users/");
-      console.log("fetchedData", data);
+      const { data } = await axios.get("http://localhost:5000/get/users/");
+      console.log("fetchedData: Users", data);
       setUsers(data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -96,7 +98,7 @@ async function getAllOrders() {
 
   const fetchChats = async () => {
     try {
-      const { data } = await axios.get("https://yota-performance-backend.vercel.app/get/chat/admin/admin123");
+      const { data } = await axios.get("http://localhost:5000/get/chat/admin/admin123");
       console.log("fetchedChats", data);
       setChats(data);
     } catch (error) {
@@ -106,7 +108,7 @@ async function getAllOrders() {
 
   const fetchFinance = async () => {
     try {
-      const { data } = await axios.get("https://yota-performance-backend.vercel.app/get/cards");
+      const { data } = await axios.get("http://localhost:5000/get/cards");
       console.log("fetchedCards", data);
       setCards(data);
     } catch (error) {
@@ -116,7 +118,7 @@ async function getAllOrders() {
   const fetchReviews = async () => {
     try {
       const { data } = await axios.get(
-        "https://yota-performance-backend.vercel.app/get/products/reviews"
+        "http://localhost:5000/get/products/reviews"
       );
       console.log("fetchedData", data);
       setReviews(data);
@@ -189,6 +191,18 @@ async function getAllOrders() {
           element: <Bonus />,
         },
         {
+          path: "/bonuses",
+          element: <Bonuses/>,
+        },
+        {
+          path: "/bonus-detail",
+          element: <BonusDetail/>,
+        },
+        {
+          path: "/bonus-edit",
+          element: <BonusEdit/>,
+        },
+        {
           path: "/Reviews",
           element: <Reviews />,
         },
@@ -207,6 +221,10 @@ async function getAllOrders() {
         {
           path: "/customers",
           element: <Customer />,
+        },
+        {
+          path: "/product-edit",
+          element: <ProductEdit/>,
         },
       ],
     },

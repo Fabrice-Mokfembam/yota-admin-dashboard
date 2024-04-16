@@ -1,16 +1,10 @@
-import React, { useState } from "react";
-import "./Bonus.css";
-import PageDetail from "../../components/PageAlert/PageDetail";
-import { productContext } from "../../context/productContext";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
-import { useContext } from "react";
+import React, { useState} from 'react'
+import { useNavigate } from 'react-router-dom';
+import PageDetail from '../../components/PageAlert/PageDetail';
 
 
-function Bonus() {
-  const bonus = "bonus-settings";
-  const { products } = useContext(productContext);
+function BonusEdit() {
+  const bonus = "bonus-edit";
   const routeTo = useNavigate();
 
   const [option1, setOption1] = useState(true);
@@ -70,11 +64,9 @@ function Bonus() {
     }
    
   }
-
-
   return (
     <div className="home-container bonus">
-      <PageDetail page={bonus} />
+      <PageDetail page={bonus}/>
 
       <div className="bonus-options">
         <div
@@ -271,7 +263,11 @@ function Bonus() {
       <button className="btnSbonus" onClick={gotoBonuses}>See all Bonuses</button>
     
     </div>
-  );
+  )
 }
 
-export default Bonus;
+export default BonusEdit
+
+
+
+

@@ -9,80 +9,79 @@ import { useNavigate } from "react-router-dom";
 const page = "All Products";
 
 function ProductList() {
-  const { products, setProducts ,setLoading,loading} = useContext(productContext);
-  
+  const { products, setProducts, setLoading, loading } = useContext(productContext);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [currentItems, setCurrentItems] = useState([]);
-  const [names, setNames] = useState('');
-   const routeTo = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const routeToProductDetail = () => {
-    routeTo("/product-detail");
-  };
+  const routeTo = useNavigate();
 
+  function routeToAddProduct() {
+    routeTo('/products/add-product');
+  }
 
-  const indexOfLastItem = currentPage * 8;
-  const indexOfFirstItem = indexOfLastItem - 8;
+  const itemsPerPage = 8;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   const nextPage = () => {
     setCurrentPage(currentPage + 1);
   };
+
   const prevPage = () => {
     setCurrentPage(currentPage - 1);
   };
 
-const changePage = () => {
-  if (products && products.length > 0) {
-    setCurrentItems(products.slice(indexOfFirstItem, indexOfLastItem));
-  }
-};
+  const changePage = () => {
+    if (products && products.length > 0) {
+      setCurrentItems(products.slice(indexOfFirstItem, indexOfLastItem));
+    }
+  };
 
-   useEffect(() => {
+  useEffect(() => {
     changePage();
   }, [currentPage, products]);
 
-
-  
-    const handleDeleteProduct = async (id) => {
-      try {
-        const {data} = await axios.delete(`https://yota-performance-backend.vercel.app/delete/product/${id}`);
-        console.log("deletedData", data);
-        setProducts((products) => products.filter((item) => item._id !== data._id));
-      } catch (error) {
-        console.error("Error deleting data:", error);
-        setLoading(false); 
-      }
+  const handleDeleteProduct = async (id) => {
+    try {
+      const { data } = await axios.delete(`http://localhost:5000/delete/product/${id}`);
+      console.log("deletedData", data);
+      setProducts((prevProducts) => prevProducts.filter((item) => item._id !== data._id));
+    } catch (error) {
+      console.error("Error deleting data:", error);
+      setLoading(false);
+    }
   };
-  
-    const searchByCategory = async (category) => {
-      try {
-        setLoading(true);
-        const {data} = await axios.get(`https://yota-performance-backend.vercel.app/get/product/${category}`);
-        console.log("categoryData", data);
-        setLoading(false)
-        setProducts((data));
-      } catch (error) {
-        console.error("Error category data:", error);
-        setLoading(false); 
-      }
-  };
-  
-const searchByName = async () => {
-  const nProducts = products.filter((product) =>
-    product.product_name.match(new RegExp(names, "i"))
-  );
-  setProducts(nProducts);
-};
-  
-    const searchByname = async () => {
-       
-    };
 
+  const searchByCategory = async (category) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`http://localhost:5000/get/product/${category}`);
+      console.log("categoryData", data);
+      setLoading(false);
+      setProducts(data);
+    } catch (error) {
+      console.error("Error category data:", error);
+      setLoading(false);
+    }
+  };
+
+  const searchByName = () => {
+    const filteredProducts = products.filter((product) =>
+      product.product_name.match(new RegExp(searchQuery, "gi"))
+    );
+    setCurrentItems(filteredProducts.slice(indexOfFirstItem, indexOfLastItem));
+  };
+
+  const routeToProductDetail = (product) => {
+    routeTo("/product-detail", {state:product});
+  };
   return (
     <div className="home-container pro">
       <div className="prheader">
         <PageDetail page={page} />
-        <button className="add-product">Add Product</button>
+        <button className="add-product" onClick={routeToAddProduct}>Add Product</button>
       </div>
       <div className="prheader2">
         <div className="product-search-bar">
@@ -91,10 +90,10 @@ const searchByName = async () => {
             id="input-product"
             placeholder="Search product by name"
             onChange={(e) => {
-              setNames(e.target.value);
+              setSearchQuery(e.target.value);
               searchByName();
             }}
-          />{names}
+          />
         </div>
         <div className="select-product">
           <select
@@ -109,7 +108,10 @@ const searchByName = async () => {
             <option value="Wheel">Wheel</option>
             <option value="Exhaust">Exhaust</option>
             <option value="Bumpers">Bumpers</option>
-            <option value="Exhaust">Fenders</option>
+            <option value="Fenders">Fenders</option>
+            <option value="Hood">Hood</option>
+            <option value="Suspension parts">Suspension parts</option>
+            <option value="Steering Wheel">Steering Wheel</option>
           </select>
           <button className="select-date-added">Last added</button>
         </div>
@@ -127,7 +129,7 @@ const searchByName = async () => {
                     src={
                       item.images[0]
                     }
-                    alt=""
+                    alt="image here"
                   />
                 </div>
                 <div className="product_name">{item.product_name.slice(0, 40) + '...'}</div>
@@ -136,7 +138,7 @@ const searchByName = async () => {
                 </div>
                 <div className="product_prize">{item.price}</div>
                 <div className="product_edit_delete">
-                  <button className="product_view Pbtn" onClick={routeToProductDetail}>View</button>
+                  <button className="product_view Pbtn" onClick={()=>routeToProductDetail(item)}>View</button>
                   <button className="product_delete Pbtn" onClick={() => { handleDeleteProduct(item._id) }}>Delete</button>
                 </div>
               </div>
@@ -146,7 +148,7 @@ const searchByName = async () => {
       )}
 
       <div className="center">
-        <button className="add-r">Add Product</button>
+        <button className="add-r" onClick={routeToAddProduct}>Add Product</button>
       </div>
 
       <div className="center">

@@ -1,30 +1,27 @@
-import React, { useState } from "react";
-import axios from "axios";
-import "./AddProduct.css";
+import React ,{useState} from 'react'
+import { useLocation } from 'react-router-dom'
+import PageDetail from '../../../components/PageAlert/PageDetail';
 import FileBase64 from "react-file-base64";
-import PageDetail from "../../../components/PageAlert/PageDetail";
-import { useContext } from "react";
-import { productContext } from '../../../context/productContext'
 
-const page = "Add Products";
+function ProductEdit() {
+  const { state } = useLocation();
 
-function AddProduct({  }) {
   const [image, setImage] = useState(null);
-  const [imagesArray, setImagesArray] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("Wheel");
-  const [selectedFitPosition, setSelectedFitPosition] = useState("");
-  const [description, setDescription] = useState("");
-  const [selectCarModel, setSelectModel] = useState("");
-  const [CarBrand, setCarBrand] = useState("");
-  const [MakeMaterial, setMakeMaterial] = useState("");
-  const [fitment, setFitment] = useState("");
-  const [Price, setPrice] = useState(0);
-  const [quantity_left, setQuantity_left] = useState(0);
-  const [WheelSize, setWheelSize] = useState("no size");
-  const [product_name, setProduct_Name] = useState("");
-  const [category_brand, setCategoryBrand] = useState("");
+  const [imagesArray, setImagesArray] = useState(state.images);
+  const [selectedCategory, setSelectedCategory] = useState(state.category);
+  const [selectedFitPosition, setSelectedFitPosition] = useState(state.fit_position);
+  const [description, setDescription] = useState(state.description);
+  const [selectCarModel, setSelectModel] = useState(state.car_model);
+  const [CarBrand, setCarBrand] = useState(state.car_brand);
+  const [MakeMaterial, setMakeMaterial] = useState(state.make_material);
+  const [fitment, setFitment] = useState(state.fitment);
+  const [Price, setPrice] = useState(state.price);
+  const [quantity_left, setQuantity_left] = useState(state.quantity_left);
+  const [WheelSize, setWheelSize] = useState(state.wheel_size);
+  const [product_name, setProduct_Name] = useState(state.product_name);
+  const [category_brand, setCategoryBrand] = useState(state.category_brand);
 
-    const { products, setProducts ,setLoading,loading} = useContext(productContext);
+    
   // states for conditional rendering
   const [wheel, setWheel] = useState(true);
   const [showDetails, setShowProductDetails] = useState(false);
@@ -49,7 +46,7 @@ function AddProduct({  }) {
     ];
 
     setImagesArray(newArrOfImages);
-    setImage(newArrOfImages[0]);
+    setImage(newArrOfImages[newArrOfImages.length -1]);
   };
 
   const handleDescription = (e) => {
@@ -98,15 +95,22 @@ function AddProduct({  }) {
         category_brand,
         make_material: MakeMaterial,
         wheel_size: WheelSize,
-        price: Number.parseFloat(Price),
-        quantity_left: Number.parseFloat(quantity_left),
+        price: Price,
+        fitment,
+        quantity_left,
         rating: 1,
+        reviews: [
+          {
+            user_text: "Sample review",
+            user_rating: 5,
+            user_name: "John Doe",
+            user_id: "123456789",
+          },
+        ],
       };
 
-      console.log(postData);
-
       const response = await axios.post(
-        "https://yotaperformanceshop.com/yps_server/admin/add_products",
+        "http://localhost:5000/create/product/",
         postData,{  maxContentLength: 1000000}
       );
       console.log("product created", response.data);
@@ -117,21 +121,10 @@ function AddProduct({  }) {
 
   };
 
-  const retrieveProducts = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/create/product/");
-      console.log("added latest product to database", response.data);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
 
-
-
-  
   return (
-    <div className="home-container">
-      <PageDetail page={page} />
+      <div className="home-container product-edit">
+      <PageDetail page={'product-edit'} />
       <div className="main-add-product-conatainer">
         <div className="firstpart part">
           <div className="product-info">Product-Info</div>
@@ -157,9 +150,17 @@ function AddProduct({  }) {
               />
             )}
             <div className="imagges">
-              selected images
+               added images
               <div className="selected-images">
                 {imagesArray.map((image) => {
+                  return <img src={image} alt="" />;
+                })}
+              </div>
+            </div>
+            <div className="imagges">
+              images
+              <div className="selected-images">
+                {state.images.map((image) => {
                   return <img src={image} alt="" />;
                 })}
               </div>
@@ -171,6 +172,7 @@ function AddProduct({  }) {
                   type="text"
                   placeholder="name"
                   id="name"
+                  value={product_name}
                   onChange={handleProductName}
                 />
               </label>
@@ -420,6 +422,7 @@ function AddProduct({  }) {
                         type="text"
                         id="wheel-size"
                         placeholder="Enter Wheel size"
+                        value={WheelSize}
                         onChange={handleWheelSize}
                       />
                     </label>
@@ -475,6 +478,7 @@ function AddProduct({  }) {
                 <input
                   type="text"
                   id="fitment"
+                  value={fitment}
                   placeholder="Enter Fitment"
                   onChange={handleFitment}
                 />
@@ -489,6 +493,7 @@ function AddProduct({  }) {
                 <input
                   type="textarea"
                   id="description"
+                  value={description}
                   onChange={handleDescription}
                   placeholder="Product Description"
                 />
@@ -503,6 +508,7 @@ function AddProduct({  }) {
                   <input
                     type="number"
                     id="number"
+                    value={Price}
                     onChange={handlePriceChange}
                   />
                 </label>
@@ -516,6 +522,7 @@ function AddProduct({  }) {
                 <input
                   type="quantity"
                   id="quantity"
+                  value={quantity_left}
                   onChange={handleQuantityChange}
                 />
               </label>
@@ -625,7 +632,7 @@ function AddProduct({  }) {
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export default AddProduct;
+export default ProductEdit

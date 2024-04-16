@@ -10,6 +10,9 @@ import { ordersContext } from "../../context/ordersContext";
 import { BsFillPeopleFill, BsList, BsCartFill } from "react-icons/bs";
 import { format as timeAgo } from "timeago.js";
 import moment from "moment";
+import Animation from "../../components/animation/Animation";
+import BarChart from "../../components/barChart/BarChart";
+
 
 function Home({ reviews }) {
   const { products, setLoading, loading } = useContext(productContext);
@@ -28,10 +31,10 @@ function Home({ reviews }) {
   const routeToOrders = () => {
     routeTo("/orders");
   };
-  const routeToCustomers = () => { 
-    routeTo('/customers')
+  const routeToCustomers = () => {
+    routeTo("/customers");
   };
-  
+
   const formatDate = (datesent) => {
     const date = new Date(datesent);
     const now = new Date();
@@ -44,32 +47,53 @@ function Home({ reviews }) {
 
   function setRW(rview) {
     rview.forEach((review) => {
-      review.reviews.forEach(item => setHomeReview(current=>[...current,item]))
-    })
+      review.reviews.forEach((item) =>
+        setHomeReview((current) => [...current, item])
+      );
+    });
   }
-  useEffect(()=>{setRW(reviews)},[])
+  useEffect(() => {
+    setRW(reviews);
+  }, []);
 
-  console.log(homeReview)
-  
+  console.log(homeReview);
+
+  const data = {
+  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+  datasets: [
+    {
+      label: 'Sales',
+      data: [12, 19, 3, 5, 2, 3, 8],
+        borderColor:'rgba(75,192,192,1)',
+      backgroundColor:[ '#9e9798','#f90707',],
+    },
+  ],
+};
+
   const home = "Home";
   return (
     <div className="home-container">
+      {(!products || loading) && <Animation />}
       <PageDetail page={home} />
       <div className="title-page">Analytic overview</div>
       <div className="home-main-container">
         <div className="home-div1">
           <div className="data-boxes">
-            <div className="box1 product-box" onClick={routeToProductList}>
+            <div
+              className="box1 product-box"
+              onClick={routeToProductList}
+            >
               <div className="number">{products.length}</div>
               <div className="product">Products</div>
               <div className="view-icon">
-                <div className="view" onClick={routeToProductList}>
-                  {" "}
+                <div
+                  className="view"
+                  onClick={routeToProductList}
+                >
                   view
                 </div>
                 <div className="icon">
-                  {" "}
-                  <BsList className="icon-home" />{" "}
+                  <BsList className="icon-home" />
                 </div>
               </div>
             </div>
@@ -78,13 +102,14 @@ function Home({ reviews }) {
               <div className="number">{users.length}</div>
               <div className="product">Customers</div>
               <div className="view-icon">
-                <div className="view" onClick={routeToCustomers}>
-                  {" "}
+                <div
+                  className="view"
+                  onClick={routeToCustomers}
+                >
                   view
                 </div>
                 <div className="icon">
-                  {" "}
-                  <BsFillPeopleFill className="icon-home" />{" "}
+                  <BsFillPeopleFill className="icon-home" />
                 </div>
               </div>
             </div>
@@ -94,40 +119,41 @@ function Home({ reviews }) {
               <div className="product">Orders</div>
               <div className="view-icon">
                 <div className="view" onClick={routeToOrders}>
-                  {" "}
                   view
                 </div>
                 <div className="icon">
-                  {" "}
-                  <BsCartFill className="icon-home" />{" "}
+                  <BsCartFill className="icon-home" />
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="graph-box">graph</div>
+          <div className="graph-box">
+            <div style={{width:630}}>
+            <BarChart chartdata={data}/></div>
+          </div>
         </div>
         <div className="home-div2">
           <div className="review-highlight">
-          
-              {
-                homeReview.slice(0,3).map(item => {
-                  return (
-                    <div className="review-container">
-                      <div className="iner">
-                        <img src={img} alt="" />
-                      </div>
-                      <div className="info-h-container">
-                        <p>{formatDate(item.createdAt)}</p>
-                        <div className="review-text">
-                          {item.user_text.split(" ").slice(0, 10).join(" ")}
-                        </div>
-                      </div>
+            {homeReview.slice(0, 5).map((item) => {
+              return (
+                <div className="review-container">
+                  <div className="iner">
+                    <img src={img} alt="" />
+                  </div>
+                  <div className="info-h-container">
+                    <p>{formatDate(item.createdAt)}</p>
+                    <div className="review-text">
+                      {item.user_text
+                        .split(" ")
+                        .slice(0, 10)
+                        .join(" ")}
                     </div>
-                  );
-                })
-            }
-            
+                  </div>
+                </div>
+              );
+            })}
+
             <div className="rdmore" onClick={routeToReviews}>
               Read more
             </div>

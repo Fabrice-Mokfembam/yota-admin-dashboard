@@ -219,6 +219,24 @@
     right: 30px;
     cursor: pointer;
    }
+  .btnSbonus{
+    padding: 12px 10px;
+    width: 95%;
+    margin: 15px 10px;
+    background-color: var(--orangebg-font-color);
+    border: 1px solid  var(--orange-bgcolor);
+    font-family: var(--poppins);
+    font-size: 15px;
+    border-radius: 6px;
+
+  }
+  .bonuses{
+    padding: 5px 0px;
+  }
+
+  .editbonus,.deletebonus{
+    font-size: large;
+  }
 
 @media screen and (max-width:594px) {
  .bonus-code button{
