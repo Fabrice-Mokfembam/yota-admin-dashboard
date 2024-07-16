@@ -2,12 +2,13 @@ import React ,{useState} from 'react'
 import { useLocation } from 'react-router-dom'
 import PageDetail from '../../../components/PageAlert/PageDetail';
 import FileBase64 from "react-file-base64";
+import axios from 'axios';
 
 function ProductEdit() {
   const { state } = useLocation();
-
+  const { id,images} = state;
   const [image, setImage] = useState(null);
-  const [imagesArray, setImagesArray] = useState(state.images);
+  const [imagesArray2, setImagesArray] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(state.category);
   const [selectedFitPosition, setSelectedFitPosition] = useState(state.fit_position);
   const [description, setDescription] = useState(state.description);
@@ -20,7 +21,46 @@ function ProductEdit() {
   const [WheelSize, setWheelSize] = useState(state.wheel_size);
   const [product_name, setProduct_Name] = useState(state.product_name);
   const [category_brand, setCategoryBrand] = useState(state.category_brand);
+  const [imgUrl, setImageUrl] = useState([]);
+  const [imgFiles, setImgFiles] = useState([]);
 
+    const setImageurlsAndNames = (e) => {
+    const urls = [];
+    const imageNames = [];
+    const files = e.target.files;
+
+    for (const file of files) {
+      urls.push(URL.createObjectURL(file));
+      imageNames.push(file.name);
+      setImgFiles((prev) => [...prev, file]);
+    }
+    setImageUrl((prevUrls) => [...prevUrls, ...urls]);
+    setImage(imgUrl[0]);
+    setImagesArray((previmageNames)=> [...previmageNames, ...imageNames]);
+  };
+
+    const handleImageInsertion = async (event) => {
+    const formData = new FormData();
+      for (const file of imgFiles) {
+      console.log(file)
+      formData.append("imageFiles[]", file);
+      }
+      console.log('formdata',formData)
+    try {
+      const { data } = await axios.post(
+        "https://yotaperformanceshop.com/yps_server/admin/upload_image",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log('success uploading image');
+    } catch (error) {
+      console.error("Error uploading image Server:", error);
+    }
+  };
     
   // states for conditional rendering
   const [wheel, setWheel] = useState(true);
@@ -37,17 +77,17 @@ function ProductEdit() {
     setSelectedFitPosition(event.target.value);
   };
 
-  const handleImageUpload = (file) => {
-    const newArrOfImages = [
-      ...imagesArray,
-      ...file.map((item) => {
-        return item.base64;
-      }),
-    ];
+  // const handleImageUpload = (file) => {
+  //   const newArrOfImages = [
+  //     ...imagesArray,
+  //     ...file.map((item) => {
+  //       return item.base64;
+  //     }),
+  //   ];
 
-    setImagesArray(newArrOfImages);
-    setImage(newArrOfImages[newArrOfImages.length -1]);
-  };
+  //   setImagesArray(newArrOfImages);
+  //   setImage(newArrOfImages[newArrOfImages.length -1]);
+  // };
 
   const handleDescription = (e) => {
     setDescription(e.target.value);
@@ -82,11 +122,26 @@ function ProductEdit() {
     setProduct_Name(e.target.value);
   };
 
+  function getUnslicedPart(str, start, end) {
+    return str.slice(0, start) + str.slice(end);
+  }
+  
   const handleSubmit = async (e) => {
+    handleImageInsertion();
+
+    const array = images.map(image => {
+      console.log(image)
+      return getUnslicedPart(image,0,41)
+    })
+    console.log(imgUrl)
+    console.log('sliced array', array);
+    console.log(imagesArray2)
+
     try {
       const postData = {
+        id,
         product_name,
-        images: imagesArray,
+        images: [...array, ...imagesArray2],
         category: selectedCategory,
         fit_position: selectedFitPosition,
         description,
@@ -96,7 +151,6 @@ function ProductEdit() {
         make_material: MakeMaterial,
         wheel_size: WheelSize,
         price: Price,
-        fitment,
         quantity_left,
         rating: 1,
         reviews: [
@@ -108,13 +162,13 @@ function ProductEdit() {
           },
         ],
       };
+      console.log(postData);
 
-      const response = await axios.post(
-        "http://localhost:5000/create/product/",
+      const {data} = await axios.put(
+        "https://yotaperformanceshop.com/yps_server/admin/update_product",
         postData,{  maxContentLength: 1000000}
       );
-      console.log("product created", response.data);
-      setProducts((products)=>[...products,postData])
+      console.log("product updated", data);
     } catch (error) {
       console.log("error", error);
     }
@@ -133,27 +187,28 @@ function ProductEdit() {
               {image ? (
                 <img src={image} alt="Uploaded Image" />
               ) : (
-                <FileBase64
-                  type="file"
-                  id="uploadImage"
-                  multiple={true}
-                  onDone={handleImageUpload}
-                />
+                <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={setImageurlsAndNames}
+                    name="imageFiles"
+                  />
               )}
             </div>
             {image && (
-              <FileBase64
-                type="file"
-                id="uploadImage"
-                multiple={true}
-                onDone={handleImageUpload}
-              />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={setImageurlsAndNames}
+                    name="imageFiles"
+                  />
             )}
             <div className="imagges">
                added images
               <div className="selected-images">
-                {imagesArray.map((image) => {
-                  console.log(image);
+                {imgUrl.map((image) => {
                   return <img src={image} alt="" />;
                 })}
               </div>
@@ -562,7 +617,7 @@ function ProductEdit() {
                 <div className="imagges">
                   selected images
                   <div className="selected-images">
-                    {imagesArray.map((image) => {
+                    {[...images,...imgUrl].map((image) => {
                       return <img src={image} alt="" />;
                     })}
                   </div>
@@ -622,10 +677,9 @@ function ProductEdit() {
                   onClick={() => {
                     handleSubmit();
                     setShowProductDetails(false);
-                    setTimeout(retrieveProducts, 1000);
                   }}
                 >
-                  Add
+                  Save Edit
                 </button>
               </div>
             </div>

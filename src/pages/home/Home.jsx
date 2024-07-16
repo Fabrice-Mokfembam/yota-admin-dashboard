@@ -14,6 +14,36 @@ import Animation from "../../components/animation/Animation";
 import BarChart from "../../components/barChart/BarChart";
 
 
+// $r->addRoute('POST', '/admin/add_products',function(){
+//         AddProducts();
+//     });
+
+//     $r->addRoute('GET', '/admin/get_products',function(){
+//         AdminGetAllProducts();
+//     });
+
+//     $r->addRoute('POST', '/admin/get_product_id',function(){
+//         GetProductonID();
+//     });
+    
+//     $r->addRoute('PUT', '/admin/update_product',function(){
+//         UpdateProduct();
+//     });
+
+//     $r->addRoute('POST', '/admin/add_bonus',function(){
+//         AddBonus();
+//     });
+
+//     $r->addRoute('POST', '/admin/get_bonus',function(){
+//         getBonus();
+//     });
+
+//     $r->addRoute('POST', '/admin/get_all
+//     _bonus',function(){
+//         getBonus();
+//     });
+
+
 function Home({ reviews }) {
   const { products, setLoading, loading } = useContext(productContext);
   const { users } = useContext(userContext);
@@ -25,6 +55,7 @@ function Home({ reviews }) {
   const routeToProductList = () => {
     routeTo("/products");
   };
+  
   const routeToReviews = () => {
     routeTo("/reviews");
   };

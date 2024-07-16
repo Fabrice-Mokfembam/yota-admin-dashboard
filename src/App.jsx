@@ -19,6 +19,7 @@ import { productContext } from "./context/productContext";
 import { userContext } from "./context/userContext";
 import { ordersContext } from "./context/ordersContext";
 import { chatContext } from "./context/chatContext";
+import { bonusContext } from "./context/bonusContext";
 import OrderDetail from "./pages/orderDetail/OrderDetail";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Customer from "./pages/customers/Customer";
@@ -26,6 +27,7 @@ import ProductEdit from "./pages/products/productEdit/ProductEdit";
 import Bonuses from "./pages/bonus-details/Bonuses";
 import BonusDetail from "./pages/bonus-details/BonusDetail";
 import BonusEdit from "./pages/bonus-details/BonusEdit";
+import BonusCoupon from "./pages/bonus-settings/BonusCoupon";
 
 function App() {
   const [data, setData] = useState([]);
@@ -36,6 +38,7 @@ function App() {
   const [reviews, setReviews] = useState([]);
   const [cards, setCards] = useState([]);
   const [chats, setChats] = useState([]);
+  const [bonusArray, setBonuses] = useState([]);
 
   const sidebarRef = useRef(null);
   const hamRef = useRef(null);
@@ -55,6 +58,7 @@ function App() {
     fetchReviews();
     fetchFinance();
     fetchChats();
+    fetchBonus();
   }, []);
 
 
@@ -83,6 +87,18 @@ async function getAllOrders() {
     } catch (error) {
       console.error("Error fetching data:", error);
       setLoading(false);
+    }
+  };
+
+  const fetchBonus = async () => {
+    try {
+      const {data} = await axios.post("https://yotaperformanceshop.com/yps_server/admin/get_all_bonus");
+      if (data) {
+        console.log('bonuses',data);
+        setBonuses(data);
+      }
+    } catch (error) {
+      console.error("Error fetching bonus:", error);
     }
   };
 
@@ -120,7 +136,7 @@ async function getAllOrders() {
       const { data } = await axios.get(
         "http://localhost:5000/get/products/reviews"
       );
-      console.log("fetchedData", data);
+      console.log("fetchedData reviews", data);
       setReviews(data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -133,14 +149,16 @@ async function getAllOrders() {
         <productContext.Provider value={{ products, setProducts, setLoading, loading }}>
           <userContext.Provider value={{ users }}>
             <ordersContext.Provider value={{ orders }}>
-              <chatContext.Provider value={{chats,setChats}}>
+              <chatContext.Provider value={{ chats, setChats }}>
+                <bonusContext.Provider value={{bonusArray,setBonuses}}>
               <div className="layout">
                 <Header hamRef={hamRef} xRef={xRef} showSidebar={showSidebar} />
                 <div className="main">
                   <Sidebar sidebarRef={sidebarRef} />
                   <Outlet />
                 </div>
-                </div>
+                  </div>
+                  </bonusContext.Provider>
                 </chatContext.Provider>
             </ordersContext.Provider>
           </userContext.Provider>
@@ -189,6 +207,10 @@ async function getAllOrders() {
         {
           path: "/bonus-settings",
           element: <Bonus />,
+        },
+        {
+          path: "/coupon-settings",
+          element: <BonusCoupon />,
         },
         {
           path: "/bonuses",

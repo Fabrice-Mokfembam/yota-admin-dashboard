@@ -46,9 +46,9 @@
 }
 
 #title-input::placeholder{
-    font-size: 16.5px;
+    font-size: 14.5px;
     color: var(--orange-bgcolor);
-  font-family: var(--poppins);
+    font-family: var(--poppins);
 }
 .value{
     margin-top: 10px;
@@ -79,9 +79,9 @@
     background-color: var(--orange-bgcolor);
 }
 
-::placeholder{
+/* ::placeholder{
     font-style: italic;
-}
+} */
 
 
 .duration-input-container {

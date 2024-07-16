@@ -44,10 +44,14 @@ function ProductList() {
   }, [currentPage, products]);
 
   const handleDeleteProduct = async (id) => {
+    const productId = {
+      id:id,
+    }
     try {
-      const { data } = await axios.delete(`http://localhost:5000/delete/product/${id}`);
-      console.log("deletedData", data);
-      setProducts((prevProducts) => prevProducts.filter((item) => item._id !== data._id));
+      console.log('product id',id)
+      const { data } = await axios.post(`https://yotaperformanceshop.com/yps_server/admin/delete_product`,productId);
+      console.log("deletedData");
+      // setProducts((prevProducts) => prevProducts.filter((item) => item.id !== data.id));
     } catch (error) {
       console.error("Error deleting data:", error);
       setLoading(false);
@@ -77,6 +81,7 @@ function ProductList() {
   const routeToProductDetail = (product) => {
     routeTo("/product-detail", {state:product});
   };
+
   return (
     <div className="home-container pro">
       <div className="prheader">
@@ -137,9 +142,10 @@ function ProductList() {
                   {item.description.slice(0, 40) + "...read more"}
                 </div>
                 <div className="product_prize">{item.price}</div>
+               
                 <div className="product_edit_delete">
                   <button className="product_view Pbtn" onClick={()=>routeToProductDetail(item)}>View</button>
-                  <button className="product_delete Pbtn" onClick={() => { handleDeleteProduct(item._id) }}>Delete</button>
+                  <button className="product_delete Pbtn" onClick={() => { handleDeleteProduct(item.id) }}>Delete</button>
                 </div>
               </div>
             );

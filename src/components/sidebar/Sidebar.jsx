@@ -67,7 +67,7 @@ function Sidebar({ sidebarRef }) {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/bonus-settings" activeClassName="active">
+            <NavLink to="/bonuses" activeClassName="active">
               <BsGearFill className="sidebar-icons" /> Bonus Settings
             </NavLink>
           </li>

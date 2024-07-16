@@ -10,7 +10,7 @@ function ProductDetail() {
   const { state } = location;
   const { car_model,category,product_name,images,fit_position, description,car_brand,make_material,category_brand,wheel_size,fitment,quantity_left,price } = state;
   
- 
+  console.log(images);
   function routeToEditPage() {
     routeTo('/product-edit', {state: state});
   }
@@ -27,13 +27,16 @@ function ProductDetail() {
           </div>
 
           <div className="imagges">
-            selected images
-            <div className="selected-images">
-                    {images.map((image) => {
-                      return <img src={image} alt="" />;
+              selected images
+              
+             <div className="selected-images">
+                {images.map((image) => {
+                  console.log(image)
+                     return <img src={image} alt="" />;
                     })}
                   </div>
-          </div>
+            </div>
+            
 
           <div className="imagges">
             Car Brand

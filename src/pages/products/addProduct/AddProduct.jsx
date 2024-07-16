@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./AddProduct.css";
 import FileBase64 from "react-file-base64";
 import PageDetail from "../../../components/PageAlert/PageDetail";
 import { useContext } from "react";
-import { productContext } from '../../../context/productContext'
+import { productContext } from "../../../context/productContext";
 
 const page = "Add Products";
 
-function AddProduct({  }) {
+function AddProduct({}) {
   const [image, setImage] = useState(null);
   const [imagesArray, setImagesArray] = useState([]);
+  const [imgUrl, setImageUrl] = useState([]);
+  const [imgFiles, setImgFiles] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("Wheel");
   const [selectedFitPosition, setSelectedFitPosition] = useState("");
   const [description, setDescription] = useState("");
@@ -24,7 +26,8 @@ function AddProduct({  }) {
   const [product_name, setProduct_Name] = useState("");
   const [category_brand, setCategoryBrand] = useState("");
 
-    const { products, setProducts ,setLoading,loading} = useContext(productContext);
+  const { products, setProducts, setLoading, loading } =
+    useContext(productContext);
   // states for conditional rendering
   const [wheel, setWheel] = useState(true);
   const [showDetails, setShowProductDetails] = useState(false);
@@ -40,17 +43,60 @@ function AddProduct({  }) {
     setSelectedFitPosition(event.target.value);
   };
 
-  const handleImageUpload = (file) => {
-    const newArrOfImages = [
-      ...imagesArray,
-      ...file.map((item) => {
-        return item.base64;
-      }),
-    ];
+  const setImageurlsAndNames = (e) => {
+    const urls = [];
+    const imageNames = [];
+    const files = e.target.files;
 
-    setImagesArray(newArrOfImages);
-    setImage(newArrOfImages[0]);
+    for (const file of files) {
+      urls.push(URL.createObjectURL(file));
+      imageNames.push(file.name);
+      setImgFiles((prev) => [...prev, file]);
+    }
+    setImageUrl(urls);
+    setImage(imgUrl[0]);
+    setImagesArray(imageNames);
   };
+
+  const handleImageInsertion = async (event) => {
+    const formData = new FormData();
+    for (const file of imgFiles) {
+      formData.append("imageFiles[]", file);
+    }
+    console.log('formdata',formData)
+    try {
+      const { data } = await axios.post(
+        "https://yotaperformanceshop.com/yps_server/admin/upload_image",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (data) {
+        console.log("success", data);
+      } else {
+        console.error("Error uploading image:", data);
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+
+  // const handleImageUpload = (file) => {
+  //   console.log(file[0]);
+  //   const newArrOfImages = [
+  //     ...imagesArray,
+  //     ...file.map((item) => {
+  //       return item.base64;
+  //     }),
+  //   ];
+
+  //   setImagesArray(newArrOfImages);
+  //   setImage(newArrOfImages[0]);
+  // };
 
   const handleDescription = (e) => {
     setDescription(e.target.value);
@@ -86,6 +132,7 @@ function AddProduct({  }) {
   };
 
   const handleSubmit = async (e) => {
+    handleImageInsertion()
     try {
       const postData = {
         product_name,
@@ -107,14 +154,14 @@ function AddProduct({  }) {
 
       const response = await axios.post(
         "https://yotaperformanceshop.com/yps_server/admin/add_products",
-        postData,{  maxContentLength: 1000000}
+        postData,
+        { maxContentLength: 1000000 }
       );
       console.log("product created", response.data);
-      setProducts((products)=>[...products,postData])
+      setProducts((products2) => [...products2, postData]);
     } catch (error) {
       console.log("error", error);
     }
-
   };
 
   const retrieveProducts = async () => {
@@ -126,9 +173,6 @@ function AddProduct({  }) {
     }
   };
 
-
-
-  
   return (
     <div className="home-container">
       <PageDetail page={page} />
@@ -140,26 +184,45 @@ function AddProduct({  }) {
               {image ? (
                 <img src={image} alt="Uploaded Image" />
               ) : (
-                <FileBase64
-                  type="file"
-                  id="uploadImage"
-                  multiple={true}
-                  onDone={handleImageUpload}
-                />
+                // <FileBase64
+                //   type="file"
+                //   id="uploadImage"
+                //   multiple={true}
+                //   onDone={handleImageUpload}
+                // />
+
+                <form>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={setImageurlsAndNames}
+                    name="imageFiles"
+                  />
+                </form>
               )}
             </div>
             {image && (
-              <FileBase64
-                type="file"
-                id="uploadImage"
-                multiple={true}
-                onDone={handleImageUpload}
-              />
+              // <FileBase64
+              //   type="file"
+              //   id="uploadImage"
+              //   multiple={true}
+              //   onDone={handleImageUpload}
+              // />
+              <form>
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={setImageurlsAndNames}
+                  name="imageFiles"
+                />
+              </form>
             )}
             <div className="imagges">
               selected images
               <div className="selected-images">
-                {imagesArray.map((image) => {
+                {imgUrl.map((image) => {
                   return <img src={image} alt="" />;
                 })}
               </div>
@@ -178,81 +241,81 @@ function AddProduct({  }) {
           </div>
 
           <div className="Carbrand title">
-              Car Brand
-              <div className="category-input Model ">
-                <label>
-                  <input
-                    type="radio"
-                    value="Toyota Corrola"
-                    checked={CarBrand === "Toyota Corrola"}
-                    onChange={handleCarBrand}
-                  />
-                  Toyota Corrola
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="Toyota Camrry"
-                    checked={CarBrand === "Toyota Camrry"}
-                    onChange={handleCarBrand}
-                  />
-                  Toyota Camrry
-                </label>
-              </div>
-          </div>
-          
-            <div className="Model title">
-              Car Model
-              <div className="category-input Model ">
-                <label>
-                  <input
-                    type="radio"
-                    value="Corrola GR"
-                    checked={selectCarModel === "Corrola GR"}
-                    onChange={handleCarModelChange}
-                  />
-                  Corrola GR
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="12th gen Toyota Corrola"
-                    checked={selectCarModel === "12th gen Toyota Corrola"}
-                    onChange={handleCarModelChange}
-                  />
-                  12th gen Toyota Corrola
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="11th gen Toyota Corrola"
-                    checked={selectCarModel === "11th gen Toyota Corrola"}
-                    onChange={handleCarModelChange}
-                  />
-                  11th gen Toyota Corrola
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value=" 8th gen Toyota Cammry"
-                    checked={selectCarModel === " 8th gen Toyota Cammry"}
-                    onChange={handleCarModelChange}
-                  />
-                 8th gen Toyota Cammry
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="7th gen Toyota Cammry"
-                    checked={selectCarModel === "7th gen Toyota Cammry"}
-                    onChange={handleCarModelChange}
-                  />
-                  7th gen Toyota Cammry
-                </label>
-              </div>
+            Car Brand
+            <div className="category-input Model ">
+              <label>
+                <input
+                  type="radio"
+                  value="Toyota Corrola"
+                  checked={CarBrand === "Toyota Corrola"}
+                  onChange={handleCarBrand}
+                />
+                Toyota Corrola
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="Toyota Camrry"
+                  checked={CarBrand === "Toyota Camrry"}
+                  onChange={handleCarBrand}
+                />
+                Toyota Camrry
+              </label>
             </div>
-           
-            <div className="Carbrand title">
+          </div>
+
+          <div className="Model title">
+            Car Model
+            <div className="category-input Model ">
+              <label>
+                <input
+                  type="radio"
+                  value="Corolla GR"
+                  checked={selectCarModel === "Corolla GR"}
+                  onChange={handleCarModelChange}
+                />
+                Corolla GR
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="12th gen Toyota Corolla"
+                  checked={selectCarModel === "12th gen Toyota Corolla"}
+                  onChange={handleCarModelChange}
+                />
+                12th gen Toyota Corolla
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="11th gen Toyota Corolla"
+                  checked={selectCarModel === "11th gen Toyota Corolla"}
+                  onChange={handleCarModelChange}
+                />
+                11th gen Toyota Corolla
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value=" 8th gen Toyota Camry"
+                  checked={selectCarModel === " 8th gen Toyota Camry"}
+                  onChange={handleCarModelChange}
+                />
+                8th gen Toyota Camry
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="7th gen Toyota Camry"
+                  checked={selectCarModel === "7th gen Toyota Camry"}
+                  onChange={handleCarModelChange}
+                />
+                7th gen Toyota Camry
+              </label>
+            </div>
+          </div>
+
+          <div className="Carbrand title">
             Make Material
             <div className="category-input Model ">
               <label>
@@ -262,7 +325,7 @@ function AddProduct({  }) {
                   checked={MakeMaterial === "carbon fibre"}
                   onChange={handleMakeMaterial}
                   onClick={() => {
-                    setParts(false);
+                    // setParts(false);
                     setExhaust(false);
                     setWheel(false);
                     setCfibre(true);
@@ -360,7 +423,6 @@ function AddProduct({  }) {
                     onChange={handleCategoryChange}
                     onClick={() => {
                       setWheel(false);
-                
                     }}
                   />
                   Suspension parts
@@ -373,18 +435,16 @@ function AddProduct({  }) {
                     onChange={handleCategoryChange}
                     onClick={() => {
                       setWheel(false);
-                
                     }}
-                  />  
+                  />
                   Steering Wheel
                 </label>
               </div>
             </div>
 
-            
             {wheel && (
               <div className="category title">
-              Category Brand
+                Category Brand
                 <select
                   name="wheel"
                   id="wheels"
@@ -400,32 +460,29 @@ function AddProduct({  }) {
                   <option value="Volk Racing">Volk Racing</option>
                   <option value="FR1">FR1</option>
                 </select>
-                 </div>
-              )}
-            
-           
-           
+              </div>
+            )}
 
-          {selectedCategory}
+            {selectedCategory}
           </div>
         </div>
 
         <div className="secondpart part">
-            {wheel && (
-                <div className="Carbrand title wheel">
-                  Wheel Size
-                  <div className="number">
-                    <label htmlFor="wheel-size">
-                      <input
-                        type="text"
-                        id="wheel-size"
-                        placeholder="Enter Wheel size"
-                        onChange={handleWheelSize}
-                      />
-                    </label>
-                  </div>
-                </div>
-              )}
+          {wheel && (
+            <div className="Carbrand title wheel">
+              Wheel Size
+              <div className="number">
+                <label htmlFor="wheel-size">
+                  <input
+                    type="text"
+                    id="wheel-size"
+                    placeholder="Enter Wheel size"
+                    onChange={handleWheelSize}
+                  />
+                </label>
+              </div>
+            </div>
+          )}
           <div className="category title">
             FitPossition
             <div className="category-input ">
@@ -496,18 +553,14 @@ function AddProduct({  }) {
             </div>
           </div>
 
-            <div className="Carbrand title">
-              Price($)
-              <div className="number ">
-                <label htmlFor="number">
-                  <input
-                    type="number"
-                    id="number"
-                    onChange={handlePriceChange}
-                  />
-                </label>
-              </div>
+          <div className="Carbrand title">
+            Price($)
+            <div className="number ">
+              <label htmlFor="number">
+                <input type="number" id="number" onChange={handlePriceChange} />
+              </label>
             </div>
+          </div>
 
           <div className="Carbrand title">
             Quantity Avalaible
@@ -554,7 +607,7 @@ function AddProduct({  }) {
                 <div className="imagges">
                   selected images
                   <div className="selected-images">
-                    {imagesArray.map((image) => {
+                    {imgUrl.map((image) => {
                       return <img src={image} alt="" />;
                     })}
                   </div>

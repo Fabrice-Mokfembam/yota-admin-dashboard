@@ -4,11 +4,12 @@ import PageDetail from "../../components/PageAlert/PageDetail";
 import { productContext } from "../../context/productContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 import { useContext } from "react";
 
 
-function Bonus() {
-  const bonus = "bonus-settings";
+function BonusCoupon(){
+  const bonus = "coupon-settings";
   const { products } = useContext(productContext);
   const routeTo = useNavigate();
 
@@ -17,13 +18,13 @@ function Bonus() {
   const [option3, setOption3] = useState(true);
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedOptionother, setSelectedOptionother] = useState("");
+  const [coupon, setCoupon] = useState("");
   const [value, setValue] = useState("");
   const [type, setType] = useState("");
-  const [code, setCode] = useState("");
+  const [bonus_type, setBonusType] = useState("");
   const [endDate, setEndDate] = useState("");
   const [previewDetail, setPreviewDetail] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState([]);
-  const [bonus_type, setBonusType] = useState("");
 
   function handleproductbonus(e) {
     const productId = e.target.value;
@@ -48,14 +49,13 @@ function Bonus() {
     routeTo('/bonuses');
   }
 
- async function createBonus() {
+ async function createCoupon() {
       const body = {
-	       products: selectedProducts,
-	       value: value,
-         type,
-         bonus_type,
-         code,
-	       endDate: endDate,
+          value: value,
+          bonus_type,
+          type,
+	        code: coupon,
+	        endDate: endDate,
     }
     
     if (selectedOption === 'black-friday') {
@@ -65,10 +65,9 @@ function Bonus() {
       body.bonus_name = selectedOptionother;
     }
 
-   try {
-      console.log(body);
-      await axios.post('https://yotaperformanceshop.com/yps_server/admin/add_bonus', body);
-      console.log('successfully creation');
+    try {
+     const {data} =  await axios.post('https://yotaperformanceshop.com/yps_server/admin/add_bonus', body);
+      console.log('successfully creation',data)
     } catch (error) {
       console.log(error); 
     }
@@ -80,27 +79,6 @@ function Bonus() {
     <div className="home-container bonus">
       <PageDetail page={bonus} />
 
-      <div className="bonus-options">
-        <div
-          className={`option1 ${option1 && option3 ? "red-bg" : null}`}
-          onClick={() => {
-            setOption1(true);
-            setOption3(true);
-            setOption2(false);
-          }}
-        >
-          General Bonus
-        </div>
-        <div
-          className={`option2 ${option2 ? "red-bg" : null}`}
-          onClick={() => {
-            setOption2(true);
-            setOption3(false);
-          }}
-        >
-          Assign bonus to particular Products
-        </div>
-      </div>
         
       {option1 && (
         <div className="option-box box1-option">
@@ -118,7 +96,7 @@ function Bonus() {
                         <label htmlFor="pdt123">
                           <input
                             type="checkbox"
-                            value={item.id}
+                            value={item._id}
                             onChange={handleproductbonus}
                           />
                           add to list
@@ -130,6 +108,8 @@ function Bonus() {
               </div>
             </div>
           )}
+          {selectedProducts}
+
           <div className="title-addbox2">Bonus Title</div>
           <div className="title-box">
             <div>
@@ -162,7 +142,7 @@ function Bonus() {
                   type="text"
                   value={selectedOptionother}
                   id="title-input"
-                  placeholder="Type bonus title here"
+                  placeholder="Type Coupon title here"
                   onChange={(e) => {
                     setSelectedOptionother(e.target.value);
                   }}
@@ -170,7 +150,7 @@ function Bonus() {
               </div>
             ) : null}
           </div>
-            <div className="value">
+          <div className="value">
             <div className="title-addbox2">Bonus Type</div>
             <input
               type="text"
@@ -197,17 +177,34 @@ function Bonus() {
             />
           </div>
           <div className="value">
-            <div className="title-addbox2">Type</div>
+            <div className="title-addbox2">Type of Value</div>
+             <input
+                  type="text"
+                  value={type}
+                  id="title-input"
+                  placeholder="Type of value"
+                  onChange={(e) => {
+                    setType(e.target.value);
+                  }}
+                />
+          </div>
+          <div className=" value bonus-code">
+            <div className="title-addbox2">Bonus code</div>
             <input
               type="text"
+              value={coupon}
               id="title-input"
-              value={type}
               className="value-input"
-              placeholder="Enter Type"
-              onChange={(e) => {
-                setType(e.target.value);
-              }}
+              placeholder="generate bonus code"
+              onChange={(e)=>{e.target.value}}
             />
+            <button
+              onClick={() => {
+                setCoupon("devlap123");
+              }}
+            >
+              generate coupon
+            </button>
           </div>
           <div className=" value bonus-code duration">
             <div className="title-addbox2">Bonus Duration</div>
@@ -236,7 +233,7 @@ function Bonus() {
           {previewDetail && (
             <div className="preview-details">
               <div className="bon-T">
-                <div className="title-addbox2">Bonus Title</div>
+                <div className="title-addbox2">Coupon Title</div>
                 <p>
                   {selectedOption === "black-friday"
                     ? selectedOption
@@ -244,30 +241,26 @@ function Bonus() {
                 </p>
               </div>
               <div className="bon-V">
-                <div className="title-addbox2">Bonus Type</div>
+                <div className="title-addbox2">Coupon bonus_type</div>
                 <p>{bonus_type}</p>
               </div>
               <div className="bon-V">
-                <div className="title-addbox2">Bonus Value</div>
+                <div className="title-addbox2">Coupon Value</div>
                 <p>{value}</p>
               </div>
               <div className="bon-V">
-                <div className="title-addbox2">type of value</div>
+                <div className="title-addbox2">Coupon Type</div>
                 <p>{type}</p>
               </div>
+              <div className="bon-c">
+                <div className="title-addbox2">Coupon code</div>
+                <p>{coupon}</p>
+              </div>
               <div className="bon-D">
-                <div className="title-addbox2">Bonus Duration</div>
+                <div className="title-addbox2">Coupon Duration</div>
                 <p>{endDate}</p>
               </div>
-              <div className="bon-id">
-                <div className="title-addbox2">Product ids</div>
-                <p>
-                  {selectedProducts.length > 0
-                    ? selectedProducts
-                    : "all products"}
-                </p>
-              </div>
-              <button className="preview" onClick={createBonus}>Apply Bonus</button>
+              <button className="preview" onClick={createCoupon}>Apply Coupon</button>
               <div
                 className="previewX"
                 onClick={() => {
@@ -288,4 +281,4 @@ function Bonus() {
   );
 }
 
-export default Bonus;
+export default BonusCoupon;

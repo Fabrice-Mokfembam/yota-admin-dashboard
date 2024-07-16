@@ -1,14 +1,30 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PageDetail from "../../components/PageAlert/PageDetail";
-import './GeneralBonus.css'
-import { useNavigate } from "react-router-dom";
+import "./GeneralBonus.css";
+import { useNavigate, useLocation } from "react-router-dom";
+import { productContext } from "../../context/productContext";
 
 function BonusDetail() {
-    const routeTo = useNavigate();
+  const routeTo = useNavigate();
+  const { state } = useLocation();
+  const [bonusProducts, setBonusProducts] = useState([]);
+  const { products } = useContext(productContext);
 
-    function gotoBonusEdit() {
-        routeTo('/bonus-edit')
-    }
+  const ids = ["1656500420242000001", "1700400420242000006"];
+
+  useEffect(() => {
+    const array = ids.flatMap((id) => {
+      return products.filter((product) => product.id === id);
+    });
+
+    setBonusProducts((prevArray) => [...prevArray, ...array]);
+    console.log("Bonus Products:", array);
+  }, [products]);
+
+  function gotoBonusEdit() {
+    routeTo("/bonus-edit", { state: state , pdt:bonusProducts});
+  }
+
   return (
     <div className="home-container product-details">
       <PageDetail page={"bonus-detail"} />
@@ -18,47 +34,57 @@ function BonusDetail() {
           <div className="detail-part1">
             <div className="imagges">
               Bonus Title
-              <div className="selected-images">Black Friday</div>
+              <div className="selected-images">{state.bonus_name}</div>
+            </div>
+
+            <div className="imagges">
+              Bonus Type
+              <div className="selected-images">{state.bonus_type}</div>
             </div>
 
             <div className="imagges">
               Bonus Value
-              <div className="selected-images"> 10%</div>
+              <div className="selected-images"> {state.value}</div>
             </div>
 
             <div className="imagges">
-              Bonus code
-              <div className="selected-images">placeholder</div>
+              Type
+              <div className="selected-images"> {state.type}</div>
             </div>
+
+            {state.code ? (
+              <div className="imagges">
+                Bonus code
+                <div className="selected-images">{state.code}</div>
+              </div>
+            ) : null}
           </div>
           <div className="detail-part2 pd2">
             <div className="imagges">
               End-Date
-              <div className="selected-images">24/12/2024</div>
+              <div className="selected-images">{state.endDate}</div>
             </div>
-
-            
           </div>
         </div>
         <div className="imagges bonus-detail">
           Products Assigned Bonus
-          <div className="selected-images"></div>
+          {bonusProducts.length > 0 ? (
+            bonusProducts.map((product, index) => (
+              <div className="selected-images" key={index}>
+                {product.images.map((item, imgIndex) => (
+                  <img key={imgIndex} src={item} alt="" />
+                ))}
+              </div>
+            ))
+          ) : (
+            <div>No products assigned</div>
+          )}
         </div>
-         {/* <div className="imagges">
-            Items
-              <div className="selected-images"> {state.items.map(item => {
-                return (
-                  <div>
-                  <div>{ item.product_id}</div>
-                  <div>{ item.quantities}</div>
-                    <div>{item.price}</div>
-                    </div>
-              )
-            })}</div>
-          </div> */}
-          </div>
-          <button className="bonusEditbtn" onClick={gotoBonusEdit}> Edit </button>
-          {/* <button className="bonusDeletebtn" > delete </button> */}
+      </div>
+      <button className="bonusEditbtn" onClick={gotoBonusEdit}>
+        Edit
+      </button>
+      {/* <button className="bonusDeletebtn" > delete </button> */}
     </div>
   );
 }
