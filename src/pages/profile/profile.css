@@ -1,0 +1,99 @@
+.profile-container{
+  position: relative;
+}
+
+.profile-header {
+  background: #cacac9;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  height: 9rem;
+}
+
+.profile-content {
+  padding: 20px;
+  margin-top: 80px;
+}
+
+.profile-picture {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 75px;
+  left: 50px;
+}
+@media screen and (max-width:600px) {
+  .profile-picture{
+    left: 38%;
+  }
+}
+.profile-picture img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid #cacac9;
+  margin-bottom: 10px;
+}
+
+.change-picture-btn {
+  background: #bebab6;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.change-picture-btn:hover {
+  background: #ff4800;
+}
+
+.profile-details, .profile-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-field {
+  margin-bottom: 15px;
+}
+
+.profile-field label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.profile-field p {
+  background: #dadad8;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.profile-field input {
+  padding: 17px;
+  border: .6px solid #ccc;
+  border-radius: 5px;
+  width: calc(100% - 22px);
+}
+
+@media screen and (max-width:600px) {
+  .profile-field input{
+    width: 100%;
+  }
+}
+
+.save-changes-btn {
+  background: var(--orange-bgcolor);
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.save-changes-btn:hover {
+  background: #f05c41;
+}

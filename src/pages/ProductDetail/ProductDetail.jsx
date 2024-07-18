@@ -1,14 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import './ProductDetail.css'
 import PageDetail from "../../components/PageAlert/PageDetail";
 import { useLocation, useNavigate } from "react-router-dom";
+import { BsPlus } from "react-icons/bs";
+import img from '../../assets/images/bf.jpeg'
+import { format as timeAgo } from 'timeago.js';
+import moment from "moment";
+import { FaStar } from 'react-icons/fa';
+
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= rating; i++) {
+      stars.push(<FaStar className="staricon" />);
+    }
+    return stars;
+  };
+
+  const formatDate = (datesent) => {
+    const time = new Date(datesent);
+    const now = new Date();
+
+    if (now - time >= 24 * 60 * 60 * 1000) {
+      return moment(time).format('DD/MM/YYYY');
+    } else {
+      return timeAgo(time);
+    }
+  };
+
 
 function ProductDetail() {
   const location = useLocation();
   const routeTo = useNavigate();
+  const [open, setOpen] = useState(false);
 
   const { state } = location;
-  const { car_model,category,product_name,images,fit_position, description,car_brand,make_material,category_brand,wheel_size,fitment,quantity_left,price } = state;
+  const { car_model,category,product_name,images,fit_position, description,car_brand,make_material,category_brand,wheel_size,fitment,quantity_left,price,reviews } = state;
   
   console.log(images);
   function routeToEditPage() {
@@ -88,7 +114,27 @@ function ProductDetail() {
         <h3>Description</h3>
         <div className="selected-images Description"> {description}</div>
         </div>
-        
+        <div className={`productReviews ${ open ? 'open' : 'close'}`}>
+          <div className='productReview'>Reviews</div>
+          
+          <div className="plus" >
+            <BsPlus className="plusDrop" onClick={()=>{setOpen(!open)}}/>
+          </div>
+          <div className="actual-product-reviews">
+            {
+          reviews.map((review, index) => (
+            <div className="timeline-item" key={index}>
+              <div className="pic-review"> <img src={img} alt="" /></div>
+              <div className="timeline-content">
+                <div className="timeline-date">{formatDate(review.createdAt)}</div>
+                {renderStars(review.user_rating)}
+                <div className="timeline-description">{review.user_text}</div>
+              </div>
+            </div>
+          ))
+              }
+          </div>
+        </div>
         <button className="editbtn" onClick={routeToEditPage}> Edit </button>
         <button className="deletebtn" > delete </button>
     </div>

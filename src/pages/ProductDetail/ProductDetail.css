@@ -34,6 +34,41 @@
   .bonus-detail{
     margin-left: 14px;
 }
+.productReviews{
+  width: 98%;
+  margin: 10px auto;
+  height: 50px;
+  border: 0.1px solid grey;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  transition: all 1s ease;
+}
+.productReviews.open{
+ height: max-content;
+}
+.productReviews.close{
+  height: 50px;
+}
+.actual-product-reviews{
+  margin-top: 60px;
+}
+.productReview{
+  position: absolute;
+  top: 11px;
+  left: 14px;
+}
+
+.plus{
+  position: absolute;
+  top: 7px;
+  right: 14px;
+
+}
+.plusDrop{
+  font-size: 35px;
+}
+
 @media screen and (max-width: 1044px) {
   .pd2 {
     flex-basis: 0;

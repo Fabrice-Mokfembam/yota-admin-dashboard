@@ -38,7 +38,7 @@ function Sidebar({ sidebarRef }) {
             </Link>
           </li>
           {isProductActive && (
-            <div className={`product-dropdown `}>
+            <div className={`product-dropdown`}>
               <ul>
                 <li>
                   <NavLink to="/products/list" activeClassName="active">
@@ -77,8 +77,8 @@ function Sidebar({ sidebarRef }) {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/Reviews" activeClassName="active">
-              <MdRateReview className="sidebar-icons" /> Reviews
+            <NavLink to="/customers" activeClassName="active">
+              <MdRateReview className="sidebar-icons" /> Customers
             </NavLink>
           </li>
         </ul>

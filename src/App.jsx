@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Sidebar from "./components/sidebar/Sidebar";
-import Header from "./components/header/header";
+import Header from "./components/header/Header";
 import "./App.css";
 import Chats from "./pages/chats/Chats";
 import Home from "./pages/home/Home";
@@ -28,6 +28,10 @@ import Bonuses from "./pages/bonus-details/Bonuses";
 import BonusDetail from "./pages/bonus-details/BonusDetail";
 import BonusEdit from "./pages/bonus-details/BonusEdit";
 import BonusCoupon from "./pages/bonus-settings/BonusCoupon";
+import ProfileEdit from './pages/profile/ProfileEdit'
+import Profile from './pages/profile/Profile'
+import Login from "./pages/auth/Login";
+
 
 function App() {
   const [data, setData] = useState([]);
@@ -104,7 +108,8 @@ async function getAllOrders() {
 
   const fetchUsers = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/get/users/");
+      console.log("fetchedData: Users");
+      const { data } = await axios.post("https://yotaperformanceshop.com/yps_server/admin/get_all_users");
       console.log("fetchedData: Users", data);
       setUsers(data);
     } catch (error) {
@@ -225,6 +230,14 @@ async function getAllOrders() {
           element: <BonusEdit/>,
         },
         {
+          path: "/profile",
+          element: <Profile/>,
+        },
+        {
+          path: "/profileEdit",
+          element: <ProfileEdit/>,
+        },
+        {
           path: "/Reviews",
           element: <Reviews />,
         },
@@ -250,6 +263,10 @@ async function getAllOrders() {
         },
       ],
     },
+    {
+      path: '/login',
+      element: <Login/>
+    }
   ]);
 
   return <RouterProvider router={router} />;
