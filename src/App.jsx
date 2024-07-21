@@ -9,7 +9,7 @@ import Card from "./pages/card-details/Card";
 import AddProduct from "./pages/products/addProduct/AddProduct";
 import ProductList from "./pages/products/productList/ProductList";
 import ImageUploader from "./pages/test/Display";
-import Header from './components/header/Header'
+import Header from './components/header/Headers'
 
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Reviews from "./pages/Reviews/Reviews";
