@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import Sidebar from "./components/sidebar/Sidebar";
-import Header from "./components/header/Header";
 import "./App.css";
 import Chats from "./pages/chats/Chats";
 import Home from "./pages/home/Home";
@@ -10,6 +9,7 @@ import Card from "./pages/card-details/Card";
 import AddProduct from "./pages/products/addProduct/AddProduct";
 import ProductList from "./pages/products/productList/ProductList";
 import ImageUploader from "./pages/test/Display";
+import Header from './components/header/Header'
 
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Reviews from "./pages/Reviews/Reviews";
@@ -157,7 +157,7 @@ async function getAllOrders() {
               <chatContext.Provider value={{ chats, setChats }}>
                 <bonusContext.Provider value={{bonusArray,setBonuses}}>
               <div className="layout">
-                <Header hamRef={hamRef} xRef={xRef} showSidebar={showSidebar} />
+                <Header  hamRef={hamRef} xRef={xRef} showSidebar={showSidebar} />
                 <div className="main">
                   <Sidebar sidebarRef={sidebarRef} />
                   <Outlet />
