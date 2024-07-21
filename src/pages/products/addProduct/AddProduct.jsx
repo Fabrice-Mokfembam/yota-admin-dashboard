@@ -174,7 +174,7 @@ function AddProduct({}) {
   };
 
   return (
-    <div className="home-container">
+    <div className="home-container add-product-container">
       <PageDetail page={page} />
       <div className="main-add-product-conatainer">
         <div className="firstpart part">
@@ -557,17 +557,18 @@ function AddProduct({}) {
             Price($)
             <div className="number ">
               <label htmlFor="number">
-                <input type="number" id="number" onChange={handlePriceChange} />
+                <input type="number" id="number" className="category-input" onChange={handlePriceChange} />
               </label>
             </div>
           </div>
 
-          <div className="Carbrand title">
+          <div className="Carbrand title ">
             Quantity Avalaible
             <div className="quantity">
               <label htmlFor="quantity">
                 <input
                   type="quantity"
+                  className="category-input"
                   id="quantity"
                   onChange={handleQuantityChange}
                 />

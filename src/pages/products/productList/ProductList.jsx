@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./ProductList.css";
 import PageDetail from "../../../components/PageAlert/PageDetail";
 import axios from "axios";
-import { useContext } from "react";
 import { productContext } from "../../../context/productContext";
 import { useNavigate } from "react-router-dom";
+import { BsPlus, BsSearch } from "react-icons/bs";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const page = "All Products";
 
@@ -21,7 +22,7 @@ function ProductList() {
     routeTo('/products/add-product');
   }
 
-  const itemsPerPage = 8;
+  const itemsPerPage = 9;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
@@ -44,14 +45,10 @@ function ProductList() {
   }, [currentPage, products]);
 
   const handleDeleteProduct = async (id) => {
-    const productId = {
-      id:id,
-    }
+    const productId = { id };
     try {
-      console.log('product id',id)
-      const { data } = await axios.post(`https://yotaperformanceshop.com/yps_server/admin/delete_product`,productId);
-      console.log("deletedData");
-      // setProducts((prevProducts) => prevProducts.filter((item) => item.id !== data.id));
+      const { data } = await axios.post(`https://yotaperformanceshop.com/yps_server/admin/delete_product`, productId);
+      setProducts((prevProducts) => prevProducts.filter((item) => item.id !== id));
     } catch (error) {
       console.error("Error deleting data:", error);
       setLoading(false);
@@ -62,11 +59,10 @@ function ProductList() {
     try {
       setLoading(true);
       const { data } = await axios.get(`http://localhost:5000/get/product/${category}`);
-      console.log("categoryData", data);
       setLoading(false);
       setProducts(data);
     } catch (error) {
-      console.error("Error category data:", error);
+      console.error("Error fetching category data:", error);
       setLoading(false);
     }
   };
@@ -79,62 +75,56 @@ function ProductList() {
   };
 
   const routeToProductDetail = (product) => {
-    routeTo("/product-detail", {state:product});
+    routeTo("/product-detail", { state: product });
   };
 
   return (
-    <div className="home-container pro">
+    <div className="home-container">
       <div className="prheader">
         <PageDetail page={page} />
-        <button className="add-product" onClick={routeToAddProduct}>Add Product</button>
       </div>
-      <div className="prheader2">
-        <div className="product-search-bar">
-          <input
-            type="text"
-            id="input-product"
-            placeholder="Search product by name"
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-              searchByName();
-            }}
-          />
+      <div className="pro">
+        <div className="prheader2">
+          <div className="product-search-bar">
+            <input
+              type="text"
+              id="input-product"
+              placeholder="Search product by name"
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                searchByName();
+              }}
+            />
+            <BsSearch className="bsSearch" />
+          </div>
+          <div className="select-product">
+            <select
+              name="select-category"
+              id="select-category"
+              onChange={(e) => searchByCategory(e.target.value)}
+            >
+              <option value="">Select by category</option>
+              <option value="Wheel">Wheel</option>
+              <option value="Exhaust">Exhaust</option>
+              <option value="Bumpers">Bumpers</option>
+              <option value="Fenders">Fenders</option>
+              <option value="Hood">Hood</option>
+              <option value="Suspension parts">Suspension parts</option>
+              <option value="Steering Wheel">Steering Wheel</option>
+            </select>
+          </div>
         </div>
-        <div className="select-product">
-          <select
-            name="select-category"
-            id="select-category"
-            onChange={(e) => {
-              // setSelectValue(e.target.value);
-              searchByCategory(e.target.value);
-            }}
-          >
-            <option value=" ">Select by category</option>
-            <option value="Wheel">Wheel</option>
-            <option value="Exhaust">Exhaust</option>
-            <option value="Bumpers">Bumpers</option>
-            <option value="Fenders">Fenders</option>
-            <option value="Hood">Hood</option>
-            <option value="Suspension parts">Suspension parts</option>
-            <option value="Steering Wheel">Steering Wheel</option>
-          </select>
-          <button className="select-date-added">Last added</button>
-        </div>
-      </div>
 
-      {loading ? ( 
-        <div>Loading....</div>
-      ) : (
-        <div className="product_list">
-          {currentItems.map((item) => {
-            return (
+        {loading ? (
+          <div>Loading....</div>
+        ) : (
+          <div className="product_list">
+            {currentItems.map((item) => (
               <div className="products_container" key={item._id}>
                 <div className="product_image">
                   <img
-                    src={
-                      item.images[0]
-                    }
-                    alt="image here"
+                    src={item.images[0]}
+                    alt="product"
                   />
                 </div>
                 <div className="product_name">{item.product_name.slice(0, 40) + '...'}</div>
@@ -142,28 +132,26 @@ function ProductList() {
                   {item.description.slice(0, 40) + "...read more"}
                 </div>
                 <div className="product_prize">{item.price}</div>
-               
+
                 <div className="product_edit_delete">
-                  <button className="product_view Pbtn" onClick={()=>routeToProductDetail(item)}>View</button>
-                  <button className="product_delete Pbtn" onClick={() => { handleDeleteProduct(item.id) }}>Delete</button>
+                  <button className="product_view Pbtn" onClick={() => routeToProductDetail(item)}>View</button>
+                  <button className="product_delete Pbtn" onClick={() => handleDeleteProduct(item.id)}>Delete</button>
                 </div>
               </div>
-            );
-          })}
+            ))}
+          </div>
+        )}
+
+        <div className="addButton" onClick={routeToAddProduct}>
+          <BsPlus className="plusIcon" />
         </div>
-      )}
 
-      <div className="center">
-        <button className="add-r" onClick={routeToAddProduct}>Add Product</button>
-      </div>
-
-      <div className="center">
         <div className="pageChangersbutton">
           <button className="prev" onClick={prevPage}>
-            Previous
+            <FaArrowLeft /> Previous
           </button>
           <button className="next" onClick={nextPage}>
-            Next
+            Next <FaArrowRight />
           </button>
         </div>
       </div>

@@ -10,19 +10,21 @@ function BonusDetail() {
   const [bonusProducts, setBonusProducts] = useState([]);
   const { products } = useContext(productContext);
 
-  const ids = ["1656500420242000001", "1700400420242000006"];
-
   useEffect(() => {
-    const array = ids.flatMap((id) => {
-      return products.filter((product) => product.id === id);
-    });
-
-    setBonusProducts((prevArray) => [...prevArray, ...array]);
-    console.log("Bonus Products:", array);
+    if (state.code) {
+      console.log('coupon')
+    } else {
+      
+      const array = state.product_ids.flatMap((id) => {
+        return products.filter((product) => product.id === id);
+      });
+      setBonusProducts((prevArray) => [...prevArray, ...array]);
+      console.log("Bonus Products:", array);
+    }
   }, [products]);
 
   function gotoBonusEdit() {
-    routeTo("/bonus-edit", { state: state , pdt:bonusProducts});
+    routeTo("/bonus-edit", { state: state, pdt: bonusProducts });
   }
 
   return (

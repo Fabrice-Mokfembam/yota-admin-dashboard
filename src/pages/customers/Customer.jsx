@@ -37,7 +37,6 @@ function Customer() {
               <h3>{user.username}</h3>
               <div className="email_c">{user.email}</div>
             </div>
-            <BsFillChatSquareTextFill className="c_icons" onClick={createAchat} />
           </div>
         ))}
       </div>

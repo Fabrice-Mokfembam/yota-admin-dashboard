@@ -1,124 +1,204 @@
+.home-container.product-details {
+  font-family: var(--poppins), sans-serif;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
 .product-detail-wrapper {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+}
+
+.page-detail {
+  margin-bottom: 20px;
+}
+
+.dt {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.detail-part1,
+.detail-part2 {
+  flex: 1;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.imagges {
+  margin-bottom: 20px;
+}
+
+.imagges h4 {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.selected-images.text{
+  font-size: 14px;
+  color: #080808;
+  padding: 10px;
+  background: #b6b6b6;
+  border-radius: 4px;
+}
+
+.selected-images img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.pdd {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pdd h3 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.Description {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+}
+
+
+.productReviews {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: relative;
 }
-.product-detail-wrapper .dt {
+
+.productReview {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.plus {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.plusDrop {
+  font-size: 20px;
+  color: #007bff;
+}
+
+.actual-product-reviews {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+.pic-review img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #007bff;
+}
+
+.timeline-content {
+  flex: 1;
+}
+
+.timeline-date {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 5px;
+}
+
+.timeline-description {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Button styling */
+.editbtn,
+.deletebtn {
+  background: #007bff;
+  color: #ffffff;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
   align-items: center;
-}
-.Description,
-.pdd h3 {
-  padding: 10px;
-}
-.Description {
-  color: rgb(134, 137, 139);
+  justify-content: center;
+  font-size: 24px;
+  position: absolute;
+  right: 30px;
+  bottom: 20px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  z-index: 10;
 }
 
 .editbtn {
-  background-color: aliceblue;
-  padding: 10px 25px;
-  border: none;
-  margin: 5px 0px;
-  border-radius: 4px;
-  box-shadow: 0px 0px 4px gainsboro;
+  background: #000000;
+  right: 20px;
 }
+
 .deletebtn {
-  background-color: rgba(249, 7, 7, 0.8);
-  padding: 10px 25px;
-  border: none;
-  margin: 5px 0px;
-  border-radius: 4px;
-}
-  .bonus-detail{
-    margin-left: 14px;
-}
-.productReviews{
-  width: 98%;
-  margin: 10px auto;
-  height: 50px;
-  border: 0.1px solid grey;
-  border-radius: 4px;
-  position: relative;
-  overflow: hidden;
-  transition: all 1s ease;
-}
-.productReviews.open{
- height: max-content;
-}
-.productReviews.close{
-  height: 50px;
-}
-.actual-product-reviews{
-  margin-top: 60px;
-}
-.productReview{
-  position: absolute;
-  top: 11px;
-  left: 14px;
+  background: #dc3545;
+  right: 80px;
 }
 
-.plus{
-  position: absolute;
-  top: 7px;
-  right: 14px;
-
-}
-.plusDrop{
-  font-size: 35px;
+.editbtn:hover,
+.deletebtn:hover {
+  opacity: 0.8;
 }
 
-@media screen and (max-width: 1044px) {
-  .pd2 {
-    flex-basis: 0;
-    padding: 0;
-  }
-  .pdd {
-    text-align: center;
-  }
-  .product-detail-wrapper {
-    width: 96%;
-  }
-}
-@media screen and (max-width: 800px) {
-  .product-detail-wrapper {
-    width: 98%;
-  }
-}
-@media screen and (max-width: 600px) {
-  .product-detail-wrapper {
-    width: 96%;
-  }
-  .editbtn {
-    position: relative;
-  }
-}
-@media screen and (min-width: 600px) {
-  .editbtn {
-    position: absolute;
-    right: 60px;
-    top: 0;
-    border: 1px solid gray;
-    box-shadow: none;
-  }
-}
-@media screen and (max-width: 520px) {
-  .product-detail-wrapper .dt {
+@media (max-width: 768px) {
+  .dt {
     flex-direction: column;
-    align-items: flex-start;
-    padding: 10px;
   }
-  .pd2 {
-    margin-left: 8px;
+
+  .detail-part1,
+  .detail-part2 {
+    margin-bottom: 20px;
   }
-  .pdd {
-    text-align: left;
-    padding: 2px;
+
+  .imagges {
+    margin-bottom: 15px;
   }
-}
-@media screen and (max-width: 450px) {
-  .product-detail-wrapper {
-    width: 100%;
+
+  .editbtn,
+  .deletebtn {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    bottom: 10px;
+    right: 10px;
+
+  }
+
+  .deletebtn {
+    right: 60px;
+   
   }
 }

@@ -21,7 +21,7 @@ function Header({ showSidebar, hamRef, xRef }) {
   return (
     <div className='Header-container'>
           <div className="logo-container">
-              <img src={loadsvg} alt="" />
+              {/* <img src={loadsvg} alt="logo" width="58%"/> */}
           </div>
           <div className="nav-icons">
               <div className="search-header-container">

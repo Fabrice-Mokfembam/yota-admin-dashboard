@@ -29,10 +29,13 @@
 .sidebar-navigation-items ul li{
     width: 80%;
     height: 30px;
-    margin: 8px; 
+    margin: 4px; 
     list-style: none;
     position: relative;
     border-radius: 7px;
+    font-size: .98rem;
+        font-weight: bold;
+        color: #272727;
 }
 
 a{

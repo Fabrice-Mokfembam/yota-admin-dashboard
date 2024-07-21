@@ -1,28 +1,22 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import PageDetail from "../../components/PageAlert/PageDetail";
 import { productContext } from "../../context/productContext";
+import axios from "axios";
 
 function BonusEdit() {
   const bonus = "bonus-edit";
   const routeTo = useNavigate();
   const { state, pdt } = useLocation();
+  const { products } = useContext(productContext);
 
   const [option1, setOption1] = useState(true);
   const [option2, setOption2] = useState(false);
   const [option3, setOption3] = useState(true);
   const [selectedOption, setSelectedOption] = useState("");
-  const [selectedOptionother, setSelectedOptionother] = useState(() => {
-    if (state.bonus_name) {
-      selectedOption === "other";
-      return state.bonus_name;
-    } else {
-      selectedOption === "";
-      return "";
-    }
-  });
+  const [selectedOptionother, setSelectedOptionother] = useState(state.bonus_name);
   const [coupon, setCoupon] = useState(state.code);
-  const [bonus_type, setBonustype] = useState(state.bonus_name);
+  const [bonus_type, setBonustype] = useState(state.bonus_type);
   const [value, setValue] = useState(state.value);
   const [type, setType] = useState(state.type);
   const [endDate, setEndDate] = useState(state.endDate);
@@ -71,8 +65,8 @@ function BonusEdit() {
 
     try {
       console.log(body)
-      // const {data} = await axios.post('https://yotaperformanceshop.com/yps_server/admin/update_bonus', body);
-      // console.log(data);
+      const {data} = await axios.post('https://yotaperformanceshop.com/yps_server/admin/update_bonus', body);
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -84,31 +78,9 @@ function BonusEdit() {
       {option1 && (
         <div className="option-box box1-option">
           {option2 && (
-            <div className="swiping-box-container">
-              <div className="swipping-box">
-                {products.map((item) => {
-                  return (
-                    <div className="product-select">
-                      <div className="p-img">
-                        <img src={item.images[0]} alt="" />
-                      </div>
-                      <div className="product-id">
-                        <label htmlFor="pdt123">
-                          <input
-                            type="checkbox"
-                            value={item._id}
-                            onChange={handleproductbonus}
-                          />
-                          add to list
-                        </label>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+<></>
           )}
-          {selectedProducts}
+          
 
           <div className="title-addbox2">Bonus Title</div>
           <div className="title-box">
@@ -140,7 +112,7 @@ function BonusEdit() {
               <div className="title-input-container">
                 <input
                   type="text"
-                  value={state.bonus_name}
+                  value={selectedOptionother}
                   id="title-input"
                   placeholder="Type bonus title here"
                   onChange={(e) => {
@@ -226,6 +198,43 @@ function BonusEdit() {
               }}
             />
           </div>
+          {
+            coupon ? null : <div className=" value add-images">
+            <div className="title-addbox2">Add products to bonus</div>
+                       <div className="swiping-box-container">
+              <div className="swipping-box">
+                {products.map((item) => {
+                  return (
+                    <div className="product-select">
+                      <div className="p-img">
+                        <img src={item.images[0]} alt=""/>
+                      </div>
+                      <div className="product-id">
+                        <label htmlFor="pdt123">
+                          <input
+                            type="checkbox"
+                            value={item.id}
+                            // checked={state.product_ids.foreach(pdId => {
+                            //   if (item.id === pdId) {
+                            //     return true
+                            //   } else {
+                            //     return false;
+                            //   }
+                            // } )}
+                            onChange={handleproductbonus}
+                          />
+                          add to list
+                        </label>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+           </div>
+       }
+          
+
           <button
             className="preview"
             onClick={() => {

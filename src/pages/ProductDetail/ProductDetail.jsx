@@ -7,6 +7,9 @@ import img from '../../assets/images/bf.jpeg'
 import { format as timeAgo } from 'timeago.js';
 import moment from "moment";
 import { FaStar } from 'react-icons/fa';
+import { FaEdit } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa';
+
 
   const renderStars = (rating) => {
     const stars = [];
@@ -49,7 +52,7 @@ function ProductDetail() {
         <div className="detail-part1">
           <div className="imagges">
             Product Name
-            <div className="selected-images">{product_name}</div>
+            <div className="selected-images text">{product_name}</div>
           </div>
 
           <div className="imagges">
@@ -66,53 +69,53 @@ function ProductDetail() {
 
           <div className="imagges">
             Car Brand
-            <div className="selected-images"> {car_brand}</div>
+            <div className="selected-images text"> {car_brand}</div>
           </div>
           <div className="imagges">
             Car Model
-            <div className="selected-images"> {car_model}</div>
+            <div className="selected-images text"> {car_model}</div>
           </div>
           <div className="imagges">
             Make Material
-            <div className="selected-images">{ make_material}</div>
+            <div className="selected-images text">{ make_material}</div>
           </div>
           <div className="imagges">
             Category
-            <div className="selected-images">{category}</div>
+            <div className="selected-images text">{category}</div>
           </div>
         </div>
         <div className="detail-part2 pd2">
           <div className="imagges">
             Category Brand
-            <div className="selected-images"> {category_brand?category_brand:'not wheel'}</div>
+            <div className="selected-images text"> {category_brand?category_brand:'not wheel'}</div>
           </div>
           <div className="imagges">
             Wheel Size
-            <div className="selected-images">{wheel_size}</div>
+            <div className="selected-images text">{wheel_size}</div>
           </div>
 
           <div className="imagges">
             Fit-Position
-            <div className="selected-images">{fit_position}</div>
+            <div className="selected-images text">{fit_position}</div>
           </div>
 
           <div className="imagges">
             Fitment
-            <div className="selected-images">{ fitment}</div>
+            <div className="selected-images text">{ fitment}</div>
           </div>
           <div className="imagges">
             Price
-            <div className="selected-images"> {price}</div>
+            <div className="selected-images text"> {price}</div>
           </div>
           <div className="imagges">
             Quantity
-            <div className="selected-images"> {quantity_left}</div>
+            <div className="selected-images text"> {quantity_left}</div>
           </div>
         </div>
         </div>
         <div className="imagges pdd">
         <h3>Description</h3>
-        <div className="selected-images Description"> {description}</div>
+        <div className="selected-images Description "> {description}</div>
         </div>
         <div className={`productReviews ${ open ? 'open' : 'close'}`}>
           <div className='productReview'>Reviews</div>
@@ -135,8 +138,13 @@ function ProductDetail() {
               }
           </div>
         </div>
-        <button className="editbtn" onClick={routeToEditPage}> Edit </button>
-        <button className="deletebtn" > delete </button>
+       <button className="editbtn" onClick={routeToEditPage}>
+  <FaEdit />
+</button>
+<button className="deletebtn">
+  <FaTrash />
+</button>
+
     </div>
       
     </div>
