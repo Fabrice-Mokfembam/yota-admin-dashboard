@@ -131,7 +131,7 @@ function ProductList() {
                 <div className="product_short_description">
                   {item.description.slice(0, 40) + "...read more"}
                 </div>
-                <div className="product_prize">{item.price}</div>
+                <div className="product_prize">${item.price}</div>
 
                 <div className="product_edit_delete">
                   <button className="product_view Pbtn" onClick={() => routeToProductDetail(item)}>View</button>

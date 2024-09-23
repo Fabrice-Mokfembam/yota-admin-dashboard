@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
 import './auth.css';
 import logo from '../../assets/images/load.svg';
+import { useState } from 'react';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -20,6 +20,7 @@ function Login() {
       </div>
       <div className="login-form-section">
         <form onSubmit={handleLogin} className="login-form">
+          <img src={logo} alt="YotaPerformance Logo" className="login-logo-small" />
           <h1>Admin Login</h1>
           <div className="form-group">
             <label htmlFor="username">Username</label>
@@ -51,7 +52,9 @@ function Login() {
               required
             />
           </div>
-          <button type="submit" className="login-button">Login</button>
+          <button type="submit" className="login-button">
+            Login
+          </button>
         </form>
       </div>
     </div>

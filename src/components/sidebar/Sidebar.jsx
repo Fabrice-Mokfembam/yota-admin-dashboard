@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "./sidebar.css";
-import { NavLink,Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
-import { BsHouseDoor, BsFillArchiveFill, BsFillChatSquareTextFill, BsListUl, BsGearFill, BsCardChecklist } from "react-icons/bs";
-import { BsArrowRight } from "react-icons/bs";
-import { MdRateReview } from "react-icons/md";
+// Importing new icons from React Icons
+import { AiOutlineHome, AiOutlineShoppingCart, AiOutlineMessage, AiOutlineRight, AiOutlineSetting, AiOutlineCreditCard } from "react-icons/ai";
+import { FiBox, FiList, FiUsers, FiArrowRight } from "react-icons/fi";
 
 function Sidebar({ sidebarRef }) {
   const [isProductActive, setIsProductActive] = useState(false);
@@ -17,7 +17,7 @@ function Sidebar({ sidebarRef }) {
         <ul className="list-items">
           <li>
             <NavLink exact='true' to="/" activeClassName="active">
-              <BsHouseDoor className="sidebar-icons" /> Home
+              <AiOutlineHome className="sidebar-icons" /> Home
             </NavLink>
           </li>
           <li
@@ -26,8 +26,8 @@ function Sidebar({ sidebarRef }) {
             }}
           >
             <Link  activeClassName="active">
-              <BsFillArchiveFill className="sidebar-icons" /> Products
-              <BsArrowRight
+              <FiBox className="sidebar-icons" /> Products
+              <AiOutlineRight
                 onClick={() => {
                   setIsProductActive(!isProductActive);
                 }}
@@ -42,7 +42,7 @@ function Sidebar({ sidebarRef }) {
               <ul>
                 <li>
                   <NavLink to="/products/list" activeClassName="active">
-                    <BsListUl className="sidebar-icons" /> Product List
+                    <FiList className="sidebar-icons" /> Product List
                   </NavLink>
                 </li>
                 <li>
@@ -50,7 +50,7 @@ function Sidebar({ sidebarRef }) {
                     to="/products/add-product"
                     activeClassName="active"
                   >
-                    <BsListUl className="sidebar-icons" /> Add Products
+                    <FiList className="sidebar-icons" /> Add Products
                   </NavLink>
                 </li>
               </ul>
@@ -58,27 +58,27 @@ function Sidebar({ sidebarRef }) {
           )}
           <li>
             <NavLink to="/orders" activeClassName="active">
-              <BsFillArchiveFill className="sidebar-icons" /> Orders
+              <AiOutlineShoppingCart className="sidebar-icons" /> Orders
             </NavLink>
           </li>
           <li>
             <NavLink to="/chats" activeClassName="active">
-              <BsFillChatSquareTextFill className="sidebar-icons" /> Messages
+              <AiOutlineMessage className="sidebar-icons" /> Messages
             </NavLink>
           </li>
           <li>
             <NavLink to="/bonuses" activeClassName="active">
-              <BsGearFill className="sidebar-icons" /> Bonus Settings
+              <AiOutlineSetting className="sidebar-icons" /> Bonus Settings
             </NavLink>
           </li>
           <li>
             <NavLink to="/card-details" activeClassName="active">
-              <BsCardChecklist className="sidebar-icons" /> Card Details
+              <AiOutlineCreditCard className="sidebar-icons" /> Card Details
             </NavLink>
           </li>
           <li>
             <NavLink to="/customers" activeClassName="active">
-              <MdRateReview className="sidebar-icons" /> Customers
+              <FiUsers className="sidebar-icons" /> Customers
             </NavLink>
           </li>
         </ul>

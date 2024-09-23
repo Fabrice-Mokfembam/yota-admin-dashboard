@@ -80,9 +80,9 @@ function Bonus() {
     <div className="home-container bonus">
       <PageDetail page={bonus} />
 
-      <div className="bonus-options">
+      <div className="tabs">
         <div
-          className={`option1 ${option1 && option3 ? "red-bg" : null}`}
+          className={`option1 ${option1 && option3 ? "red-bg" : null} tab`}
           onClick={() => {
             setOption1(true);
             setOption3(true);
@@ -92,7 +92,7 @@ function Bonus() {
           General Bonus
         </div>
         <div
-          className={`option2 ${option2 ? "red-bg" : null}`}
+          className={`option2 ${option2 ? "red-bg" : null} tab`}
           onClick={() => {
             setOption2(true);
             setOption3(false);
@@ -100,6 +100,12 @@ function Bonus() {
         >
           Assign bonus to particular Products
         </div>
+         <div
+          className="underline"
+          style={{
+            transform: `translateX(${option3 ? 0 : 98}%)`,
+          }}
+        />
       </div>
         
       {option1 && (
@@ -231,7 +237,7 @@ function Bonus() {
               setPreviewDetail(!previewDetail);
             }}
           >
-         {!previewDetail ? "preview bonus details" : "cancel preview"}
+         {!previewDetail ? "Preview bonus details" : "cancel preview"}
           </button>
           {previewDetail && (
             <div className="preview-details">
@@ -282,7 +288,6 @@ function Bonus() {
         </div>
         
       )}
-      <button className="btnSbonus" onClick={gotoBonuses}>See all Bonuses</button>
     
     </div>
   );

@@ -1,13 +1,13 @@
 .Header-container {
-  width: 100%;
-  height: 60px;
-  background-color: var(--orangebg-font-color);
-  padding: 10px 20px;
+  height: 65px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(197, 194, 194, 0.4);
-  box-shadow: 0px 5px 8px var(--boxshadow-grey);
+  align-items: center;
+  padding: 4px 10px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1000;
 }
 
 .logo-container {
@@ -15,29 +15,44 @@
   align-items: center;
 }
 
+.logo-container img {
+  width: 160px;
+  height: auto;
+  position: absolute;
+  top: -7px;
+}
+
 .nav-icons {
-  height: inherit;
   display: flex;
+  height: inherit;
   align-items: center;
-  padding: 0 20px;
   gap: 20px;
 }
 
-.nav-icons .search-header-container {
+.search-header-container {
+  display: flex;
+  align-items: center;
   position: relative;
 }
 
-.search-header-container .input-header-container {
+.input-header-container {
+  display: flex;
+  align-items: center;
   position: relative;
 }
 
 #input-1 {
-  width: 250px;
-  height: 30px;
-  border-radius: 7px;
+  width: 350px;
+  padding: 6px 18px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 1rem;
   outline: none;
-  border: none;
-  background-color: var(--bg-grey);
+  transition: border-color 0.3s ease;
+}
+
+#input-1:focus {
+  border-color: var(--orange-bgcolor);
 }
 
 .input-header-container .search {
@@ -46,65 +61,60 @@
   right: 15px;
 }
 
-.icons {
-  font-size: var(--icons-font-size);
-  color: var(--orange-bgcolor);
+.notification-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
-.nav-icons .notification-container {
-  position: relative;
-  padding: 1.8px 6px;
-  border-radius: 7px;
-  box-shadow: 0px 0px 5px var(--bg-grey);
-  align-items: center;
+.notification-icon {
+  font-size: 1.5rem;
+  color: #333;
 }
 
 .notification-container span {
   position: absolute;
-  font-size: small;
-  background-color: var(--orange-bgcolor);
-  color: var(--orangebg-font-color);
-  padding: 5px;
-  width: 18px;
-  height: 18px;
+  top: -5px;
+  right: -5px;
+  background-color: #ff0000;
+  color: #fff;
   border-radius: 50%;
-  top: -10px;
-  right: -10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 0.6px 6px;
+  font-size: 0.8rem;
+  font-weight: bold;
 }
 
-.nav-icons .profile-header-container {
-  width: 120px;
-  height: inherit;
+.profile-header-container {
   display: flex;
   align-items: center;
-  gap: 6px;
+  cursor: pointer;
 }
 
-@media screen and (max-width: 1034px) {
-  .nav-icons .profile-header-container {
-    display: none;
-  }
-}
-
-.profile-header-container .image-header-container {
-  width: 30px;
-  height: 30px;
+.image-header-container {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
 }
 
-.image-header-container img {
+#admin-img {
   width: 100%;
   height: 100%;
-  border-radius: inherit;
   object-fit: cover;
-  display: block;
 }
 
 .profile-name span {
-  font-weight: var(--font-weight-bold);
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+@media screen and (max-width: 1034px) {
+  .profile-name {
+    display: none;
+  }
 }
 
 .nav-icons .hamburger-container,
@@ -118,16 +128,16 @@
 
 .hamburger,
 .menuX {
-  font-size: 30px;
+  font-size: 33px;
 }
 
 @media screen and (max-width: 1034px) {
   .nav-icons .hamburger-container {
     display: block;
-    margin-top: 15px;
+    margin-top: 28px;
   }
   .menuX-container {
-    margin-top: 17px;
+    margin-top: 29px;
   }
   .visible {
     display: block;
@@ -149,5 +159,34 @@
   }
   .input-header-container .search {
     display: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .logo-container img {
+    width: 135px;
+    height: auto;
+    position: absolute;
+    top: -7px;
+  }
+
+  .notification-icon {
+    font-size: 1.3rem;
+  }
+
+  .notification-container span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.6px 5px;
+    font-size: 0.6rem;
+    font-weight: bold;
+  }
+  .image-header-container {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
   }
 }
