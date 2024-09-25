@@ -607,69 +607,69 @@ function ProductEdit() {
             X
           </button>
           {
-            <div className="detail-wrapper">
-              <div className="detail-part1">
-                <div className="imagges">
+            <div className="details-wrapper">
+              <div className="details-part1">
+                <div className="details-images">
                   Product Name
-                  <div className="selected-images">{product_name}</div>
+                  <div className="details-selected-images">{product_name}</div>
                 </div>
 
-                <div className="imagges">
+                <div className="details-imagges">
                   selected images
-                  <div className="selected-images">
+                  <div className="details-selected-images">
                     {[...images,...imgUrl].map((image) => {
                       return <img src={image} alt="" />;
                     })}
                   </div>
                 </div>
 
-                <div className="imagges">
+                <div className="details-imagges">
                   Car Brand
-                  <div className="selected-images"> {CarBrand}</div>
+                  <div className="details-selected-images"> {CarBrand}</div>
                 </div>
-                <div className="imagges">
+                <div className="details-imagges">
                   Car Model
-                  <div className="selected-images"> {selectCarModel}</div>
+                  <div className="details-selected-images"> {selectCarModel}</div>
                 </div>
-                <div className="imagges">
+                <div className="details-imagges">
                   Make Material
-                  <div className="selected-images"> {MakeMaterial}</div>
+                  <div className="details-selected-images"> {MakeMaterial}</div>
                 </div>
-                <div className="imagges">
+                <div className="details-imagges">
                   Category Brand
-                  <div className="selected-images"> {category_brand}</div>
+                  <div className="details-selected-images"> {category_brand}</div>
                 </div>
-                <div className="imagges">
+                <div className="details-imagges">
                   Category
-                  <div className="selected-images"> {selectedCategory}</div>
+                  <div className="details-selected-images"> {selectedCategory}</div>
                 </div>
               </div>
-              <div className="detail-part2">
-                <div className="imagges">
+              <div className="details-detail-part2">
+                <div className="details-imagges">
                   Wheel Size
-                  <div className="selected-images">{WheelSize}</div>
+                  <div className="details-selected-images">{WheelSize}</div>
                 </div>
 
-                <div className="imagges">
+                <div className="details-imagges">
                   Fit-Position
-                  <div className="selected-images">{selectedFitPosition}</div>
+                  <div className="details-selected-images">{selectedFitPosition}</div>
                 </div>
 
-                <div className="imagges">
+                <div className="details-imagges">
                   Description
-                  <div className="selected-images"> {description}</div>
+                  <div className="details-selected-images"> {description}</div>
                 </div>
-                <div className="imagges">
+                <div className="details-imagges">
                   Fitment
-                  <div className="selected-images"> {fitment}</div>
+                  <div className="details-selected-images"> {fitment}</div>
                 </div>
-                <div className="imagges">
+                <div className="details-imagges">
                   Price
-                  <div className="selected-images"> {Price}</div>
+                  <div className="details-selected-images"> {Price}</div>
                 </div>
-                <div className="imagges">
+                <div className="details-imagges">
                   Quantity
-                  <div className="selected-images"> {quantity_left}</div>
+                  <div className="details-selected-images"> {quantity_left}</div>
                 </div>
 
                 <button

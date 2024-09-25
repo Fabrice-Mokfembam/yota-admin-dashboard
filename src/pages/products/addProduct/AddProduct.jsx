@@ -598,83 +598,84 @@ function AddProduct({}) {
             X
           </button>
           {
-            <div className="detail-wrapper">
-              <div className="detail-part1">
-                <div className="imagges">
-                  Product Name
-                  <div className="selected-images">{product_name}</div>
-                </div>
+         <div className="details-wrapper">
+  <div className="details-part1">
+    <div className="details-images">
+      Product Name
+      <div className="details-selected-images">{product_name}</div>
+    </div>
 
-                <div className="imagges">
-                  selected images
-                  <div className="selected-images">
-                    {imgUrl.map((image) => {
-                      return <img src={image} alt="" />;
-                    })}
-                  </div>
-                </div>
+    <div className="details-images">
+      Selected Images
+      <div className="details-selected-images">
+        {imgUrl.map((image) => {
+          return <img src={image} alt="" />;
+        })}
+      </div>
+    </div>
 
-                <div className="imagges">
-                  Car Brand
-                  <div className="selected-images"> {CarBrand}</div>
-                </div>
-                <div className="imagges">
-                  Car Model
-                  <div className="selected-images"> {selectCarModel}</div>
-                </div>
-                <div className="imagges">
-                  Make Material
-                  <div className="selected-images"> {MakeMaterial}</div>
-                </div>
-                <div className="imagges">
-                  Category Brand
-                  <div className="selected-images"> {category_brand}</div>
-                </div>
-                <div className="imagges">
-                  Category
-                  <div className="selected-images"> {selectedCategory}</div>
-                </div>
-              </div>
-              <div className="detail-part2">
-                <div className="imagges">
-                  Wheel Size
-                  <div className="selected-images">{WheelSize}</div>
-                </div>
+    <div className="details-images">
+      Car Brand
+      <div className="details-selected-images">{CarBrand}</div>
+    </div>
+    <div className="details-images">
+      Car Model
+      <div className="details-selected-images">{selectCarModel}</div>
+    </div>
+    <div className="details-images">
+      Make Material
+      <div className="details-selected-images">{MakeMaterial}</div>
+    </div>
+    <div className="details-images">
+      Category Brand
+      <div className="details-selected-images">{category_brand}</div>
+    </div>
+    <div className="details-images">
+      Category
+      <div className="details-selected-images">{selectedCategory}</div>
+    </div>
+  </div>
+  <div className="details-part2">
+    <div className="details-images">
+      Wheel Size
+      <div className="details-selected-images">{WheelSize}</div>
+    </div>
 
-                <div className="imagges">
-                  Fit-Position
-                  <div className="selected-images">{selectedFitPosition}</div>
-                </div>
+    <div className="details-images">
+      Fit-Position
+      <div className="details-selected-images">{selectedFitPosition}</div>
+    </div>
 
-                <div className="imagges">
-                  Description
-                  <div className="selected-images"> {description}</div>
-                </div>
-                <div className="imagges">
-                  Fitment
-                  <div className="selected-images"> {fitment}</div>
-                </div>
-                <div className="imagges">
-                  Price
-                  <div className="selected-images"> {Price}</div>
-                </div>
-                <div className="imagges">
-                  Quantity
-                  <div className="selected-images"> {quantity_left}</div>
-                </div>
+    <div className="details-images">
+      Description
+      <div className="details-selected-images">{description}</div>
+    </div>
+    <div className="details-images">
+      Fitment
+      <div className="details-selected-images">{fitment}</div>
+    </div>
+    <div className="details-images">
+      Price
+      <div className="details-selected-images">{Price}</div>
+    </div>
+    <div className="details-images">
+      Quantity
+      <div className="details-selected-images">{quantity_left}</div>
+    </div>
 
-                <button
-                  className="Add-to-db"
-                  onClick={() => {
-                    handleSubmit();
-                    setShowProductDetails(false);
-                    setTimeout(retrieveProducts, 1000);
-                  }}
-                >
-                  Add
-                </button>
-              </div>
-            </div>
+    <button
+      className="add-to-db"
+      onClick={() => {
+        handleSubmit();
+        setShowProductDetails(false);
+        setTimeout(retrieveProducts, 1000);
+      }}
+    >
+      Add
+    </button>
+  </div>
+</div>
+
           }
         </div>
       )}

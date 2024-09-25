@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import  { useState, useEffect, useRef } from "react";
 import Sidebar from "./components/sidebar/Sidebar";
 import "./App.css";
 import Chats from "./pages/chats/Chats";

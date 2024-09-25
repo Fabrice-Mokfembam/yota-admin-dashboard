@@ -43,12 +43,35 @@ import BarChart from "../../components/barChart/BarChart";
 //         getBonus();
 //     });
 
+const homeReview = [
+  {
+    createdAt: '04/03/2003',
+    user_text: 'This product is top notch, in this era'
+  },
+  {
+    createdAt: '04/03/2033',
+    user_text: 'This product is top notch, in this era'
+  },
+  {
+    createdAt: '12/23/2003',
+    user_text: 'This product is top notch, in this era'
+  },
+  {
+    createdAt: '05/33/2013',
+    user_text:'This product is top notch, in this era'
+  },
+  {
+    createdAt: '09/03/2056',
+    user_text:'This product is top notch, in this era'
+  }
+]
+
 
 function Home({ reviews }) {
   const { products, setLoading, loading } = useContext(productContext);
   const { users } = useContext(userContext);
   const { orders } = useContext(ordersContext);
-  const [homeReview, setHomeReview] = useState([]);
+  // const [homeReview, setHomeReview] = useState([]);
 
   const routeTo = useNavigate();
 
@@ -166,7 +189,7 @@ function Home({ reviews }) {
         </div>
         <div className="home-div2">
           <div className="review-highlight">
-            {homeReview.slice(0, 5).map((item) => {
+            {homeReview.map((item) => {
               return (
                 <div className="review-container">
                   <div className="iner">

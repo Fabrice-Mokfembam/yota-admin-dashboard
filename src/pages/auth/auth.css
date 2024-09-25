@@ -1,0 +1,112 @@
+
+.login-container {
+  display: flex;
+  width: 100%;
+  height: 100vh; 
+  overflow: hidden;
+}
+
+.login-image-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #333;
+}
+
+.login-logo {
+  max-width: 80%;
+  height: auto;
+}
+.login-logo-small {
+  display: none;
+}
+
+.login-form-section {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+}
+.login-form{
+    width: 100%;
+}
+.login-form h1 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 36px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  color: #666;
+  font-size: 14px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #555;
+  outline: none;
+}
+
+.login-button {
+  width: 100%;
+  padding: 15px;
+  background-color: #333;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #555;
+}
+
+
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column; 
+  }
+
+  .login-image-section {
+    display: none;
+  }
+
+  .login-form-section {
+    flex: none;
+    width: 100%;
+    height: 100vh;
+    padding: 20px;
+  }
+  .login-form{
+    width: 100%;
+    height: 100vh;
+}
+.login-logo-small{
+    display: block;
+    margin-bottom: 1.5rem;
+}
+}

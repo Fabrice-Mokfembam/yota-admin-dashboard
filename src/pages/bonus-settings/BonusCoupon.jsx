@@ -228,7 +228,7 @@ function BonusCoupon(){
               setPreviewDetail(!previewDetail);
             }}
           >
-         {!previewDetail ? "preview bonus details" : "cancel preview"}
+         {!previewDetail ? "Preview Coupon details" : "cancel preview"}
           </button>
           {previewDetail && (
             <div className="preview-details">
@@ -275,7 +275,6 @@ function BonusCoupon(){
         </div>
         
       )}
-      <button className="btnSbonus" onClick={gotoBonuses}>See all Bonuses</button>
     
     </div>
   );
