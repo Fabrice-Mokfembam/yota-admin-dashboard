@@ -46,7 +46,10 @@
   background: #b6b6b6;
   border-radius: 4px;
 }
-
+.selected-images.imageconn{
+  display: flex;
+  flex-wrap: wrap;
+}
 .selected-images img {
   max-width: 100%;
   border-radius: 8px;

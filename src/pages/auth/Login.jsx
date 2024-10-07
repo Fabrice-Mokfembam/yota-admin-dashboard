@@ -1,17 +1,50 @@
-import './auth.css';
-import logo from '../../assets/images/load.svg';
-import { useState } from 'react';
+// Login.jsx
+import "./auth.css";
+import logo from "../../assets/images/load.svg";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom"; 
+import { useContext } from "react";
+import { adminContext } from "../../context/adminContext";
+import axios from "axios";
 
 function Login() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate(); 
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    
-    console.log('Logging in:', { username, email, password });
+  const { setAdmin } = useContext(adminContext);
+
+
+const handleLogin = async (e) => {
+  e.preventDefault();
+
+  const credentials = {
+    email,
+    password,
   };
+
+  try {
+    // Add withCredentials to enable sending/receiving cookies
+    const { data } = await axios.post(
+      "https://yotaperformanceshop.com/yps_server/yps_admin/login",
+      credentials,
+      {
+        withCredentials: true, // Allows cookies to be sent/received
+      }
+    );
+
+    if (data) {
+      setAdmin(data);
+      console.log(data);
+      localStorage.setItem("admin", JSON.stringify(data));
+      navigate("/");
+    } else {
+      console.log("Login failed");
+    }
+  } catch (error) {
+    console.error("Error during login:", error);
+  }
+};
 
   return (
     <div className="login-container">
@@ -20,18 +53,12 @@ function Login() {
       </div>
       <div className="login-form-section">
         <form onSubmit={handleLogin} className="login-form">
-          <img src={logo} alt="YotaPerformance Logo" className="login-logo-small" />
+          <img
+            src={logo}
+            alt="YotaPerformance Logo"
+            className="login-logo-small"
+          />
           <h1>Admin Login</h1>
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </div>
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input

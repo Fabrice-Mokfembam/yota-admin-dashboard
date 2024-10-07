@@ -115,7 +115,7 @@ function Bonus() {
               <div className="swipping-box">
                 {products.map((item) => {
                   return (
-                    <div className="product-select">
+                    <div className="product-select" key={item}>
                       <div className="p-img">
                         <img src={item.images[0]} alt="" />
                       </div>
