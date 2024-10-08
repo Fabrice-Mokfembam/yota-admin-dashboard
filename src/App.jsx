@@ -192,7 +192,8 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: admin ? <Layout /> : <Navigate to="/login" />,
+      element:
+        Object.keys(admin).length !== 0 ? <Layout /> : <Navigate to="/login" />,
       children: [
         { path: "/", element: <Home reviews={reviews} /> },
         { path: "/chats", element: <Chats /> },
