@@ -1,6 +1,6 @@
 import React from "react";
 import "./header.css";
-import me from "../../assets/images/remix1.jpg";
+import me from "../../assets/images/avatar.jpeg";
 import loadsvg from "../../assets/images/load.svg";
 
 import { IoNotificationsOutline } from "react-icons/io5";

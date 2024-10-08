@@ -5,10 +5,12 @@ import FileBase64 from "react-file-base64";
 import PageDetail from "../../../components/PageAlert/PageDetail";
 import { useContext } from "react";
 import { productContext } from "../../../context/productContext";
+import Loader from "../../../components/Loader/Loader";
+import Modal from "../../../components/modal/Modal";
 
 const page = "Add Products";
 
-function AddProduct({}) {
+function AddProduct() {
   const [image, setImage] = useState(null);
   const [imagesArray, setImagesArray] = useState([]);
   const [imgUrl, setImageUrl] = useState([]);
@@ -31,6 +33,13 @@ function AddProduct({}) {
   // states for conditional rendering
   const [wheel, setWheel] = useState(true);
   const [showDetails, setShowProductDetails] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState(false);
+
+    const [modalMessage, setModalMessage] = useState("");
+    const [modalType, setModalType] = useState("");
+    const [showModal, setShowModal] = useState(false);
 
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
@@ -58,7 +67,7 @@ function AddProduct({}) {
     setImagesArray(imageNames);
   };
 
-  const handleImageInsertion = async (event) => {
+  const handleImageInsertion =async  () => {
     const formData = new FormData();
     for (const file of imgFiles) {
       formData.append("imageFiles[]", file);
@@ -131,8 +140,10 @@ function AddProduct({}) {
     setProduct_Name(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     handleImageInsertion()
+    setIsLoading(true)
+    
     try {
       const postData = {
         product_name,
@@ -158,8 +169,20 @@ function AddProduct({}) {
         { maxContentLength: 1000000 }
       );
       console.log("product created", response.data);
+      setStatus('success')
+      setIsLoading(false);
+      setShowModal(true);
+    
+       
       setProducts((products2) => [...products2, postData]);
+      clearAllFields();
+       window.location.reload();
     } catch (error) {
+      setStatus('failed')
+      setIsLoading(false);
+      setModalMessage("failed to add product !");
+      setModalType("error"); // or 'deleted', 'edited', 'error' based on the operation
+      setShowModal(true);
       console.log("error", error);
     }
   };
@@ -173,9 +196,36 @@ function AddProduct({}) {
     }
   };
 
+  const clearAllFields = () => {
+    setImage(null);
+    setImagesArray([]);
+    setImageUrl([]);
+    setImgFiles([]);
+    setSelectedCategory("Wheel");
+    setSelectedFitPosition("");
+    setDescription("");
+    setSelectModel("");
+    setCarBrand("");
+    setMakeMaterial("");
+    setFitment("");
+    setPrice(0);
+    setQuantity_left(0);
+    setWheelSize("no size");
+    setProduct_Name("");
+    setCategoryBrand("");
+  };
+
+
   return (
     <div className="home-container add-product-container">
       <PageDetail page={page} />
+      {isLoading && <Loader message={'uploading product'} />}
+      {showModal && (
+        <Modal
+          message={modalMessage}
+          type={modalType}
+          onClose={()=>{setShowModal(false)}}
+        />)}
       <div className="main-add-product-conatainer">
         <div className="firstpart part">
           <div className="product-info">Product-Info</div>
@@ -270,11 +320,11 @@ function AddProduct({}) {
               <label>
                 <input
                   type="radio"
-                  value="Corolla GR"
-                  checked={selectCarModel === "Corolla GR"}
+                  value="Toyota Corolla GR"
+                  checked={selectCarModel === "Toyota Corolla GR"}
                   onChange={handleCarModelChange}
                 />
-                Corolla GR
+                Toyota Corolla GR
               </label>
               <label>
                 <input
@@ -557,7 +607,12 @@ function AddProduct({}) {
             Price($)
             <div className="number ">
               <label htmlFor="number">
-                <input type="number" id="number" className="category-input" onChange={handlePriceChange} />
+                <input
+                  type="number"
+                  id="number"
+                  className="category-input"
+                  onChange={handlePriceChange}
+                />
               </label>
             </div>
           </div>
@@ -598,84 +653,91 @@ function AddProduct({}) {
             X
           </button>
           {
-         <div className="details-wrapper">
-  <div className="details-part1">
-    <div className="details-images">
-      Product Name
-      <div className="details-selected-images">{product_name}</div>
-    </div>
+            <div className="details-wrapper">
+              <div className="details-part1">
+                <div className="details-images">
+                  Product Name
+                  <div className="details-selected-images">{product_name}</div>
+                </div>
 
-    <div className="details-images">
-      Selected Images
-      <div className="details-selected-images">
-        {imgUrl.map((image) => {
-          return <img src={image} alt="" />;
-        })}
-      </div>
-    </div>
+                <div className="details-images">
+                  Selected Images
+                  <div className="details-selected-images">
+                    {imgUrl.map((image) => {
+                      return <img src={image} alt="" />;
+                    })}
+                  </div>
+                </div>
 
-    <div className="details-images">
-      Car Brand
-      <div className="details-selected-images">{CarBrand}</div>
-    </div>
-    <div className="details-images">
-      Car Model
-      <div className="details-selected-images">{selectCarModel}</div>
-    </div>
-    <div className="details-images">
-      Make Material
-      <div className="details-selected-images">{MakeMaterial}</div>
-    </div>
-    <div className="details-images">
-      Category Brand
-      <div className="details-selected-images">{category_brand}</div>
-    </div>
-    <div className="details-images">
-      Category
-      <div className="details-selected-images">{selectedCategory}</div>
-    </div>
-  </div>
-  <div className="details-part2">
-    <div className="details-images">
-      Wheel Size
-      <div className="details-selected-images">{WheelSize}</div>
-    </div>
+                <div className="details-images">
+                  Car Brand
+                  <div className="details-selected-images">{CarBrand}</div>
+                </div>
+                <div className="details-images">
+                  Car Model
+                  <div className="details-selected-images">
+                    {selectCarModel}
+                  </div>
+                </div>
+                <div className="details-images">
+                  Make Material
+                  <div className="details-selected-images">{MakeMaterial}</div>
+                </div>
+                <div className="details-images">
+                  Category Brand
+                  <div className="details-selected-images">
+                    {category_brand}
+                  </div>
+                </div>
+                <div className="details-images">
+                  Category
+                  <div className="details-selected-images">
+                    {selectedCategory}
+                  </div>
+                </div>
+              </div>
+              <div className="details-part2">
+                <div className="details-images">
+                  Wheel Size
+                  <div className="details-selected-images">{WheelSize}</div>
+                </div>
 
-    <div className="details-images">
-      Fit-Position
-      <div className="details-selected-images">{selectedFitPosition}</div>
-    </div>
+                <div className="details-images">
+                  Fit-Position
+                  <div className="details-selected-images">
+                    {selectedFitPosition}
+                  </div>
+                </div>
 
-    <div className="details-images">
-      Description
-      <div className="details-selected-images">{description}</div>
-    </div>
-    <div className="details-images">
-      Fitment
-      <div className="details-selected-images">{fitment}</div>
-    </div>
-    <div className="details-images">
-      Price
-      <div className="details-selected-images">{Price}</div>
-    </div>
-    <div className="details-images">
-      Quantity
-      <div className="details-selected-images">{quantity_left}</div>
-    </div>
+                <div className="details-images">
+                  Description
+                  <div className="details-selected-images">{description}</div>
+                </div>
+                <div className="details-images">
+                  Fitment
+                  <div className="details-selected-images">{fitment}</div>
+                </div>
+                <div className="details-images">
+                  Price
+                  <div className="details-selected-images">{Price}</div>
+                </div>
+                <div className="details-images">
+                  Quantity
+                  <div className="details-selected-images">{quantity_left}</div>
+                </div>
 
-    <button
-      className="add-to-db"
-      onClick={() => {
-        handleSubmit();
-        setShowProductDetails(false);
-        setTimeout(retrieveProducts, 1000);
-      }}
-    >
-      Add
-    </button>
-  </div>
-</div>
-
+                <button
+                  className="add-to-db"
+                  onClick={() => {
+                    handleSubmit();
+                    setShowProductDetails(false);
+                    setTimeout(retrieveProducts, 1000);
+                  }}
+                >
+                  Add
+                </button>
+              </div>
+            </div>
           }
         </div>
       )}
