@@ -1,50 +1,49 @@
 // Login.jsx
 import "./auth.css";
 import logo from "../../assets/images/load.svg";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom"; 
-import { useContext } from "react";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { adminContext } from "../../context/adminContext";
 import axios from "axios";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai"; // Import eye icons
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); 
+  const [showPassword, setShowPassword] = useState(false); // Toggle password visibility
+  const navigate = useNavigate();
 
   const { setAdmin } = useContext(adminContext);
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-const handleLogin = async (e) => {
-  e.preventDefault();
+    const credentials = {
+      email,
+      password,
+    };
 
-  const credentials = {
-    email,
-    password,
-  };
+    try {
+      const { data } = await axios.post(
+        "https://yotaperformanceshop.com/yps_server/yps_admin/login",
+        credentials,
+        {
+          withCredentials: true, // Allows cookies to be sent/received
+        }
+      );
 
-  try {
-    // Add withCredentials to enable sending/receiving cookies
-    const { data } = await axios.post(
-      "https://yotaperformanceshop.com/yps_server/yps_admin/login",
-      credentials,
-      {
-        withCredentials: true, // Allows cookies to be sent/received
+      if (data) {
+        setAdmin(data);
+        console.log(data);
+        localStorage.setItem("admin", JSON.stringify(data));
+        navigate("/");
+      } else {
+        console.log("Login failed");
       }
-    );
-
-    if (data) {
-      setAdmin(data);
-      console.log(data);
-      localStorage.setItem("admin", JSON.stringify(data));
-      navigate("/");
-    } else {
-      console.log("Login failed");
+    } catch (error) {
+      console.error("Error during login:", error);
     }
-  } catch (error) {
-    console.error("Error during login:", error);
-  }
-};
+  };
 
   return (
     <div className="login-container">
@@ -71,13 +70,21 @@ const handleLogin = async (e) => {
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="password-wrapper">
+              <input
+                type={showPassword ? "text" : "password"} // Toggle input type
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <span
+                className="password-toggle-icon"
+                onClick={() => setShowPassword(!showPassword)} // Toggle visibility
+              >
+                {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+              </span>
+            </div>
           </div>
           <button type="submit" className="login-button">
             Login
