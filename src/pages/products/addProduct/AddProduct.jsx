@@ -176,7 +176,6 @@ function AddProduct() {
        
       setProducts((products2) => [...products2, postData]);
       clearAllFields();
-       window.location.reload();
     } catch (error) {
       setStatus('failed')
       setIsLoading(false);

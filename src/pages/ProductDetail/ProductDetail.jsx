@@ -64,7 +64,6 @@ function ProductDetail() {
          prevProducts.filter((item) => item.id !== id)
        );
        setIsLoading(false);
-        window.location.reload();
         gotoproducts();
      } catch (error) {
        console.error("Error deleting data:", error);

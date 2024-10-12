@@ -88,7 +88,6 @@ function ProductList() {
         prevProducts.filter((item) => item.id !== id)
       );
       setIsLoading(false);
-       window.location.reload();
     } catch (error) {
       console.error("Error deleting data:", error);
       setLoading(false);
