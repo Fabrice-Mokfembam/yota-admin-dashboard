@@ -16,7 +16,7 @@ import {
   RouterProvider,
   Outlet,
   Navigate,
-} from "react-router-dom"; // Import Navigate
+} from "react-router-dom"; 
 import Reviews from "./pages/Reviews/Reviews";
 import axios from "axios";
 import PersonMessage from "./components/PersonMessage/PersonMessage";
@@ -112,6 +112,7 @@ function App() {
         "https://yotaperformanceshop.com/yps_server/admin/get_all_bonus"
       );
       setBonuses(data);
+      console.log('bonuses',data)
     } catch (error) {
       console.error("Error fetching bonus:", error);
     }

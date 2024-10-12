@@ -5,6 +5,7 @@ import { productContext } from "../../context/productContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
+import Loader from "../../components/Loader/Loader";
 
 
 function Bonus() {
@@ -24,6 +25,9 @@ function Bonus() {
   const [previewDetail, setPreviewDetail] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [bonus_type, setBonusType] = useState("");
+
+  const [isLoading, setIsLoading] = useState(false);
+  
 
   function handleproductbonus(e) {
     const productId = e.target.value;
@@ -48,7 +52,8 @@ function Bonus() {
     routeTo('/bonuses');
   }
 
- async function createBonus() {
+  async function createBonus() {
+    setIsLoading(true);
       const body = {
 	       products: selectedProducts,
 	       value: value,
@@ -65,21 +70,38 @@ function Bonus() {
       body.bonus_name = selectedOptionother;
     }
 
+
    try {
-      console.log(body);
-      await axios.post('https://yotaperformanceshop.com/yps_server/admin/add_bonus', body);
-      console.log('successfully creation');
+    
+    const data =  await axios.post('https://yotaperformanceshop.com/yps_server/admin/add_bonus', body);
+     console.log('successfully creation',data);
+     
+     setIsLoading(false)
+    setPreviewDetail(false)
+     clearValues()
     } catch (error) {
-      console.log(error); 
+     console.log(error); 
+     setIsLoading(false)
     }
    
   }
 
+   const clearValues = () => {
+     setSelectedOption("");
+     setValue("");
+     setType("");
+     setCode("");
+     setEndDate("");
+     setSelectedProducts([]);
+     setBonusType("");
+     setPreviewDetail(false);
+   };
 
   return (
     <div className="home-container bonus">
       <PageDetail page={bonus} />
 
+      { isLoading && <Loader message={'creating bonus'}/>}
       <div className="tabs">
         <div
           className={`option1 ${option1 && option3 ? "red-bg" : null} tab`}

@@ -1,8 +1,9 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import PageDetail from "../../components/PageAlert/PageDetail";
 import { productContext } from "../../context/productContext";
 import axios from "axios";
+import Loader from "../../components/Loader/Loader";
 
 function BonusEdit() {
   const bonus = "bonus-edit";
@@ -14,7 +15,9 @@ function BonusEdit() {
   const [option2, setOption2] = useState(false);
   const [option3, setOption3] = useState(true);
   const [selectedOption, setSelectedOption] = useState("");
-  const [selectedOptionother, setSelectedOptionother] = useState(state.bonus_name);
+  const [selectedOptionother, setSelectedOptionother] = useState(
+    state.bonus_name
+  );
   const [coupon, setCoupon] = useState(state.code);
   const [bonus_type, setBonustype] = useState(state.bonus_type);
   const [value, setValue] = useState(state.value);
@@ -22,6 +25,7 @@ function BonusEdit() {
   const [endDate, setEndDate] = useState(state.endDate);
   const [previewDetail, setPreviewDetail] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleproductbonus(e) {
     const productId = e.target.value;
@@ -47,6 +51,7 @@ function BonusEdit() {
   }
 
   async function updateBonus() {
+    setIsLoading(true);
     const body = {
       product_ids: selectedProducts,
       bonus_type,
@@ -54,7 +59,7 @@ function BonusEdit() {
       code: coupon,
       type,
       endDate: endDate,
-      id:state.id
+      id: state.id,
     };
 
     if (selectedOption === "black-friday") {
@@ -64,23 +69,31 @@ function BonusEdit() {
     }
 
     try {
-      console.log(body)
-      const {data} = await axios.post('https://yotaperformanceshop.com/yps_server/admin/update_bonus', body);
+      console.log(body);
+      const { data } = await axios.post(
+        "https://yotaperformanceshop.com/yps_server/admin/update_bonus",
+        body
+      );
       console.log(data);
+      setIsLoading(false);
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 900);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   }
   return (
     <div className="home-container bonus">
       <PageDetail page={bonus} />
 
+      {isLoading && <Loader message={'editing bonus'}/>}
+
       {option1 && (
         <div className="option-box box1-option">
-          {option2 && (
-<></>
-          )}
-          
+          {option2 && <></>}
 
           <div className="title-addbox2">Bonus Title</div>
           <div className="title-box">
@@ -198,42 +211,41 @@ function BonusEdit() {
               }}
             />
           </div>
-          {
-            coupon ? null : <div className=" value add-images">
-            <div className="title-addbox2">Add products to bonus</div>
-                       <div className="swiping-box-container">
-              <div className="swipping-box">
-                {products.map((item) => {
-                  return (
-                    <div className="product-select">
-                      <div className="p-img">
-                        <img src={item.images[0]} alt=""/>
+          {coupon ? null : (
+            <div className=" value add-images">
+              <div className="title-addbox2">Add products to bonus</div>
+              <div className="swiping-box-container">
+                <div className="swipping-box">
+                  {products.map((item, index) => {
+                    return (
+                      <div className="product-select" key={index}>
+                        <div className="p-img">
+                          <img src={item.images[0]} alt="" />
+                        </div>
+                        <div className="product-id">
+                          <label htmlFor="pdt123">
+                            <input
+                              type="checkbox"
+                              value={item.id}
+                              // checked={state.product_ids.foreach(pdId => {
+                              //   if (item.id === pdId) {
+                              //     return true
+                              //   } else {
+                              //     return false;
+                              //   }
+                              // } )}
+                              onChange={handleproductbonus}
+                            />
+                            add to list
+                          </label>
+                        </div>
                       </div>
-                      <div className="product-id">
-                        <label htmlFor="pdt123">
-                          <input
-                            type="checkbox"
-                            value={item.id}
-                            // checked={state.product_ids.foreach(pdId => {
-                            //   if (item.id === pdId) {
-                            //     return true
-                            //   } else {
-                            //     return false;
-                            //   }
-                            // } )}
-                            onChange={handleproductbonus}
-                          />
-                          add to list
-                        </label>
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
             </div>
-           </div>
-       }
-          
+          )}
 
           <button
             className="preview"
@@ -300,9 +312,6 @@ function BonusEdit() {
           )}
         </div>
       )}
-      <button className="btnSbonus" onClick={gotoBonuses}>
-        See all Bonuses
-      </button>
     </div>
   );
 }

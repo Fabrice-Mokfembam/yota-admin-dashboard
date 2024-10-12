@@ -1,11 +1,11 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { BsPencilSquare, BsTrash, BsPlus } from "react-icons/bs";
 import PageDetail from "../../components/PageAlert/PageDetail";
 import { useNavigate } from "react-router-dom";
 import "./Bonuses.css";
 import { bonusContext } from "../../context/bonusContext";
 import axios from "axios";
-
+import Loader from "../../components/Loader/Loader";
 
 function Bonuses() {
   const [activeTab, setActiveTab] = useState("bonuses");
@@ -13,13 +13,14 @@ function Bonuses() {
   const [coupons, setCoupons] = useState([]);
   const [bonuses, setBonuses] = useState([]);
   const routeTo = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (Array.isArray(bonusArray)) {
       filterBonuses(bonusArray);
       filterCoupons(bonusArray);
     } else {
-      console.error('bonusArray is not an array:', bonusArray);
+      console.error("bonusArray is not an array:", bonusArray);
     }
   }, [bonusArray]);
 
@@ -31,7 +32,7 @@ function Bonuses() {
 
   function filterCoupons(array) {
     if (!Array.isArray(array)) {
-      console.error('Expected an array for filterCoupons, but got:', array);
+      console.error("Expected an array for filterCoupons, but got:", array);
       return;
     }
     const newArray = array.filter((item) => item.code !== "");
@@ -40,7 +41,7 @@ function Bonuses() {
 
   function filterBonuses(array) {
     if (!Array.isArray(array)) {
-      console.error('Expected an array for filterBonuses, but got:', array);
+      console.error("Expected an array for filterBonuses, but got:", array);
       return;
     }
     const newArray = array.filter((item) => item.code === "");
@@ -48,35 +49,57 @@ function Bonuses() {
   }
 
   function gotoBonusDetail(bonus) {
-    routeTo("/bonus-detail",{state:bonus});
-    }
-    
+    routeTo("/bonus-detail", { state: bonus });
+  }
 
-  
- async function deleteBonus(id) {
-     const body = {
-      id:id
-  }
-   try {
-     const {data} = await axios.post('https://yotaperformanceshop.com/yps_server/admin/delete_bonus', body);
+  async function deleteBonus(id) {
+    setIsLoading(true);
+    const body = {
+      id: id,
+    };
+    try {
+      const { data } = await axios.post(
+        "https://yotaperformanceshop.com/yps_server/admin/delete_bonus",
+        body
+      );
       console.log(data);
+      setIsLoading(false);
+
+      setTimeout(() => {
+        window.location.reload();
+      },900)
+     
     } catch (error) {
-      console.log(error); 
+      console.log(error);
+      setIsLoading(false);
     }
-   
   }
-  
 
   const renderBonusCard = (bonus) => (
     <div className="each_card" key={bonus.bonus_name}>
-      <div className="c_info">
+      <div
+        className="c_info"
+        onClick={() => {
+          gotoBonusDetail(bonus);
+        }}
+      >
         <h3>{bonus.bonus_name}</h3>
         <div className="email_c">{bonus.endDate}</div>
       </div>
-      <div className="editIcon" onClick={() => { gotoBonusDetail(bonus) }}>
+      <div
+        className="editIcon"
+        onClick={() => {
+          gotoBonusDetail(bonus);
+        }}
+      >
         <BsPencilSquare className="editIconBtn" />
       </div>
-      <div className="deleteIcon" onClick={()=>{deleteBonus(bonus.id)}}>
+      <div
+        className="deleteIcon"
+        onClick={() => {
+          deleteBonus(bonus.id);
+        }}
+      >
         <BsTrash className="deleteIconBtn" />
       </div>
     </div>
@@ -84,15 +107,30 @@ function Bonuses() {
 
   const renderCouponCard = (coupon) => (
     <div className="each_card" key={coupon.bonus_name}>
-      <div className="c_info">
+      <div
+        className="c_info"
+        onClick={() => {
+          gotoBonusDetail(coupon);
+        }}
+      >
         <h3>{coupon.bonus_name}</h3>
         <div className="email_c">{coupon.endDate}</div>
         <div className="coupon_code">Coupon: {coupon.code}</div>
       </div>
-          <div className="editIcon" onClick={() => { gotoBonusDetail(coupon) }}>
+      <div
+        className="editIcon"
+        onClick={() => {
+          gotoBonusDetail(coupon);
+        }}
+      >
         <BsPencilSquare className="editIconBtn" />
       </div>
-      <div className="deleteIcon" onClick={()=>{deleteBonus(coupon.id)}}>
+      <div
+        className="deleteIcon"
+        onClick={() => {
+          deleteBonus(coupon.id);
+        }}
+      >
         <BsTrash className="deleteIconBtn" />
       </div>
     </div>
@@ -101,7 +139,7 @@ function Bonuses() {
   return (
     <div className="home-container bonus">
       <PageDetail page={"Bonuses and Coupons "} />
-
+      {isLoading && <Loader message={"deleting bonus"} />}
       <div className="tabs">
         <div
           className={`tab ${activeTab === "bonuses" ? "active" : ""}`}
@@ -126,12 +164,16 @@ function Bonuses() {
       <div className="content">
         {activeTab === "bonuses" && (
           <div className="items">
-            {bonuses.length ? bonuses.map(renderBonusCard) : 'Bonuses Are not Available'}
+            {bonuses.length
+              ? bonuses.map(renderBonusCard)
+              : "Bonuses Are not Available"}
           </div>
         )}
         {activeTab === "coupons" && (
           <div className="items">
-            {coupons.length ? coupons.map(renderCouponCard) : 'Coupons Are Not Available'}
+            {coupons.length
+              ? coupons.map(renderCouponCard)
+              : "Coupons Are Not Available"}
           </div>
         )}
       </div>
