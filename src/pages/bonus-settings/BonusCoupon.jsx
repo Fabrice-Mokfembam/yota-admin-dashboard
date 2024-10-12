@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import { useContext } from "react";
+import Loader from "../../components/Loader/Loader";
 
 
 function BonusCoupon(){
@@ -25,10 +26,12 @@ function BonusCoupon(){
   const [endDate, setEndDate] = useState("");
   const [previewDetail, setPreviewDetail] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState([]);
+   const [isLoading, setIsLoading] = useState(false);
 
   function handleproductbonus(e) {
     const productId = e.target.value;
     const isChecked = e.target.checked;
+    
 
     if (isChecked) {
       setSelectedProducts((prevproducts) => [...prevproducts, productId]);
@@ -49,7 +52,8 @@ function BonusCoupon(){
     routeTo('/bonuses');
   }
 
- async function createCoupon() {
+  async function createCoupon() {
+    setIsLoading(true);
       const body = {
           value: value,
           bonus_type,
@@ -67,27 +71,46 @@ function BonusCoupon(){
 
     try {
      const {data} =  await axios.post('https://yotaperformanceshop.com/yps_server/admin/add_bonus', body);
-      console.log('successfully creation',data)
+      console.log('successfully creation', data)
+      
+      alert('succesfully created')
+         clearValues();
     } catch (error) {
       console.log(error); 
-    }
+       alert("unsuccesfully");
+   }
+    finally {
+      setIsLoading(false)
+      setPreviewDetail(false)
+   
+   }
    
   }
 
+     const clearValues = () => {
+       setSelectedOption("");
+       setValue("");
+       setType("");
+       setCode("");
+       setEndDate("");
+       setSelectedProducts([]);
+       setBonusType("");
+       setPreviewDetail(false);
+     };
 
   return (
     <div className="home-container bonus">
       <PageDetail page={bonus} />
-
+      {isLoading && <Loader message={'creating coupon'}/>}
         
       {option1 && (
         <div className="option-box box1-option">
           {option2 && (
             <div className="swiping-box-container">
               <div className="swipping-box">
-                {products.map((item) => {
+                {products.map((item,index) => {
                   return (
-                    <div className="product-select">
+                    <div className="product-select" key={index}>
                       <div className="p-img">
                         <img src={item.images[0]} alt="" />
                       </div>

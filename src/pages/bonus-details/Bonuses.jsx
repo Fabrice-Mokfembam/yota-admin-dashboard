@@ -65,9 +65,6 @@ function Bonuses() {
       console.log(data);
       setIsLoading(false);
 
-      setTimeout(() => {
-        window.location.reload();
-      },900)
      
     } catch (error) {
       console.log(error);

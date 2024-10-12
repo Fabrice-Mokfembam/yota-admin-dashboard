@@ -277,3 +277,55 @@
         margin-top: 10px;
     }
 }
+
+.preview-details {
+  position: fixed; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  width: 80%; 
+  height: 90vh; 
+  background-color: white; 
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  overflow-y: auto; 
+  z-index: 1000; 
+}
+
+.title-addbox2 {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.bon-T,
+.bon-V,
+.bon-c,
+.bon-D,
+.bon-id {
+  margin-bottom: 20px; /* Add space between sections */
+}
+
+.preview {
+  background-color: #6B5B95; /* Button styling */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.previewX {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 24px;
+  color: #333;
+}
+
+.previewX:hover {
+  color: #ff6f61; /* Change color on hover */
+}

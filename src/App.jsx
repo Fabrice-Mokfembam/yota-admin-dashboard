@@ -73,10 +73,10 @@ function App() {
   useEffect(() => {
     fetchData();
     fetchUsers();
-    getAllOrders();
-    fetchReviews();
-    fetchFinance();
-    fetchChats();
+    // getAllOrders();
+    // fetchReviews();
+    // fetchFinance();
+    // fetchChats();
     fetchBonus();
   }, []);
 
@@ -84,14 +84,14 @@ function App() {
     localStorage.setItem("isLogin", isLogin.toString());
   }, [isLogin]);
 
-  async function getAllOrders() {
-    try {
-      const { data } = await axios.get("http://localhost:5000/get/orders");
-      setOrders(data.map((item) => ({ id: item.id, ...item._doc })));
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // async function getAllOrders() {
+  //   try {
+  //     const { data } = await axios.get("http://localhost:5000/get/orders");
+  //     setOrders(data.map((item) => ({ id: item.id, ...item._doc })));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   const fetchData = async () => {
     try {
@@ -129,36 +129,36 @@ function App() {
     }
   };
 
-  const fetchChats = async () => {
-    try {
-      const { data } = await axios.get(
-        "http://localhost:5000/get/chat/admin/admin123"
-      );
-      setChats(data);
-    } catch (error) {
-      console.error("Error fetching chats:", error);
-    }
-  };
+  // const fetchChats = async () => {
+  //   try {
+  //     const { data } = await axios.get(
+  //       "http://localhost:5000/get/chat/admin/admin123"
+  //     );
+  //     setChats(data);
+  //   } catch (error) {
+  //     console.error("Error fetching chats:", error);
+  //   }
+  // };
 
-  const fetchFinance = async () => {
-    try {
-      const { data } = await axios.get("http://localhost:5000/get/cards");
-      setCards(data);
-    } catch (error) {
-      console.error("Error fetching finance data:", error);
-    }
-  };
+  // const fetchFinance = async () => {
+  //   try {
+  //     const { data } = await axios.get("http://localhost:5000/get/cards");
+  //     setCards(data);
+  //   } catch (error) {
+  //     console.error("Error fetching finance data:", error);
+  //   }
+  // };
 
-  const fetchReviews = async () => {
-    try {
-      const { data } = await axios.get(
-        "http://localhost:5000/get/products/reviews"
-      );
-      setReviews(data);
-    } catch (error) {
-      console.error("Error fetching reviews:", error);
-    }
-  };
+  // const fetchReviews = async () => {
+  //   try {
+  //     const { data } = await axios.get(
+  //       "http://localhost:5000/get/products/reviews"
+  //     );
+  //     setReviews(data);
+  //   } catch (error) {
+  //     console.error("Error fetching reviews:", error);
+  //   }
+  // };
 
   const Layout = () => (
     <>
@@ -225,7 +225,7 @@ function App() {
   ]);
 
   return (
-    <adminContext.Provider value={{ admin, setAdmin }}>
+    <adminContext.Provider value={{ admin, setAdmin , fetchData}}>
       <loginContext.Provider value={{ isLogin, setIsLogin }}>
         <RouterProvider router={router} />
       </loginContext.Provider>

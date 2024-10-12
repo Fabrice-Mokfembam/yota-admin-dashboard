@@ -27,28 +27,28 @@ function ProductList() {
     routeTo("/products/add-product");
   }
 
-  // Calculate the pagination indexes
+  
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  // Paginate filtered products
+
   const currentItems = filteredProducts.slice(
     indexOfFirstItem,
     indexOfLastItem
   );
 
-  // Fetch and update filtered products when search or category changes
+  
   const filterProducts = () => {
     let updatedProducts = products;
 
-    // Filter by category if selected
+  
     if (selectedCategory) {
       updatedProducts = updatedProducts.filter(
         (product) => product.category === selectedCategory
       );
     }
 
-    // Filter by name if search query is entered
+    
     if (searchQuery) {
       updatedProducts = updatedProducts.filter((product) =>
         product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -56,7 +56,7 @@ function ProductList() {
     }
 
     setFilteredProducts(updatedProducts);
-    setCurrentPage(1); // Reset to first page on new filter
+    setCurrentPage(1); 
   };
 
   useEffect(() => {
@@ -72,7 +72,7 @@ function ProductList() {
 
   const prevPage = () => {
     if (currentPage > 1) {
-      setCurrentPage((prevPage) => prevPage - 1);
+      setCurrentPage((prevPage) => prevPage - 1); 
     }
   };
 
@@ -88,9 +88,11 @@ function ProductList() {
         prevProducts.filter((item) => item.id !== id)
       );
       setIsLoading(false);
+      alert('deleting was succesfull')
     } catch (error) {
       console.error("Error deleting data:", error);
       setLoading(false);
+      alert("deleting was unsuccesfull");
     }
   };
 

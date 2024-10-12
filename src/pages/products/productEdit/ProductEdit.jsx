@@ -1,10 +1,11 @@
-import React ,{useState} from 'react'
+import {useContext,useState} from 'react'
 import { useLocation,useNavigate } from 'react-router-dom'
 import PageDetail from '../../../components/PageAlert/PageDetail';
 import FileBase64 from "react-file-base64";
 import axios from 'axios';
 import Loader from '../../../components/Loader/Loader';
 import './ProductEdit.css'
+import { adminContext } from '../../../context/adminContext';
 
 
 function ProductEdit() {
@@ -28,6 +29,8 @@ function ProductEdit() {
   const [imgFiles, setImgFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+   const { fetchData } = useContext(adminContext);
 
   function gotoproducts() {
     navigate('/products/list')
@@ -250,7 +253,7 @@ function ProductEdit() {
             </div>
             <div className="imagges">
               images
-              <div className="selected-images">
+              <div className="selected-images imageconn">
                 {state.images.map((image) => {
                   return <img src={image} alt="" />;
                 })}
@@ -575,12 +578,13 @@ function ProductEdit() {
             Description
             <div className="description">
               <label htmlFor="description">
-                <input
-                  type="textarea"
+                <textarea
                   id="description"
                   value={description}
                   onChange={handleDescription}
                   placeholder="Product Description"
+                  rows={4} // Specifies the number of visible text lines
+                  cols={50} // Optional: Specifies the width of the textarea
                 />
               </label>
             </div>
@@ -717,6 +721,9 @@ function ProductEdit() {
                 onClick={() => {
                   handleSubmit();
                   setShowProductDetails(false);
+                  setTimeout(() => {
+                    fetchData();
+                  }, 1000);
                 }}
               >
                 Save Edit

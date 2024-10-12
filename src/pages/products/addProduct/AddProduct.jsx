@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import "./AddProduct.css";
 import FileBase64 from "react-file-base64";
@@ -6,7 +6,10 @@ import PageDetail from "../../../components/PageAlert/PageDetail";
 import { useContext } from "react";
 import { productContext } from "../../../context/productContext";
 import Loader from "../../../components/Loader/Loader";
-import Modal from "../../../components/modal/Modal";
+import { adminContext } from "../../../context/adminContext";
+
+import Failurepopup from "../../../components/Failurepopoup/Failurepopup";
+import Successpopup from "../../../components/successpopup/Successpopup";
 
 const page = "Add Products";
 
@@ -30,6 +33,7 @@ function AddProduct() {
 
   const { products, setProducts, setLoading, loading } =
     useContext(productContext);
+  const { fetchData } = useContext(adminContext);
   // states for conditional rendering
   const [wheel, setWheel] = useState(true);
   const [showDetails, setShowProductDetails] = useState(false);
@@ -37,9 +41,30 @@ function AddProduct() {
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState(false);
 
-    const [modalMessage, setModalMessage] = useState("");
-    const [modalType, setModalType] = useState("");
-    const [showModal, setShowModal] = useState(false);
+  
+
+    const [isSuccess, setIsSuccess] = useState(false); // For showing success popup
+    const [isFailure, setIsFailure] = useState(false); // For showing failure popup
+
+  
+    const showSuccessPopup = () => {
+      setIsSuccess(true);
+    };
+
+  
+    const showFailurePopup = () => {
+      setIsFailure(true);
+    };
+
+  
+    const closeSuccessPopup = () => {
+      setIsSuccess(false);
+    };
+
+    
+    const closeFailurePopup = () => {
+      setIsFailure(false);
+    };
 
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
@@ -168,30 +193,22 @@ function AddProduct() {
         postData,
         { maxContentLength: 1000000 }
       );
-      console.log("product created", response.data);
-      setStatus('success')
       setIsLoading(false);
-      setShowModal(true);
-    
+
+      if (response.data) {
+        alert('success')
+
+        clearAllFields();
+      }
        
       setProducts((products2) => [...products2, postData]);
-      clearAllFields();
+      
     } catch (error) {
       setStatus('failed')
       setIsLoading(false);
-      setModalMessage("failed to add product !");
-      setModalType("error"); // or 'deleted', 'edited', 'error' based on the operation
-      setShowModal(true);
+      
       console.log("error", error);
-    }
-  };
-
-  const retrieveProducts = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/create/product/");
-      console.log("added latest product to database", response.data);
-    } catch (error) {
-      console.log(error.message);
+      alert("error uploadind product");
     }
   };
 
@@ -218,13 +235,8 @@ function AddProduct() {
   return (
     <div className="home-container add-product-container">
       <PageDetail page={page} />
-      {isLoading && <Loader message={'uploading product'} />}
-      {showModal && (
-        <Modal
-          message={modalMessage}
-          type={modalType}
-          onClose={()=>{setShowModal(false)}}
-        />)}
+      {isLoading && <Loader message={"uploading product"} />}
+
       <div className="main-add-product-conatainer">
         <div className="firstpart part">
           <div className="product-info">Product-Info</div>
@@ -592,11 +604,13 @@ function AddProduct() {
             Description
             <div className="description">
               <label htmlFor="description">
-                <input
-                  type="textarea"
+                <textarea
                   id="description"
+                  value={description}
                   onChange={handleDescription}
                   placeholder="Product Description"
+                  rows={4} // Specifies the number of visible text lines
+                  cols={50} // Optional: Specifies the width of the textarea
                 />
               </label>
             </div>
@@ -641,103 +655,92 @@ function AddProduct() {
         </div>
       </div>
       {showDetails && (
-        <div className="details-container">
-          Product Detail
-          <button
-            className="detail-btn"
-            onClick={() => {
-              setShowProductDetails(false);
-            }}
-          >
-            X
-          </button>
-          {
-            <div className="details-wrapper">
-              <div className="details-part1">
-                <div className="details-images">
-                  Product Name
-                  <div className="details-selected-images">{product_name}</div>
-                </div>
-
-                <div className="details-images">
-                  Selected Images
-                  <div className="details-selected-images">
-                    {imgUrl.map((image) => {
-                      return <img src={image} alt="" />;
-                    })}
-                  </div>
-                </div>
-
-                <div className="details-images">
-                  Car Brand
-                  <div className="details-selected-images">{CarBrand}</div>
-                </div>
-                <div className="details-images">
-                  Car Model
-                  <div className="details-selected-images">
-                    {selectCarModel}
-                  </div>
-                </div>
-                <div className="details-images">
-                  Make Material
-                  <div className="details-selected-images">{MakeMaterial}</div>
-                </div>
-                <div className="details-images">
-                  Category Brand
-                  <div className="details-selected-images">
-                    {category_brand}
-                  </div>
-                </div>
-                <div className="details-images">
-                  Category
-                  <div className="details-selected-images">
-                    {selectedCategory}
-                  </div>
+        <div className="product-detail-modal">
+          <div className="modal-header">
+            <span>Product Detail</span>
+            <button
+              className="close-modal-btn"
+              onClick={() => {
+                setShowProductDetails(false);
+              }}
+            >
+              X
+            </button>
+          </div>
+          <div className="modal-content">
+            <div className="modal-left">
+              <div className="modal-item">
+                <span>Product Name:</span>
+                <div className="modal-value">{product_name}</div>
+              </div>
+              <div className="modal-item">
+                <span>Selected Images:</span>
+                <div className="modal-images">
+                  {imgUrl.map((image, index) => (
+                    <img key={index} src={image} alt={`Selected ${index}`} />
+                  ))}
                 </div>
               </div>
-              <div className="details-part2">
-                <div className="details-images">
-                  Wheel Size
-                  <div className="details-selected-images">{WheelSize}</div>
-                </div>
-
-                <div className="details-images">
-                  Fit-Position
-                  <div className="details-selected-images">
-                    {selectedFitPosition}
-                  </div>
-                </div>
-
-                <div className="details-images">
-                  Description
-                  <div className="details-selected-images">{description}</div>
-                </div>
-                <div className="details-images">
-                  Fitment
-                  <div className="details-selected-images">{fitment}</div>
-                </div>
-                <div className="details-images">
-                  Price
-                  <div className="details-selected-images">{Price}</div>
-                </div>
-                <div className="details-images">
-                  Quantity
-                  <div className="details-selected-images">{quantity_left}</div>
-                </div>
-
-                <button
-                  className="add-to-db"
-                  onClick={() => {
-                    handleSubmit();
-                    setShowProductDetails(false);
-                    setTimeout(retrieveProducts, 1000);
-                  }}
-                >
-                  Add
-                </button>
+              <div className="modal-item">
+                <span>Car Brand:</span>
+                <div className="modal-value">{CarBrand}</div>
+              </div>
+              <div className="modal-item">
+                <span>Car Model:</span>
+                <div className="modal-value">{selectCarModel}</div>
+              </div>
+              <div className="modal-item">
+                <span>Make Material:</span>
+                <div className="modal-value">{MakeMaterial}</div>
+              </div>
+              <div className="modal-item">
+                <span>Category Brand:</span>
+                <div className="modal-value">{category_brand}</div>
+              </div>
+              <div className="modal-item">
+                <span>Category:</span>
+                <div className="modal-value">{selectedCategory}</div>
               </div>
             </div>
-          }
+            <div className="modal-right">
+              <div className="modal-item">
+                <span>Wheel Size:</span>
+                <div className="modal-value">{WheelSize}</div>
+              </div>
+              <div className="modal-item">
+                <span>Fit-Position:</span>
+                <div className="modal-value">{selectedFitPosition}</div>
+              </div>
+              <div className="modal-item">
+                <span>Description:</span>
+                <div className="modal-value">{description}</div>
+              </div>
+              <div className="modal-item">
+                <span>Fitment:</span>
+                <div className="modal-value">{fitment}</div>
+              </div>
+              <div className="modal-item">
+                <span>Price:</span>
+                <div className="modal-value">{Price}</div>
+              </div>
+              <div className="modal-item">
+                <span>Quantity:</span>
+                <div className="modal-value">{quantity_left}</div>
+              </div>
+              <button
+                className="add-to-db-btn"
+                onClick={() => {
+                  handleSubmit();
+                  setShowProductDetails(false);
+                  setTimeout(() => {
+                    fetchData();
+                  },1000)
+                }}
+              >
+                Add
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

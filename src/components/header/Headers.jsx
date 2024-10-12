@@ -1,4 +1,3 @@
-import React from "react";
 import "./header.css";
 import me from "../../assets/images/avatar.jpeg";
 import loadsvg from "../../assets/images/load.svg";
@@ -10,13 +9,26 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { BiX } from "react-icons/bi";
 
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Header({ showSidebar, hamRef, xRef }) {
   const routeto = useNavigate();
+  const [isInputActive, setInputActive] = useState(null); 
 
   function gotoProfile() {
     routeto("/profile");
   }
+
+  function gotoproducts() {
+    // Navigate to products and disable the input field
+    routeto("/products");
+    setInputActive(true);
+
+    setTimeout(() => {
+      setInputActive(false)
+    },1000)
+  }
+
   return (
     <div className="Header-container">
       <div className="logo-container">
@@ -25,7 +37,13 @@ function Header({ showSidebar, hamRef, xRef }) {
       <div className="nav-icons">
         <div className="search-header-container">
           <div className="input-header-container">
-            <input type="text" placeholder="search availabe products" id="input-1" />
+            <input
+              type="text"
+              placeholder="search available products"
+              id="input-1"
+              onClick={gotoproducts}
+              disabled={isInputActive} // Disable input when not active
+            />
             <BsSearch className="icons search" />
           </div>
         </div>

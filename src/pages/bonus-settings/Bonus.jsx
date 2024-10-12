@@ -77,11 +77,16 @@ function Bonus() {
      console.log('successfully creation',data);
      
      setIsLoading(false)
-    setPreviewDetail(false)
+     setPreviewDetail(false)
+      alert("succesfully created");
      clearValues()
     } catch (error) {
      console.log(error); 
      setIsLoading(false)
+      alert("unsuccesfully");
+    }
+   finally {
+     setPreviewDetail(false);
     }
    
   }

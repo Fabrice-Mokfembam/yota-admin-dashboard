@@ -44,3 +44,12 @@ body{
 input{
   font-family: var(--poppins);
 }
+
+textarea{
+  font-family: var(--poppins);
+}
+
+textarea:focus{
+  outline: none;
+  padding: 10px;
+}

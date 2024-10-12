@@ -77,9 +77,6 @@ function BonusEdit() {
       console.log(data);
       setIsLoading(false);
 
-      setTimeout(() => {
-        window.location.reload();
-      }, 900);
     } catch (error) {
       console.log(error);
       setIsLoading(false);
@@ -89,7 +86,7 @@ function BonusEdit() {
     <div className="home-container bonus">
       <PageDetail page={bonus} />
 
-      {isLoading && <Loader message={'editing bonus'}/>}
+      {isLoading && <Loader message={"editing bonus"} />}
 
       {option1 && (
         <div className="option-box box1-option">
