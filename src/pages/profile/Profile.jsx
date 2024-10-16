@@ -1,14 +1,17 @@
-import React from 'react';
+import {useContext} from 'react';
 import './profile.css';
 import PageDetail from '../../components/PageAlert/PageDetail.jsx';
 import { BsPlus } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
 import avatar from '../../assets/images/avatar.jpeg'
+import { adminContext } from '../../context/adminContext.js';
+import { FaEdit } from "react-icons/fa";
 
 const page = "Profile";
 
 function Profile() {
-    const routeTo = useNavigate();
+  const routeTo = useNavigate();
+  const {admin} = useContext(adminContext)
 
     function routeToProfileEdit() {
       routeTo("/profileEdit");
@@ -20,18 +23,18 @@ function Profile() {
         <div className="profile-header">
           <h1>My Profile</h1>
         </div>
-         <div className="profile-picture">
-            <img src={avatar} alt="Profile" />
-          </div>
+        <div className="profile-picture">
+          <img src={avatar} alt="Profile" />
+        </div>
         <div className="profile-content">
           <div className="profile-details">
             <div className="profile-field">
               <label>Full Name</label>
-              <p>Obmipotem Thiago</p>
+              <p>{admin.name}</p>
             </div>
             <div className="profile-field">
               <label>Email</label>
-              <p>obmipotemthiago@gmail.com</p>
+              <p>ludwigdivine1@gmail.com</p>
             </div>
             <div className="profile-field">
               <label>Admin Type</label>
@@ -39,9 +42,9 @@ function Profile() {
             </div>
           </div>
         </div>
-         <div className="addButton" onClick={routeToProfileEdit}>
-        <BsPlus className="plusIcon" />
-      </div>
+        <div className="addButton" onClick={routeToProfileEdit}>
+          <FaEdit className="plusIcon" />
+        </div>
       </div>
     </div>
   );

@@ -15,13 +15,9 @@ function ProfileEdit() {
         <div className="profile-content">
           <div className="profile-picture">
             <img src={avatar} alt="Profile" />
-            <button className="change-picture-btn">Change Picture</button>
+            <input type="file" accept="image/*" />
           </div>
           <form className="profile-form">
-            <div className="profile-field">
-              <label>Full Name</label>
-              <input type="text" placeholder="Onam Sarker" />
-            </div>
             <div className="profile-field">
               <label>Email</label>
               <input type="email" placeholder="onamsarker@gmail.com" />
@@ -34,7 +30,9 @@ function ProfileEdit() {
               <label>Confirm Password</label>
               <input type="password" placeholder="******" />
             </div>
-            <button type="submit" className="save-changes-btn">Save Changes</button>
+            <button type="submit" className="save-changes-btn">
+              Save Changes
+            </button>
           </form>
         </div>
       </div>
