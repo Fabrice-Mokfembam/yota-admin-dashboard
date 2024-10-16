@@ -197,7 +197,7 @@ function ProductEdit() {
     setImagesArray([]);
     setImageUrl([]);
     setImgFiles([]);
-    setSelectedCategory("Wheel");
+    setSelectedCategory("");
     setSelectedFitPosition("");
     setDescription("");
     setSelectModel("");
@@ -279,20 +279,20 @@ function ProductEdit() {
               <label>
                 <input
                   type="radio"
-                  value="Toyota Corrola"
-                  checked={CarBrand === "Toyota Corrola"}
+                  value="Toyota Corolla"
+                  checked={CarBrand === "Toyota Corolla"}
                   onChange={handleCarBrand}
                 />
-                Toyota Corrola
+                Toyota Corolla
               </label>
               <label>
                 <input
                   type="radio"
-                  value="Toyota Camrry"
-                  checked={CarBrand === "Toyota Camrry"}
+                  value="Toyota Camry"
+                  checked={CarBrand === "Toyota Camry"}
                   onChange={handleCarBrand}
                 />
-                Toyota Camrry
+                Toyota Camry
               </label>
             </div>
           </div>
@@ -303,38 +303,51 @@ function ProductEdit() {
               <label>
                 <input
                   type="radio"
-                  value="Corrola GR"
-                  checked={selectCarModel === "Corrola GR"}
+                  value="Toyota Corolla GR (2023+)"
+                  checked={selectCarModel === "Toyota Corolla GR (2023+)"}
                   onChange={handleCarModelChange}
                 />
-                Corrola GR
+                Toyota Corolla GR (2023+)
               </label>
               <label>
                 <input
                   type="radio"
-                  value="12th gen Toyota Corrola"
-                  checked={selectCarModel === "12th gen Toyota Corrola"}
+                  value="12th gen Toyota Corolla (2019+)"
+                  checked={selectCarModel === "12th gen Toyota Corolla (2019+)"}
                   onChange={handleCarModelChange}
                 />
-                12th gen Toyota Corrola
+                12th gen Toyota Corolla (2019+)
               </label>
               <label>
                 <input
                   type="radio"
-                  value="11th gen Toyota Corrola"
-                  checked={selectCarModel === "11th gen Toyota Corrola"}
+                  value="11th gen Toyota Corolla (2014 - 2019)"
+                  checked={
+                    selectCarModel === "11th gen Toyota Corolla (2014 - 2019)"
+                  }
                   onChange={handleCarModelChange}
                 />
-                11th gen Toyota Corrola
+                11th gen Toyota Corolla (2014 - 2019)
               </label>
               <label>
                 <input
                   type="radio"
-                  value=" 8th gen Toyota Cammry"
-                  checked={selectCarModel === " 8th gen Toyota Cammry"}
+                  value="9th gen Toyota Camry (2025+)"
+                  checked={selectCarModel === "9th gen Toyota Camry (2025+)"}
                   onChange={handleCarModelChange}
                 />
-                8th gen Toyota Cammry
+                9th gen Toyota Camry (2025+)
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="8th gen Toyota Camry (2018 - 2024)"
+                  checked={
+                    selectCarModel === "8th gen Toyota Camry (2018 - 2024)"
+                  }
+                  onChange={handleCarModelChange}
+                />
+                8th gen Toyota Camry (2018 - 2024)
               </label>
               <label>
                 <input
@@ -343,7 +356,7 @@ function ProductEdit() {
                   checked={selectCarModel === "7th gen Toyota Cammry"}
                   onChange={handleCarModelChange}
                 />
-                7th gen Toyota Cammry
+                7th gen Toyota Camry (2015 - 2017)
               </label>
             </div>
           </div>
@@ -354,8 +367,8 @@ function ProductEdit() {
               <label>
                 <input
                   type="radio"
-                  value="carbon fibre"
-                  checked={MakeMaterial === "carbon fibre"}
+                  value="carbon fiber"
+                  checked={MakeMaterial === "carbon fiber"}
                   onChange={handleMakeMaterial}
                   onClick={() => {
                     setParts(false);
@@ -365,7 +378,7 @@ function ProductEdit() {
                     handleCategoryChange();
                   }}
                 />
-                Carbon Fibre
+                Carbon Fiber
               </label>
               <label>
                 <input
@@ -472,6 +485,30 @@ function ProductEdit() {
                   />
                   Steering Wheel
                 </label>
+                <label htmlFor="Front Lip">
+                  <input
+                    type="radio"
+                    value="Front Lip"
+                    checked={selectedCategory === "Front Lip"}
+                    onChange={handleCategoryChange}
+                    onClick={() => {
+                      setWheel(false);
+                    }}
+                  />
+                  Front Lip
+                </label>
+                <label htmlFor="Rear Spoiler">
+                  <input
+                    type="radio"
+                    value="Rear Spoiler"
+                    checked={selectedCategory === "Rear Spoiler"}
+                    onChange={handleCategoryChange}
+                    onClick={() => {
+                      setWheel(false);
+                    }}
+                  />
+                  Rear Spoiler
+                </label>
               </div>
             </div>
 
@@ -495,8 +532,6 @@ function ProductEdit() {
                 </select>
               </div>
             )}
-
-            {selectedCategory}
           </div>
         </div>
 
@@ -518,7 +553,7 @@ function ProductEdit() {
             </div>
           )}
           <div className="category title">
-            FitPossition
+            Category Type
             <div className="category-input ">
               <label>
                 <input
@@ -550,11 +585,11 @@ function ProductEdit() {
               <label>
                 <input
                   type="radio"
-                  value="other"
-                  checked={selectedFitPosition === "other"}
+                  value="body kits"
+                  checked={selectedFitPosition === "body kits"}
                   onChange={handleFitPositionChange}
                 />
-                Other
+                Body Kits
               </label>
             </div>
           </div>

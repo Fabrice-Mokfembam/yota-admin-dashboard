@@ -136,8 +136,10 @@ function ProductList() {
               <option value="Bumpers">Bumpers</option>
               <option value="Fenders">Fenders</option>
               <option value="Hood">Hood</option>
-              <option value="Suspension parts">Suspension parts</option>
-              <option value="Steering Wheel">Steering Wheel</option>
+              <option value="suspension parts">suspension parts</option>
+              <option value="Steering wheel">Steering wheel</option>
+              <option value="Front Lip">Front Lip</option>
+              <option value="Rear Spoiler">Rear Spoiler</option>
             </select>
           </div>
         </div>

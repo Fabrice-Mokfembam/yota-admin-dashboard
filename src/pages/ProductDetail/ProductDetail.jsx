@@ -123,7 +123,7 @@ return (
           </div>
 
           <div className="imagges">
-            Fit-Position
+            Category Type
             <div className="selected-images text">{fit_position}</div>
           </div>
 

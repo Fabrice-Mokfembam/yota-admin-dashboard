@@ -360,8 +360,8 @@ function AddProduct() {
               <label>
                 <input
                   type="radio"
-                  value=" 9th gen Toyota Camry (2025+)"
-                  checked={selectCarModel === " 9th gen Toyota Camry (2025+)"}
+                  value="9th gen Toyota Camry (2025+)"
+                  checked={selectCarModel === "9th gen Toyota Camry (2025+)"}
                   onChange={handleCarModelChange}
                 />
                 9th gen Toyota Camry (2025+)
@@ -369,9 +369,9 @@ function AddProduct() {
               <label>
                 <input
                   type="radio"
-                  value=" 8th gen Toyota Camry (2018 - 2024)"
+                  value="8th gen Toyota Camry (2018 - 2024)"
                   checked={
-                    selectCarModel === " 8th gen Toyota Camry (2018 - 2024)"
+                    selectCarModel === "8th gen Toyota Camry (2018 - 2024)"
                   }
                   onChange={handleCarModelChange}
                 />
@@ -712,7 +712,7 @@ function AddProduct() {
               </div>
               <div className="modal-item">
                 <span>Selected Images:</span>
-                <div className="modal-images">
+                <div className="modal-images imageconn">
                   {imgUrl.map((image, index) => (
                     <img key={index} src={image} alt={`Selected ${index}`} />
                   ))}
