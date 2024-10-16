@@ -316,11 +316,11 @@ function AddProduct() {
               <label>
                 <input
                   type="radio"
-                  value="Toyota Camrry"
-                  checked={CarBrand === "Toyota Camrry"}
+                  value="Toyota Camry"
+                  checked={CarBrand === "Toyota Camry"}
                   onChange={handleCarBrand}
                 />
-                Toyota Camrry
+                Toyota Camry
               </label>
             </div>
           </div>
@@ -331,56 +331,62 @@ function AddProduct() {
               <label>
                 <input
                   type="radio"
-                  value="Toyota Corolla GR"
-                  checked={selectCarModel === "Toyota Corolla GR"}
+                  value="Toyota Corolla GR (2023+)"
+                  checked={selectCarModel === "Toyota Corolla GR (2023+)"}
                   onChange={handleCarModelChange}
                 />
-                Toyota Corolla GR
+                Toyota Corolla GR (2023+)
               </label>
               <label>
                 <input
                   type="radio"
-                  value="12th gen Toyota Corolla"
-                  checked={selectCarModel === "12th gen Toyota Corolla"}
+                  value="12th gen Toyota Corolla (2019+)"
+                  checked={selectCarModel === "12th gen Toyota Corolla (2019+)"}
                   onChange={handleCarModelChange}
                 />
-                12th gen Toyota Corolla
+                12th gen Toyota Corolla (2019+)
               </label>
               <label>
                 <input
                   type="radio"
-                  value="11th gen Toyota Corolla"
-                  checked={selectCarModel === "11th gen Toyota Corolla"}
+                  value="11th gen Toyota Corolla (2014 - 2019)"
+                  checked={
+                    selectCarModel === "11th gen Toyota Corolla (2014 - 2019)"
+                  }
                   onChange={handleCarModelChange}
                 />
-                11th gen Toyota Corolla
+                11th gen Toyota Corolla (2014 - 2019)
               </label>
               <label>
                 <input
                   type="radio"
-                  value=" 9th gen Toyota Camry"
-                  checked={selectCarModel === " 9th gen Toyota Camry"}
+                  value=" 9th gen Toyota Camry (2025+)"
+                  checked={selectCarModel === " 9th gen Toyota Camry (2025+)"}
                   onChange={handleCarModelChange}
                 />
-                9th gen Toyota Camry
+                9th gen Toyota Camry (2025+)
               </label>
               <label>
                 <input
                   type="radio"
-                  value=" 8th gen Toyota Camry"
-                  checked={selectCarModel === " 8th gen Toyota Camry"}
+                  value=" 8th gen Toyota Camry (2018 - 2024)"
+                  checked={
+                    selectCarModel === " 8th gen Toyota Camry (2018 - 2024)"
+                  }
                   onChange={handleCarModelChange}
                 />
-                8th gen Toyota Camry
+                8th gen Toyota Camry (2018 - 2024)
               </label>
               <label>
                 <input
                   type="radio"
-                  value="7th gen Toyota Camry"
-                  checked={selectCarModel === "7th gen Toyota Camry"}
+                  value="7th gen Toyota Camry (2015 - 2017)"
+                  checked={
+                    selectCarModel === "7th gen Toyota Camry (2015 - 2017)"
+                  }
                   onChange={handleCarModelChange}
                 />
-                7th gen Toyota Camry
+                7th gen Toyota Camry (2015 - 2017)
               </label>
             </div>
           </div>
@@ -512,14 +518,14 @@ function AddProduct() {
                 <label htmlFor="Front Lib">
                   <input
                     type="radio"
-                    value="Front Lib"
-                    checked={selectedCategory === "Front Lib"}
+                    value="Front Lip"
+                    checked={selectedCategory === "Front Lip"}
                     onChange={handleCategoryChange}
                     onClick={() => {
                       setWheel(false);
                     }}
                   />
-                  Front Lib
+                  Front Lip
                 </label>
                 <label htmlFor="Rear Spoiler">
                   <input
