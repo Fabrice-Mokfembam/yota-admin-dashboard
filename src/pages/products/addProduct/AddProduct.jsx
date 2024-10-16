@@ -18,7 +18,7 @@ function AddProduct() {
   const [imagesArray, setImagesArray] = useState([]);
   const [imgUrl, setImageUrl] = useState([]);
   const [imgFiles, setImgFiles] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("Wheel");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedFitPosition, setSelectedFitPosition] = useState("");
   const [description, setDescription] = useState("");
   const [selectCarModel, setSelectModel] = useState("");
@@ -307,11 +307,11 @@ function AddProduct() {
               <label>
                 <input
                   type="radio"
-                  value="Toyota Corrola"
-                  checked={CarBrand === "Toyota Corrola"}
+                  value="Toyota Corolla"
+                  checked={CarBrand === "Toyota Corolla"}
                   onChange={handleCarBrand}
                 />
-                Toyota Corrola
+                Toyota Corolla
               </label>
               <label>
                 <input
@@ -358,6 +358,15 @@ function AddProduct() {
               <label>
                 <input
                   type="radio"
+                  value=" 9th gen Toyota Camry"
+                  checked={selectCarModel === " 9th gen Toyota Camry"}
+                  onChange={handleCarModelChange}
+                />
+                9th gen Toyota Camry
+              </label>
+              <label>
+                <input
+                  type="radio"
                   value=" 8th gen Toyota Camry"
                   checked={selectCarModel === " 8th gen Toyota Camry"}
                   onChange={handleCarModelChange}
@@ -382,8 +391,8 @@ function AddProduct() {
               <label>
                 <input
                   type="radio"
-                  value="carbon fibre"
-                  checked={MakeMaterial === "carbon fibre"}
+                  value="carbon fiber"
+                  checked={MakeMaterial === "carbon fiber"}
                   onChange={handleMakeMaterial}
                   onClick={() => {
                     // setParts(false);
@@ -393,7 +402,7 @@ function AddProduct() {
                     handleCategoryChange();
                   }}
                 />
-                Carbon Fibre
+                Carbon Fiber
               </label>
               <label>
                 <input
@@ -500,6 +509,30 @@ function AddProduct() {
                   />
                   Steering Wheel
                 </label>
+                <label htmlFor="Front Lib">
+                  <input
+                    type="radio"
+                    value="Front Lib"
+                    checked={selectedCategory === "Front Lib"}
+                    onChange={handleCategoryChange}
+                    onClick={() => {
+                      setWheel(false);
+                    }}
+                  />
+                  Front Lib
+                </label>
+                <label htmlFor="Rear Spoiler">
+                  <input
+                    type="radio"
+                    value="Rear Spoiler"
+                    checked={selectedCategory === "Rear Spoiler"}
+                    onChange={handleCategoryChange}
+                    onClick={() => {
+                      setWheel(false);
+                    }}
+                  />
+                  Rear Spoiler
+                </label>
               </div>
             </div>
 
@@ -523,8 +556,6 @@ function AddProduct() {
                 </select>
               </div>
             )}
-
-            {selectedCategory}
           </div>
         </div>
 
@@ -545,7 +576,7 @@ function AddProduct() {
             </div>
           )}
           <div className="category title">
-            FitPossition
+            Category Type
             <div className="category-input ">
               <label>
                 <input
@@ -577,11 +608,11 @@ function AddProduct() {
               <label>
                 <input
                   type="radio"
-                  value="other"
-                  checked={selectedFitPosition === "other"}
+                  value="body kits"
+                  checked={selectedFitPosition === "body kits"}
                   onChange={handleFitPositionChange}
                 />
-                Other
+                Body kits
               </label>
             </div>
           </div>
@@ -734,7 +765,7 @@ function AddProduct() {
                   setShowProductDetails(false);
                   setTimeout(() => {
                     fetchData();
-                  },1000)
+                  }, 1000);
                 }}
               >
                 Add
