@@ -10,8 +10,30 @@ import { adminContext } from "../../../context/adminContext";
 
 import Failurepopup from "../../../components/Failurepopoup/Failurepopup";
 import Successpopup from "../../../components/successpopup/Successpopup";
+import Label from "../../../components/Label/Label";
 
 const page = "Add Products";
+
+const items = [
+  "Rear trunk",
+  "Side skirt",
+  "Rear diffuser",
+  "Side mirrors & covers",
+  "Front grille",
+  "Bumper grille",
+  "Head lights",
+  "Tail lights",
+  "Rear trunk",
+  "Shift knob & pedals",
+  "Steering wheel & Airbags",
+  "Seats & Covers",
+  "Dashboard panel",
+  "Center console",
+  "Floor mats",
+  "Door & trim panels",
+  "Lighting kit",
+];
+
 
 function AddProduct() {
   const [image, setImage] = useState(null);
@@ -439,7 +461,7 @@ function AddProduct() {
                   />
                   Exhaust
                 </label>
-                <label htmlFor="Exhaust">
+                <label htmlFor="Bumpers">
                   <input
                     type="radio"
                     id="Bumpers"
@@ -452,7 +474,7 @@ function AddProduct() {
                   />
                   Bumpers
                 </label>
-                <label htmlFor="Exhaust">
+                <label htmlFor="Fenders">
                   <input
                     type="radio"
                     id="Fenders"
@@ -465,7 +487,7 @@ function AddProduct() {
                   />
                   Fenders
                 </label>
-                <label htmlFor="Exhaust">
+                <label htmlFor="Hood">
                   <input
                     type="radio"
                     id="Hood"
@@ -539,6 +561,18 @@ function AddProduct() {
                   />
                   Rear Spoiler
                 </label>
+
+                {items.map((item) => (
+                  <Label
+                    key={item}
+                    id={item}
+                    value={item}
+                    selectedCategory={selectedCategory}
+                    handleCategoryChange={handleCategoryChange}
+                    onClick={() => setWheel(false)}
+                    label={item}
+                  />
+                ))}
               </div>
             </div>
 

@@ -6,6 +6,27 @@ import axios from 'axios';
 import Loader from '../../../components/Loader/Loader';
 import './ProductEdit.css'
 import { adminContext } from '../../../context/adminContext';
+import Label from '../../../components/Label/Label';
+
+const items = [
+  "Rear trunk",
+  "Side skirt",
+  "Rear diffuser",
+  "Side mirrors & covers",
+  "Front grille",
+  "Bumper grille",
+  "Head lights",
+  "Tail lights",
+  "Rear trunk",
+  "Shift knob & pedals",
+  "Steering wheel & Airbags",
+  "Seats & Covers",
+  "Dashboard panel",
+  "Center console",
+  "Floor mats",
+  "Door & trim panels",
+  "Lighting kit",
+];
 
 
 function ProductEdit() {
@@ -509,6 +530,18 @@ function ProductEdit() {
                   />
                   Rear Spoiler
                 </label>
+
+                {items.map((item) => (
+                  <Label
+                    key={item}
+                    id={item}
+                    value={item}
+                    selectedCategory={selectedCategory}
+                    handleCategoryChange={handleCategoryChange}
+                    onClick={() => setWheel(false)}
+                    label={item}
+                  />
+                ))}
               </div>
             </div>
 

@@ -10,6 +10,26 @@ import Loader from "../../../components/Loader/Loader";
 
 const page = "All Products";
 
+const items = [
+  "Rear trunk",
+  "Side skirt",
+  "Rear diffuser",
+  "Side mirrors & covers",
+  "Front grille",
+  "Bumper grille",
+  "Head lights",
+  "Tail lights",
+  "Rear trunk",
+  "Shift knob & pedals",
+  "Steering wheel & Airbags",
+  "Seats & Covers",
+  "Dashboard panel",
+  "Center console",
+  "Floor mats",
+  "Door & trim panels",
+  "Lighting kit",
+];
+
 function ProductList() {
   const { products, setProducts, setLoading, loading } =
     useContext(productContext);
@@ -140,6 +160,9 @@ function ProductList() {
               <option value="Steering wheel">Steering wheel</option>
               <option value="Front Lip">Front Lip</option>
               <option value="Rear Spoiler">Rear Spoiler</option>
+              {items.map((item) => (
+                <option key={item} value={item}>{ item}</option>
+              ))}
             </select>
           </div>
         </div>
