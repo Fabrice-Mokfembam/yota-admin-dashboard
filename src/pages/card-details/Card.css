@@ -5,3 +5,108 @@
   font-weight: 500;
   text-align: center;
 }
+
+
+.card-main-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem; 
+  padding: 1.5rem;
+  background-color: #f7f7f7; 
+}
+
+.no-cards {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #6b5b95; 
+}
+
+.card-container {
+  background-color: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-container:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.flex-cvv-date {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 1rem;
+}
+
+.expiry-date, .cvv {
+  background-color: #615f5e; 
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+  color: white;
+}
+
+.code-pic img {
+  width: 60px;
+  margin: 0.5rem 0;
+}
+
+.card-number {
+  font-size: 1.4rem;
+  letter-spacing: 0.1rem;
+  color: #333;
+  margin: 1rem 0;
+}
+
+.card-holder-icon {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.holder-name {
+  font-size: 1rem;
+  color: #6b5b95; 
+  font-weight: bold;
+}
+
+.icon-container img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #88b04b; 
+  padding: 0.4rem;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+  .card-container {
+    padding: 1rem;
+  }
+
+  .card-number {
+    font-size: 1.2rem;
+  }
+
+  .code-pic img {
+    width: 35px;
+  }
+
+  .holder-name {
+    font-size: 0.9rem;
+  }
+
+  .icon-container img {
+    width: 25px;
+    height: 25px;
+  }
+}

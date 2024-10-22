@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./home.css";
-import img from "../../assets/images/remix1.jpg";
+import img from "../../assets/images/tes2.jpg";
 import PageDetail from "../../components/PageAlert/PageDetail";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";

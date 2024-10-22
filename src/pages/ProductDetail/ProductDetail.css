@@ -39,17 +39,19 @@
   margin-bottom: 5px;
 }
 
-.selected-images.text{
+.selected-images.text {
   font-size: 14px;
   color: #080808;
   padding: 10px;
   background: #b6b6b6;
   border-radius: 4px;
 }
-.selected-images.imageconn{
+
+.selected-images.imageconn {
   display: flex;
   flex-wrap: wrap;
 }
+
 .selected-images img {
   max-width: 100%;
   border-radius: 8px;
@@ -73,9 +75,11 @@
   font-size: 14px;
   color: #555;
   line-height: 1.6;
-  height: 100px;
+  padding-right: 10px; 
+  max-height: none; 
+  overflow: visible;
+  display: block;
 }
-
 
 .productReviews {
   background: #ffffff;
@@ -143,7 +147,9 @@
 
 /* Button styling */
 .editbtn,
-.deletebtn {
+.deletebtn,
+.reviewbtn,
+.cancelbtn {
   background: #007bff;
   color: #ffffff;
   border: none;
@@ -165,12 +171,20 @@
 .editbtn {
   background: #000000;
   right: 20px;
+  bottom: 150px;
 }
 
 .deletebtn {
   background: #dc3545;
-  right: 80px;
+  right: 20px;
+    bottom: 40px;
 }
+.reviewbtn {
+  background:  #007bff;
+  right: 20px;
+    bottom: 95px;
+}
+
 
 .editbtn:hover,
 .deletebtn:hover {
@@ -192,33 +206,51 @@
   }
 
   .editbtn,
-  .deletebtn {
+  .deletebtn,
+  .reviewbtn {
     width: 40px;
     height: 40px;
     font-size: 20px;
     bottom: 10px;
     right: 10px;
-
   }
 
   .deletebtn {
-    right: 60px;
-   
+    bottom: 20px;
+  }
+  .reviewbtn {
+    bottom: 70px;
+  }
+  .editbtn {
+    bottom: 120px;
   }
 }
 
 .imagges.pdd {
-  height: 600px; /* Adjust height to your preferred size */
-  overflow-y: auto;  /* Enable vertical scroll if content exceeds height */
-  padding: 20px;
-  background-color: #f7f7f7;
+  background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
 }
 
-.selected-images.Description {
-  font-size: 16px;
-  color: #333;
-  line-height: 1.6;
-  padding-right: 10px; /* Add padding to prevent text from touching the scrollbar */
+
+
+.review-modal{
+  position: relative;
+  background-color: #007bff;
+}
+
+.cancelbtn{
+  position: absolute;
+  right: -50px;
+  top: -20px;
+}
+
+
+@media screen and (max-width:620px) {
+    .cancelbtn{
+  position: absolute;
+  right: 0;
+  top: -50px;
+}
 }

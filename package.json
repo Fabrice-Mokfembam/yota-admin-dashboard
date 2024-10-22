@@ -25,6 +25,7 @@
     "react-file-base64": "^1.0.3",
     "react-icons": "^4.11.0",
     "react-image-file-resizer": "^0.4.8",
+    "react-quill": "^2.0.0",
     "react-router-dom": "^6.21.1",
     "styled-components": "^6.1.6",
     "swiper": "^11.0.5",

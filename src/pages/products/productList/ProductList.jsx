@@ -11,15 +11,15 @@ import Loader from "../../../components/Loader/Loader";
 const page = "All Products";
 
 const items = [
-  "Rear trunk",
-  "Side skirt",
-  "Rear diffuser",
-  "Side mirrors & covers",
-  "Front grille",
-  "Bumper grille",
-  "Head lights",
-  "Tail lights",
-  "Rear trunk",
+  "Exhaust",
+  "Suspension parts",
+  "Wheel",
+  "Rear Spoilers",
+  "Hood",
+  "Bumpers",
+  "Fenders",
+  "Rear Trunk",
+  "Lighting kit",
   "Shift knob & pedals",
   "Steering wheel & Airbags",
   "Seats & Covers",
@@ -27,8 +27,18 @@ const items = [
   "Center console",
   "Floor mats",
   "Door & trim panels",
-  "Lighting kit",
+  "Steering wheel",
+  "Head Lights",
+  "Tail Lights",
+  "Front Lip",
+  "Side skirt",
+  "Rear diffuser",
+  "Side mirrors & covers",
+  "Front grille",
+  "Bumper grille",
+  "Covers",
 ];
+
 
 function ProductList() {
   const { products, setProducts, setLoading, loading } =
@@ -151,7 +161,7 @@ function ProductList() {
               onChange={(e) => setSelectedCategory(e.target.value)}
             >
               <option value="">Select by category</option>
-              <option value="Wheel">Wheel</option>
+              {/* <option value="Wheel">Wheel</option>
               <option value="Exhaust">Exhaust</option>
               <option value="Bumpers">Bumpers</option>
               <option value="Fenders">Fenders</option>
@@ -159,9 +169,11 @@ function ProductList() {
               <option value="suspension parts">suspension parts</option>
               <option value="Steering wheel">Steering wheel</option>
               <option value="Front Lip">Front Lip</option>
-              <option value="Rear Spoiler">Rear Spoiler</option>
+              <option value="Rear Spoiler">Rear Spoiler</option> */}
               {items.map((item) => (
-                <option key={item} value={item}>{ item}</option>
+                <option key={item} value={item}>
+                  {item}
+                </option>
               ))}
             </select>
           </div>
@@ -189,8 +201,11 @@ function ProductList() {
                 <div
                   className="product_short_description"
                   onClick={() => routeToProductDetail(item)}
+                  dangerouslySetInnerHTML={{
+                    __html: item.description.slice(0, 40),
+                  }}
                 >
-                  {item.description.slice(0, 40) + "...read more"}
+                  
                 </div>
                 <div className="product_prize">${item.price}</div>
 

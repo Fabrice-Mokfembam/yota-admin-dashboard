@@ -8,24 +8,81 @@ import './ProductEdit.css'
 import { adminContext } from '../../../context/adminContext';
 import Label from '../../../components/Label/Label';
 
-const items = [
-  "Rear trunk",
-  "Side skirt",
-  "Rear diffuser",
-  "Side mirrors & covers",
-  "Front grille",
-  "Bumper grille",
-  "Head lights",
-  "Tail lights",
-  "Rear trunk",
-  "Shift knob & pedals",
-  "Steering wheel & Airbags",
-  "Seats & Covers",
-  "Dashboard panel",
-  "Center console",
-  "Floor mats",
-  "Door & trim panels",
-  "Lighting kit",
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { FaTrash } from "react-icons/fa";
+
+const itemsOther = [
+  { text: "Exhaust", selected: false },
+  { text: "Suspension parts", selected: false },
+  { text: "Wheels", selected: true },
+  { text: "Rear Spoilers", selected: false },
+];
+
+const itemsBodykits = [
+  { text: "Hood", selected: false },
+  { text: "Bumpers", selected: false },
+  { text: "Fenders", selected: false },
+  { text: "Rear Trunk", selected: false },
+  { text: "Lighting kit", selected: false },
+];
+
+const itemsInterior = [
+  { text: "Shift knob & pedals", selected: false },
+  { text: "Steering wheel & Airbags", selected: false },
+  { text: "Seats & Covers", selected: false },
+  { text: "Dashboard panel", selected: false },
+  { text: "Center console", selected: false },
+  { text: "Floor mats", selected: false },
+  { text: "Door & trim panels", selected: false },
+  { text: "Steering wheel", selected: false },
+];
+
+const itemsLighting = [
+  { text: "Head Lights", selected: false },
+  { text: "Tail Lights", selected: false },
+];
+
+const itemsExterior = [
+  { text: "Front Lip", selected: false },
+  { text: "Side skirt", selected: false },
+  { text: "Rear diffuser", selected: false },
+  { text: "Side mirrors & covers", selected: false },
+  { text: "Front grille", selected: false },
+  { text: "Bumper grille", selected: false },
+  { text: "Covers", selected: false },
+];
+
+const categories = [
+  { value: "lighting", label: "Lighting" },
+  { value: "exterior", label: "Exterior" },
+  { value: "interior", label: "Interior" },
+  { value: "body kit", label: "Body Kits" },
+  { value: "other", label: "Other" },
+];
+
+const carModels = [
+  { value: "Toyota Corolla GR (2023+)", label: "Toyota Corolla GR (2023+)" },
+  {
+    value: "12th gen Toyota Corolla (2019+)",
+    label: "12th gen Toyota Corolla (2019+)",
+  },
+  {
+    value: "11th gen Toyota Corolla (2014 - 2019)",
+    label: "11th gen Toyota Corolla (2014 - 2019)",
+  },
+  {
+    value: "9th gen Toyota Camry (2025+)",
+    label: "9th gen Toyota Camry (2025+)",
+  },
+  {
+    value: "8th gen Toyota Camry (2018 - 2024)",
+    label: "8th gen Toyota Camry (2018 - 2024)",
+  },
+  {
+    value: "7th gen Toyota Camry (2015 - 2017)",
+    label: "7th gen Toyota Camry (2015 - 2017)",
+  },
 ];
 
 
@@ -37,6 +94,7 @@ function ProductEdit() {
   const [selectedCategory, setSelectedCategory] = useState(state.category);
   const [selectedFitPosition, setSelectedFitPosition] = useState(state.fit_position);
   const [description, setDescription] = useState(state.description);
+  const [features, setFeatures] = useState(state.features);
   const [selectCarModel, setSelectModel] = useState(state.car_model);
   const [CarBrand, setCarBrand] = useState(state.car_brand);
   const [MakeMaterial, setMakeMaterial] = useState(state.make_material);
@@ -49,6 +107,7 @@ function ProductEdit() {
   const [imgUrl, setImageUrl] = useState([]);
   const [imgFiles, setImgFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [prevImage, setPrevImage] = useState(state.images);
   const navigate = useNavigate();
 
    const { fetchData } = useContext(adminContext);
@@ -125,6 +184,9 @@ function ProductEdit() {
   const handleDescription = (e) => {
     setDescription(e.target.value);
   };
+  const handleFeatures = (e) => {
+    setFeatures(e.target.value);
+  };
   const handleCarModelChange = (e) => {
     setSelectModel(e.target.value);
   };
@@ -163,7 +225,7 @@ function ProductEdit() {
     handleImageInsertion();
      setIsLoading(true);
 
-    const array = images.map(image => {
+    const array = prevImage.map(image => {
       console.log(image)
       return getUnslicedPart(image,0,41)
     })
@@ -179,6 +241,8 @@ function ProductEdit() {
         category: selectedCategory,
         fit_position: selectedFitPosition,
         description,
+        features,
+        fitment,
         car_model: selectCarModel,
         car_brand: CarBrand,
         category_brand,
@@ -232,6 +296,9 @@ function ProductEdit() {
     setCategoryBrand("");
   };
 
+  const handleDeleteImage = async (name) => {
+    setPrevImage(prevImage.filter(item=>(item !== name)))
+  }
 
 
   return (
@@ -275,8 +342,17 @@ function ProductEdit() {
             <div className="imagges">
               images
               <div className="selected-images imageconn">
-                {state.images.map((image) => {
-                  return <img src={image} alt="" />;
+                {prevImage.map((image,index) => {
+                  return (
+                    <div key={index} className='imageEdit'>
+                      
+                      <FaTrash className='imagedelete' onClick={() => {
+                          handleDeleteImage(image)
+                        }}/>
+                      
+                      <img src={image} alt="" />
+                    </div>
+                  ); 
                 })}
               </div>
             </div>
@@ -293,7 +369,19 @@ function ProductEdit() {
               </label>
             </div>
           </div>
-
+          <div className="Carbrand title">
+            Price($)
+            <div className="number ">
+              <label htmlFor="number">
+                <input
+                  type="number"
+                  id="number"
+                  value={Price}
+                  onChange={handlePriceChange}
+                />
+              </label>
+            </div>
+          </div>
           <div className="Carbrand title">
             Car Brand
             <div className="category-input Model ">
@@ -320,65 +408,18 @@ function ProductEdit() {
 
           <div className="Model title">
             Car Model
-            <div className="category-input Model ">
-              <label>
-                <input
-                  type="radio"
-                  value="Toyota Corolla GR (2023+)"
-                  checked={selectCarModel === "Toyota Corolla GR (2023+)"}
-                  onChange={handleCarModelChange}
-                />
-                Toyota Corolla GR (2023+)
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="12th gen Toyota Corolla (2019+)"
-                  checked={selectCarModel === "12th gen Toyota Corolla (2019+)"}
-                  onChange={handleCarModelChange}
-                />
-                12th gen Toyota Corolla (2019+)
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="11th gen Toyota Corolla (2014 - 2019)"
-                  checked={
-                    selectCarModel === "11th gen Toyota Corolla (2014 - 2019)"
-                  }
-                  onChange={handleCarModelChange}
-                />
-                11th gen Toyota Corolla (2014 - 2019)
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="9th gen Toyota Camry (2025+)"
-                  checked={selectCarModel === "9th gen Toyota Camry (2025+)"}
-                  onChange={handleCarModelChange}
-                />
-                9th gen Toyota Camry (2025+)
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="8th gen Toyota Camry (2018 - 2024)"
-                  checked={
-                    selectCarModel === "8th gen Toyota Camry (2018 - 2024)"
-                  }
-                  onChange={handleCarModelChange}
-                />
-                8th gen Toyota Camry (2018 - 2024)
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="7th gen Toyota Cammry"
-                  checked={selectCarModel === "7th gen Toyota Cammry"}
-                  onChange={handleCarModelChange}
-                />
-                7th gen Toyota Camry (2015 - 2017)
-              </label>
+            <div className="category-input Model">
+              {carModels.map((carModel) => (
+                <label key={carModel.value}>
+                  <input
+                    type="radio"
+                    value={carModel.value}
+                    checked={selectCarModel === carModel.value}
+                    onChange={handleCarModelChange}
+                  />
+                  {carModel.label}
+                </label>
+              ))}
             </div>
           </div>
 
@@ -415,160 +456,111 @@ function ProductEdit() {
 
           <div className="carbrand-and-details">
             <div className="category title">
-              Category
-              <div className="category-input ">
-                <label htmlFor="Exhaust">
-                  <input
-                    type="radio"
-                    id="Exhaust"
-                    value="Exhaust"
-                    checked={selectedCategory === "Exhaust"}
-                    onChange={handleCategoryChange}
-                    onClick={() => {
-                      setWheel(false);
-                    }}
-                  />
-                  Exhaust
-                </label>
-                <label htmlFor="Exhaust">
-                  <input
-                    type="radio"
-                    id="Bumpers"
-                    value="Bumpers"
-                    checked={selectedCategory === "Bumpers"}
-                    onChange={handleCategoryChange}
-                    onClick={() => {
-                      setWheel(false);
-                    }}
-                  />
-                  Bumpers
-                </label>
-                <label htmlFor="Exhaust">
-                  <input
-                    type="radio"
-                    id="Fenders"
-                    value="Fenders"
-                    checked={selectedCategory === "Fenders"}
-                    onChange={handleCategoryChange}
-                    onClick={() => {
-                      setWheel(false);
-                    }}
-                  />
-                  Fenders
-                </label>
-                <label htmlFor="Exhaust">
-                  <input
-                    type="radio"
-                    id="Hood"
-                    value="Hood"
-                    checked={selectedCategory === "Hood"}
-                    onChange={handleCategoryChange}
-                    onClick={() => {
-                      setWheel(false);
-                    }}
-                  />
-                  Hood
-                </label>
-                <label htmlFor="Wheel">
-                  <input
-                    type="radio"
-                    id="Wheel"
-                    value="Wheel"
-                    checked={selectedCategory === "Wheel"}
-                    onChange={handleCategoryChange}
-                    onClick={() => {
-                      setWheel(true);
-                    }}
-                  />
-                  Wheel
-                </label>
-                <label htmlFor="suspension parts">
-                  <input
-                    type="radio"
-                    value="suspension parts"
-                    checked={selectedCategory === "suspension parts"}
-                    onChange={handleCategoryChange}
-                    onClick={() => {
-                      setWheel(false);
-                    }}
-                  />
-                  Suspension parts
-                </label>
-                <label htmlFor="Steering wheel">
-                  <input
-                    type="radio"
-                    value="Steering wheel"
-                    checked={selectedCategory === "Steering wheel"}
-                    onChange={handleCategoryChange}
-                    onClick={() => {
-                      setWheel(false);
-                    }}
-                  />
-                  Steering Wheel
-                </label>
-                <label htmlFor="Front Lip">
-                  <input
-                    type="radio"
-                    value="Front Lip"
-                    checked={selectedCategory === "Front Lip"}
-                    onChange={handleCategoryChange}
-                    onClick={() => {
-                      setWheel(false);
-                    }}
-                  />
-                  Front Lip
-                </label>
-                <label htmlFor="Rear Spoiler">
-                  <input
-                    type="radio"
-                    value="Rear Spoiler"
-                    checked={selectedCategory === "Rear Spoiler"}
-                    onChange={handleCategoryChange}
-                    onClick={() => {
-                      setWheel(false);
-                    }}
-                  />
-                  Rear Spoiler
-                </label>
-
-                {items.map((item) => (
-                  <Label
-                    key={item}
-                    id={item}
-                    value={item}
-                    selectedCategory={selectedCategory}
-                    handleCategoryChange={handleCategoryChange}
-                    onClick={() => setWheel(false)}
-                    label={item}
-                  />
+              Category Type
+              <div className="category-input">
+                {categories.map((category) => (
+                  <label key={category.value}>
+                    <input
+                      type="radio"
+                      value={category.value}
+                      checked={selectedFitPosition === category.value}
+                      onChange={handleFitPositionChange}
+                    />
+                    {category.label}
+                  </label>
                 ))}
               </div>
             </div>
-
-            {wheel && (
-              <div className="category title">
-                Category Brand
-                <select
-                  name="wheel"
-                  id="wheels"
-                  onChange={handleCategorybrandChange}
-                >
-                  <option value="" className="unbrand">
-                    select the category brand:wheel
-                  </option>
-                  <option value="Kansei">Kansei</option>
-                  <option value="Enkei">Enkei</option>
-                  <option value="Advan Racing">Advan Racing</option>
-                  <option value="Bc Forged">Bc Forged</option>
-                  <option value="Volk Racing">Volk Racing</option>
-                  <option value="FR1">FR1</option>
-                </select>
-              </div>
-            )}
           </div>
         </div>
 
         <div className="secondpart part">
+          <div className="category title">
+            Category
+            <div className="category-input ">
+              {selectedFitPosition === "other"
+                ? itemsOther.map((item) => (
+                    <Label
+                      key={item.text}
+                      id={item.text}
+                      value={item.text}
+                      selectedCategory={selectedCategory}
+                      handleCategoryChange={handleCategoryChange}
+                      onClick={() => setWheel(item.selected)}
+                      label={item.text}
+                    />
+                  ))
+                : selectedFitPosition === "interior"
+                ? itemsInterior.map((item) => (
+                    <Label
+                      key={item.text}
+                      id={item.text}
+                      value={item.text}
+                      selectedCategory={selectedCategory}
+                      handleCategoryChange={handleCategoryChange}
+                      onClick={() => setWheel(item.selected)}
+                      label={item.text}
+                    />
+                  ))
+                : selectedFitPosition === "exterior"
+                ? itemsExterior.map((item) => (
+                    <Label
+                      key={item.text}
+                      id={item.text}
+                      value={item.text}
+                      selectedCategory={selectedCategory}
+                      handleCategoryChange={handleCategoryChange}
+                      onClick={() => setWheel(item.selected)}
+                      label={item.text}
+                    />
+                  ))
+                : selectedFitPosition === "body kit"
+                ? itemsBodykits.map((item) => (
+                    <Label
+                      key={item.text}
+                      id={item.text}
+                      value={item.text}
+                      selectedCategory={selectedCategory}
+                      handleCategoryChange={handleCategoryChange}
+                      onClick={() => setWheel(item.selected)}
+                      label={item.text}
+                    />
+                  ))
+                : selectedFitPosition === "lighting"
+                ? itemsLighting.map((item) => (
+                    <Label
+                      key={item.text}
+                      id={item.text}
+                      value={item.text}
+                      selectedCategory={selectedCategory}
+                      handleCategoryChange={handleCategoryChange}
+                      onClick={() => setWheel(item.selected)}
+                      label={item.text}
+                    />
+                  ))
+                : ""}
+            </div>
+          </div>
+          {wheel && (
+            <div className="category title">
+              Category Brand
+              <select
+                name="wheel"
+                id="wheels"
+                onChange={handleCategorybrandChange}
+              >
+                <option value="" className="unbrand">
+                  select the category brand:wheel
+                </option>
+                <option value="Kansei">Kansei</option>
+                <option value="Enkei">Enkei</option>
+                <option value="Advan Racing">Advan Racing</option>
+                <option value="Bc Forged">Bc Forged</option>
+                <option value="Volk Racing">Volk Racing</option>
+                <option value="FR1">FR1</option>
+              </select>
+            </div>
+          )}
           {wheel && (
             <div className="Carbrand title wheel">
               Wheel Size
@@ -585,47 +577,6 @@ function ProductEdit() {
               </div>
             </div>
           )}
-          <div className="category title">
-            Category Type
-            <div className="category-input ">
-              <label>
-                <input
-                  type="radio"
-                  value="lighting"
-                  checked={selectedFitPosition === "lighting"}
-                  onChange={handleFitPositionChange}
-                />
-                Lighting
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="exterior"
-                  checked={selectedFitPosition === "exterior"}
-                  onChange={handleFitPositionChange}
-                />
-                Exterior
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="interior"
-                  checked={selectedFitPosition === "interior"}
-                  onChange={handleFitPositionChange}
-                />
-                Interior
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="body kits"
-                  checked={selectedFitPosition === "body kits"}
-                  onChange={handleFitPositionChange}
-                />
-                Body Kits
-              </label>
-            </div>
-          </div>
 
           <div className="Carbrand title ">
             Fitment
@@ -646,27 +597,43 @@ function ProductEdit() {
             Description
             <div className="description">
               <label htmlFor="description">
-                <textarea
+                {/* <textarea
                   id="description"
                   value={description}
                   onChange={handleDescription}
                   placeholder="Product Description"
                   rows={4} // Specifies the number of visible text lines
                   cols={50} // Optional: Specifies the width of the textarea
+                /> */}
+                <ReactQuill
+                  theme="snow"
+                  value={description}
+                  onChange={(description) => setDescription(description)}
                 />
+                {/* <div
+                  className="output"
+                  dangerouslySetInnerHTML={{ __html: description }}
+                ></div> */}
               </label>
             </div>
           </div>
 
           <div className="Carbrand title">
-            Price($)
-            <div className="number ">
-              <label htmlFor="number">
-                <input
-                  type="number"
-                  id="number"
-                  value={Price}
-                  onChange={handlePriceChange}
+            Features
+            <div className="description">
+              <label htmlFor="features">
+                {/* <textarea
+                  id="features"
+                  value={features}
+                  onChange={handleFeatures}
+                  placeholder="Product Features"
+                  rows={4} // Specifies the number of visible text lines
+                  cols={50} // Optional: Specifies the width of the textarea
+                /> */}
+                <ReactQuill
+                  theme="snow"
+                  value={features}
+                  onChange={(features) => setFeatures(features)}
                 />
               </label>
             </div>
@@ -766,7 +733,21 @@ function ProductEdit() {
 
               <div className="product-detail-item">
                 Description
-                <div className="product-detail-value">{description}</div>
+                <div
+                  className="product-detail-value"
+                  dangerouslySetInnerHTML={{ __html: description }}
+                >
+                  
+                </div>
+              </div>
+              <div className="product-detail-item">
+                Features
+                <div
+                  className="product-detail-value"
+                  dangerouslySetInnerHTML={{ __html: features }}
+                >
+                  
+                </div>
               </div>
 
               <div className="product-detail-item">

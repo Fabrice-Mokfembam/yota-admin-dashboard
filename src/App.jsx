@@ -75,7 +75,6 @@ function App() {
     fetchUsers();
     // getAllOrders();
     // fetchReviews();
-    // fetchFinance();
     // fetchChats();
     fetchBonus();
   }, []);
@@ -140,14 +139,7 @@ function App() {
   //   }
   // };
 
-  // const fetchFinance = async () => {
-  //   try {
-  //     const { data } = await axios.get("http://localhost:5000/get/cards");
-  //     setCards(data);
-  //   } catch (error) {
-  //     console.error("Error fetching finance data:", error);
-  //   }
-  // };
+
 
   // const fetchReviews = async () => {
   //   try {
