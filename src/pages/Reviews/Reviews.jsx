@@ -1,54 +1,164 @@
-import React, { useState, useEffect, useContext } from "react";
-import "./Review.css";
+import  { useState } from "react";
 import PageDetail from "../../components/PageAlert/PageDetail";
-import img from '../../assets/images/bf.jpeg'
-import { FaStar } from 'react-icons/fa';
-import { productContext } from "../../context/productContext";
-import { format as timeAgo } from 'timeago.js';
-import moment from "moment";
+import pic from "../../assets/images/avatar.jpeg";
+import ReviewCard from "./ReviewCard";
 
 function Reviews() {
-  const { products } = useContext(productContext);
+  // Dummy data for unconfirmed and confirmed reviews
+  const unconfirmedReviews = [
+    {
+      _id: "1",
+      title: "Great Product!",
+      reviewText: "This product exceeded my expectations. Highly recommend it.",
+      name: "Alice Smith",
+      photos: pic,
+      createdAt: new Date().toISOString(),
+      confirmed: false,
+    },
+    {
+      _id: "2",
+      title: "Average Experience",
+      reviewText: "It’s okay, but could be better. Decent value for the price.",
+      name: "Bob Johnson",
+      photos: pic,
+      createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
+      confirmed: false,
+    },
+    {
+      _id: "3",
+      title: "Disappointing",
+      reviewText: "Not what I expected. Quality issues noticed after a week.",
+      name: "Charlie Brown",
+      photos: pic,
+      createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days ago
+      confirmed: false,
+    },
+  ];
 
-  const renderStars = (rating) => {
-    const stars = [];
-    for (let i = 1; i <= rating; i++) {
-      stars.push(<FaStar className="staricon" />);
-    }
-    return stars;
-  };
+  const confirmedReviews = [
+    {
+      _id: "4",
+      title: "Best Purchase Ever!",
+      reviewText: "Absolutely love this product. Perfect in every way.",
+      name: "Logan N.",
+      photos: pic,
+      createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(), // 10 days ago
+      confirmed: true,
+      rating: 5,
+    },
+    {
+      _id: "4",
+      title: "Best Purchase Ever!",
+      reviewText: "Absolutely love this product. Perfect in every way.",
+      name: "Logan N.",
+      photos: pic,
+      createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(), // 10 days ago
+      confirmed: true,
+      rating: 5,
+    },
+    {
+      _id: "4",
+      title: "Best Purchase Ever!",
+      reviewText: "Absolutely love this product. Perfect in every way.",
+      name: "Logan N.",
+      photos: pic,
+      createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(), // 10 days ago
+      confirmed: true,
+      rating: 5,
+    },
+    {
+      _id: "4",
+      title: "Best Purchase Ever!",
+      reviewText: "Absolutely love this product. Perfect in every way.",
+      name: "Logan N.",
+      photos: pic,
+      createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(), // 10 days ago
+      confirmed: true,
+      rating: 5,
+    },
+    {
+      _id: "4",
+      title: "Best Purchase Ever!",
+      reviewText: "Absolutely love this product. Perfect in every way.",
+      name: "Logan N.",
+      photos: pic,
+      createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(), // 10 days ago
+      confirmed: true,
+      rating: 5,
+    },
+    {
+      _id: "4",
+      title: "Best Purchase Ever!",
+      reviewText: "Absolutely love this product. Perfect in every way.",
+      name: "Logan N.",
+      photos: pic,
+      createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(), // 10 days ago
+      confirmed: true,
+      rating: 5,
+    },
+    {
+      _id: "5",
+      title: "Good Value",
+      reviewText: "Works well for the price. Satisfied overall.",
+      name: "Emma Wilson",
+      photos: pic,
+      createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(), // 15 days ago
+      confirmed: true,
+      rating: 4,
+    },
+    {
+      _id: "6",
+      title: "Could Be Better",
+      reviewText: "It’s functional, but there are some flaws in design.",
+      name: "David Lee",
+      photos: pic,
+      createdAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(), // 20 days ago
+      confirmed: true,
+      rating: 3,
+    },
+  ];
 
-  const formatDate = (datesent) => {
-    const time = new Date(datesent);
-    const now = new Date();
-
-    if (now - time >= 24 * 60 * 60 * 1000) {
-      return moment(time).format('DD/MM/YYYY');
-    } else {
-      return timeAgo(time);
-    }
-  };
+  const [activeTab, setActiveTab] = useState("confirmed"); // State to manage active tab
 
   const review = "Reviews";
 
   return (
-    <div className="home-container">
+    <div className="home-container p-4">
       <PageDetail page={review} />
 
-      <div className="timeline">
-        {products.map((product, index) => (
-          product.reviews.map((review, index) => (
-            <div className="timeline-item" key={index}>
-              <div className="pic-review"> <img src={img} alt="" /></div>
-              <div className="timeline-content">
-                <div className="timeline-date">{formatDate(review.createdAt)}</div>
-                <div className="timeline-heading">{product.product_name}</div>
-                {renderStars(review.user_rating)}
-                <div className="timeline-description">{review.user_text}</div>
-              </div>
-            </div>
-          ))
-        ))}
+      {/* Tabs */}
+      <div className="flex justify-center space-x-4 mb-[10px">
+        <button
+          className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+            activeTab === "confirmed"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+          }`}
+          onClick={() => setActiveTab("confirmed")}
+        >
+          Confirmed Reviews
+        </button>
+        <button
+          className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+            activeTab === "unconfirmed"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+          }`}
+          onClick={() => setActiveTab("unconfirmed")}
+        >
+          Unconfirmed Reviews
+        </button>
+      </div>
+
+      {/* Reviews */}
+      <div className="flex flex-wrap justify-center gap-3.5  mt-[10px] w-full">
+        {activeTab === "confirmed"
+          ? confirmedReviews.map((review) => (
+              <ReviewCard key={review._id} review={review} />
+            ))
+          : unconfirmedReviews.map((review) => (
+              <ReviewCard key={review._id} review={review} />
+            ))}
       </div>
     </div>
   );

@@ -38,6 +38,8 @@ import ProfileEdit from "./pages/profile/ProfileEdit";
 import Profile from "./pages/profile/Profile";
 import Login from "./pages/auth/Login";
 import { adminContext } from "./context/adminContext";
+import WriteReview from "./pages/Reviews/WriteReview";
+import { Bounce, ToastContainer } from "react-toastify";
 
 function App() {
   const [data, setData] = useState([]);
@@ -202,7 +204,8 @@ function App() {
         { path: "/bonus-edit", element: <BonusEdit /> },
         { path: "/profile", element: <Profile /> },
         { path: "/profileEdit", element: <ProfileEdit /> },
-        { path: "/Reviews", element: <Reviews /> },
+        { path: "/Reviews/list", element: <Reviews /> },
+        { path: "/reviews/write-review", element: <WriteReview /> },
         { path: "/messages", element: <PersonMessage /> },
         { path: "/order-detail", element: <OrderDetail /> },
         { path: "/test", element: <ImageUploader /> },
@@ -217,11 +220,25 @@ function App() {
   ]);
 
   return (
+    <>
     <adminContext.Provider value={{ admin, setAdmin , fetchData}}>
       <loginContext.Provider value={{ isLogin, setIsLogin }}>
         <RouterProvider router={router} />
       </loginContext.Provider>
     </adminContext.Provider>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        transition={Bounce}
+      />
+      </>
   );
 }
 

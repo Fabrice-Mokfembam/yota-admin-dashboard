@@ -16,6 +16,8 @@
     "@mui/material": "^5.15.2",
     "@mui/styled-engine-sc": "^6.0.0-alpha.10",
     "@mui/x-data-grid": "^6.18.6",
+    "@tailwindcss/vite": "^4.0.9",
+    "@tanstack/react-query": "^5.67.1",
     "axios": "^1.6.5",
     "chart.js": "^4.4.2",
     "moment": "^2.30.1",
@@ -27,11 +29,14 @@
     "react-image-file-resizer": "^0.4.8",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.21.1",
+    "react-toastify": "^11.0.5",
     "styled-components": "^6.1.6",
     "swiper": "^11.0.5",
+    "tailwindcss": "^4.0.9",
     "timeago.js": "^4.0.2"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.66.1",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@vitejs/plugin-react": "^4.2.1",

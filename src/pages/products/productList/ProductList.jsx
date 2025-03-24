@@ -69,7 +69,7 @@ function ProductList() {
 
   
   const filterProducts = () => {
-    let updatedProducts = products;
+    let updatedProducts = products.reverse();
 
   
     if (selectedCategory) {
@@ -184,7 +184,7 @@ function ProductList() {
           <div>Loading....</div>
         ) : (
           <div className="product_list">
-            {currentItems.map((item) => (
+            {currentItems.reverse().map((item) => (
               <div className="products_container" key={item.id}>
                 <div
                   className="product_image"

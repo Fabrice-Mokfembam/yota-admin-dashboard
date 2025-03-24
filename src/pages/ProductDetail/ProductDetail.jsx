@@ -6,11 +6,12 @@ import { BsPlus } from "react-icons/bs";
 import img from "../../assets/images/bf.jpeg";
 import { format as timeAgo } from "timeago.js";
 import moment from "moment";
-import { FaStar, FaEdit, FaTrash, FaPlus, FaTimes } from "react-icons/fa";
+import { FaStar, FaEdit, FaTrash, FaPlus} from "react-icons/fa";
 import axios from "axios";
 import Loader from "../../components/Loader/Loader";
 import { productContext } from "../../context/productContext";
 import ReviewForm from "../../components/Review/ReviewForm";
+import YouTubeEmbed from "../products/YoutubeEmbed";
 
 const renderStars = (rating) => {
   const stars = [];
@@ -54,6 +55,11 @@ function ProductDetail() {
     wheel_size,
     fitment,
     quantity_left,
+    hot_product,
+    subcategory,
+    final_subcategory,
+    performance_part,
+    video,
     price,
     reviews,
   } = state;
@@ -112,6 +118,10 @@ function ProductDetail() {
             </div>
 
             <div className="imagges">
+              Performance Part
+              <div className="selected-images text">{performance_part? "yes" : "no"}</div>
+            </div>
+            <div className="imagges">
               Car Brand
               <div className="selected-images text">{car_brand}</div>
             </div>
@@ -120,6 +130,13 @@ function ProductDetail() {
               <div className="selected-images text">{car_model}</div>
             </div>
             <div className="imagges">
+              Hot Product
+              <div className="selected-images text">{hot_product}</div>
+            </div>
+          </div>
+
+          <div className="detail-part2 pd2">
+            <div className="imagges">
               Make Material
               <div className="selected-images text">{make_material}</div>
             </div>
@@ -127,9 +144,25 @@ function ProductDetail() {
               Category
               <div className="selected-images text">{category}</div>
             </div>
-          </div>
-
-          <div className="detail-part2 pd2">
+            <div className="imagges">
+              Sub-Category
+              <div className="selected-images text">{subcategory}</div>
+            </div>
+            <div className="imagges">
+              final-subCategory
+              <div className="selected-images text">{final_subcategory}</div>
+            </div>
+            {category === "Exhaust" && (
+              <>
+                <div className="imagges">
+                  YoutubeId
+                  <div className="selected-images text">{video}</div>
+                </div>
+                <div>
+                  <YouTubeEmbed videoId={video}/>
+                </div>
+              </>
+            )}
             <div className="imagges">
               Category Brand
               <div className="selected-images text">
@@ -147,10 +180,6 @@ function ProductDetail() {
             </div>
 
             <div className="imagges">
-              Fitment
-              <div className="selected-images text">{fitment}</div>
-            </div>
-            <div className="imagges">
               Price
               <div className="selected-images text">{price}</div>
             </div>
@@ -162,6 +191,14 @@ function ProductDetail() {
         </div>
 
         {/* Description and Features */}
+
+        <div className="imagges pdd">
+          <h3>Fitment</h3>
+          <div
+            className="selected-images Description"
+            dangerouslySetInnerHTML={{ __html: fitment }}
+          ></div>
+        </div>
         <div className="imagges pdd">
           <h3>Description</h3>
           <div
